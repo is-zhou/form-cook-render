@@ -1,5 +1,5 @@
 import type { App } from 'vue'
-import FormRender from './components/FormRender.vue'
+import FormRender from './lib/FormRender.vue'
 
 // 插件安装方法
 const install = (app: App): void => {

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from "element-plus";
-import { componentsMap } from "@/components/componentMap";
+import { componentsMap } from "@/lib/componentMap";
 
 const formSchema = {
   formContentConfigList: [
