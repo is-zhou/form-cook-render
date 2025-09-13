@@ -1,0 +1,6 @@
+node_modules
+dist
+example/auto-imports.d.ts
+example/components.d.ts
+auto-imports.d.ts
+components.d.ts
