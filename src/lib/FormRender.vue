@@ -1,7 +1,16 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from "element-plus";
 import { getComponent } from "./core/registry";
-
+import { ElementPlusComponentName } from "./core/defaultRegistry";
+interface FormSchemaNode {
+  field?: keyof FormData;
+  componentName: ElementPlusComponentName;
+  componentType?: "form" | "layout";
+  formItemAttrs?: Partial<any>;
+  attrs?: Record<string, any>;
+  children?: FormSchemaNode[];
+  slots?: any[];
+}
 const formSchema = {
   formContentConfigList: [
     {
@@ -258,44 +267,41 @@ const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
 };
+
+const renderNode = (node: FormSchemaNode) => {
+  const comp = getComponent(node.componentName);
+
+  if (!comp) {
+    return;
+  }
+
+  if (node.componentType === "layout") {
+    return h(comp, node.attrs, {
+      default: () => node.children?.map(renderNode),
+    });
+  }
+
+  return h(
+    ElFormItem,
+    { prop: node.field, ...node.formItemAttrs },
+    {
+      default: () =>
+        h(comp, {
+          ...node.attrs,
+          modelValue: formData[node.field!],
+          "onUpdate:modelValue": (v) => (formData[node.field!] = v),
+        }),
+    }
+  );
+};
 </script>
 <template>
   <el-form ref="formRef" :model="formData" :rules="rules" label-width="auto">
-    <template v-for="config in formSchema.formContentConfigList">
-      <template v-if="config.componentType === 'layout'">
-        <component
-          :is="getComponent(config.componentName)"
-          v-bind="config.attrs"
-        >
-          <template v-if="config.children.length">
-            <component
-              v-for="c in config.children"
-              :is="getComponent(c.componentName)"
-              v-model="formData[c.field]"
-              v-bind="c.attrs"
-            ></component>
-          </template>
-        </component>
-      </template>
-      <el-form-item v-else :prop="config.field" v-bind="config.formItemAttrs">
-        <component
-          v-model="formData[config.field]"
-          :is="getComponent(config.componentName)"
-          v-bind="config.attrs"
-        >
-          <template v-for="slot in config?.slots" #[slot.name]>
-            <template v-for="option in slot.options">
-              <component
-                :is="getComponent(slot.componentName)"
-                :value="option.value"
-                :name="option.name"
-                >{{ option.label }}</component
-              >
-            </template>
-          </template>
-        </component>
-      </el-form-item>
-    </template>
+    <component
+      v-for="config in formSchema.formContentConfigList"
+      :is="renderNode(config)"
+      :key="config.field || config.componentName"
+    />
 
     <el-form-item>
       <el-button type="primary" @click="submitForm(formRef)">
