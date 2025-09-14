@@ -2,35 +2,49 @@
 import type { FormInstance } from "element-plus";
 import { getComponent } from "./core/registry";
 import { TComponentConfig, TFormSchema } from "./types/schema";
-import { testSchema } from "./utils/testSchema";
+import { VNode } from "vue";
 
-const formData = defineModel<Record<string, any>>({ default: () => ({}) });
+type FormData = Record<string, any>;
+
+const formData = defineModel<FormData>({ default: () => ({}) });
 const formSchema = defineModel<TFormSchema>("formSchema", {
   default: () => ({}),
 });
 
-//调试用
-if (!formSchema.value.formContentConfigList) {
-  formSchema.value = testSchema;
-}
+const emits = defineEmits<{
+  (e: "submit", formData: FormData): void;
+  (e: "reset"): void;
+}>();
 
 const formRef = ref<FormInstance>();
 
-const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      console.log("submit!");
-    } else {
-      console.log("error submit!", fields);
-    }
-  });
+const validate = async () => {
+  if (!formRef.value) return;
+  return await formRef.value.validate();
 };
 
-const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
-  formEl.resetFields();
+const submit = async () => {
+  await validate();
+  return formData.value;
 };
+
+const resetFields = () => {
+  if (!formRef.value) return;
+  formRef.value.resetFields();
+};
+
+const submitForm = async () => {
+  await validate();
+  emits("submit", formData.value);
+};
+
+const resetForm = () => {
+  if (!formRef.value) return;
+  formRef.value.resetFields();
+  emits("reset");
+};
+
+defineExpose({ validate, submit, resetFields });
 
 const renderNode = (node: TComponentConfig) => {
   const comp = getComponent(node.componentName);
@@ -72,10 +86,8 @@ const renderNode = (node: TComponentConfig) => {
     />
 
     <el-form-item>
-      <el-button type="primary" @click="submitForm(formRef)">
-        Create
-      </el-button>
-      <el-button @click="resetForm(formRef)">Reset</el-button>
+      <el-button type="primary" @click="submitForm()"> Create </el-button>
+      <el-button @click="resetForm()">Reset</el-button>
     </el-form-item>
   </el-form>
 </template>

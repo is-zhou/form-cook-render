@@ -1,6 +1,4 @@
-import { TFormSchema } from "../types/schema";
-
-export const testSchema: TFormSchema = {
+export const testSchema = {
   formAreaConfig: {
     attrs: {
       "label-width": "auto",
