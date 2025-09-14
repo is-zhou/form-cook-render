@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from "element-plus";
-import { componentsMap } from "@/lib/componentMap";
+import { getComponent } from "./core/registry";
 
 const formSchema = {
   formContentConfigList: [
@@ -264,13 +264,13 @@ const resetForm = (formEl: FormInstance | undefined) => {
     <template v-for="config in formSchema.formContentConfigList">
       <template v-if="config.componentType === 'layout'">
         <component
-          :is="componentsMap[config.componentName]"
+          :is="getComponent(config.componentName)"
           v-bind="config.attrs"
         >
           <template v-if="config.children.length">
             <component
               v-for="c in config.children"
-              :is="componentsMap[c.componentName]"
+              :is="getComponent(c.componentName)"
               v-model="formData[c.field]"
               v-bind="c.attrs"
             ></component>
@@ -280,13 +280,13 @@ const resetForm = (formEl: FormInstance | undefined) => {
       <el-form-item v-else :prop="config.field" v-bind="config.formItemAttrs">
         <component
           v-model="formData[config.field]"
-          :is="componentsMap[config.componentName]"
+          :is="getComponent(config.componentName)"
           v-bind="config.attrs"
         >
           <template v-for="slot in config?.slots" #[slot.name]>
             <template v-for="option in slot.options">
               <component
-                :is="componentsMap[slot.componentName]"
+                :is="getComponent(slot.componentName)"
                 :value="option.value"
                 :name="option.name"
                 >{{ option.label }}</component

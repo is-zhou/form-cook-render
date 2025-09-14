@@ -1,14 +1,22 @@
 import type { App } from 'vue'
 import FormRender from './lib/FormRender.vue'
+import { registerComponents } from './lib/core/registry'
+import { defaultRegistry } from './lib/core/defaultRegistry'
 
-// 插件安装方法
-const install = (app: App): void => {
-    app.component('FormRender', FormRender)
-}
-
-// 允许 app.use() 使用
+//支持插件模式 允许 app.use() 使用
 export default {
-    install
+    install: (app: App, options?: { components?: Record<string, Component | (() => Promise<Component>)> }): void => {
+        // 注册 FormRender 组件
+        app.component('FormRender', FormRender)
+
+        registerComponents({
+            // 注册默认组件
+            ...defaultRegistry(),
+            //注册传入的组件（重名会覆盖）
+            ...options?.components || {}
+        })
+    }
 }
+
 // 支持按需导入
-export { FormRender }
+export { FormRender, registerComponents, defaultRegistry }
