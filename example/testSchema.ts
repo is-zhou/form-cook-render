@@ -115,7 +115,7 @@ export const testSchema = {
       attrs: {
         placeholder: "Activity zone",
       },
-      defaultValue: "",
+      defaultValue: "shanghai",
     },
     {
       id: "",
@@ -136,7 +136,7 @@ export const testSchema = {
           },
         ],
       },
-      defaultValue: "",
+      defaultValue: "2",
     },
     {
       id: "",
@@ -178,7 +178,7 @@ export const testSchema = {
       componentType: "form",
       formItemAttrs: { label: "Instant delivery" },
       attrs: {},
-      defaultValue: "",
+      defaultValue: true,
     },
     {
       id: "",
@@ -189,7 +189,7 @@ export const testSchema = {
       attrs: {
         options: ["Home", "Company", "School"],
       },
-      defaultValue: "",
+      defaultValue: "School",
     },
     {
       id: "",

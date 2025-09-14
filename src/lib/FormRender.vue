@@ -4,7 +4,7 @@ import { getComponent } from "./core/registry";
 import { TComponentConfig, TFormSchema } from "./types/schema";
 import { VNode } from "vue";
 
-type FormData = Record<string, any>;
+type FormData = Record<string, unknown>;
 
 const formData = defineModel<FormData>({ default: () => ({}) });
 const formSchema = defineModel<TFormSchema>("formSchema", {
@@ -58,8 +58,8 @@ const renderNode = (node: TComponentConfig) => {
       default: () => node.children?.map(renderNode),
     });
   }
-  let slots: { [key: string]: () => Array<VNode> } | undefined = undefined;
 
+  let slots: { [key: string]: () => Array<VNode> } | undefined = undefined;
   if (Array.isArray(node.slots) && node.slots.length > 0) {
     // {
     //   slotName: () => [
@@ -78,7 +78,7 @@ const renderNode = (node: TComponentConfig) => {
       if (slot.options) {
         const list = slot.options?.map((opt) => {
           const { value, name, label } = opt;
-          return h(slotComp, { value, name }, { default: () => label });
+          return h(slotComp, { value, name, label }, { default: () => label });
         });
 
         slots![slot.name] = () => list;
@@ -86,6 +86,10 @@ const renderNode = (node: TComponentConfig) => {
         slots![slot.name] = () => [h(slot.componentName)];
       }
     });
+  }
+
+  if (node.defaultValue !== "") {
+    formData.value[node.field] = node.defaultValue;
   }
 
   return h(
@@ -98,7 +102,8 @@ const renderNode = (node: TComponentConfig) => {
           {
             ...node.attrs,
             modelValue: formData.value[node.field],
-            "onUpdate:modelValue": (v) => (formData.value[node.field] = v),
+            "onUpdate:modelValue": (v: unknown) =>
+              (formData.value[node.field] = v),
           },
           slots
         ),
