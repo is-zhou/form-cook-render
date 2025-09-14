@@ -2,8 +2,14 @@
 import type { FormInstance } from "element-plus";
 import { getComponent } from "./core/registry";
 import { TComponentConfig, TFormSchema } from "./types/schema";
-import { VNode } from "vue";
+import { get, set } from "lodash-es";
+import { ElForm, ElButton, ElFormItem } from "element-plus";
 
+interface FormRenderExpose {
+  validate: () => Promise<boolean | undefined>;
+  submit: () => Promise<FormData>;
+  resetFields: () => void;
+}
 type FormData = Record<string, unknown>;
 
 const formData = defineModel<FormData>({ default: () => ({}) });
@@ -34,6 +40,8 @@ const resetFields = () => {
 };
 
 const submitForm = async () => {
+  console.log(formData.value);
+
   await validate();
   emits("submit", formData.value);
 };
@@ -44,9 +52,9 @@ const resetForm = () => {
   emits("reset");
 };
 
-defineExpose({ validate, submit, resetFields });
+defineExpose<FormRenderExpose>({ validate, submit, resetFields });
 
-const renderNode = (node: TComponentConfig) => {
+const renderNode = (node: TComponentConfig): VNode | undefined => {
   const comp = getComponent(node.componentName);
 
   if (!comp) {
@@ -89,21 +97,24 @@ const renderNode = (node: TComponentConfig) => {
   }
 
   if (node.defaultValue !== "") {
-    formData.value[node.field] = node.defaultValue;
+    const currentVal = get(formData.value, node.formItemAttrs.field);
+    if (currentVal === undefined) {
+      set(formData.value, node.formItemAttrs.field, node.defaultValue);
+    }
   }
 
   return h(
     ElFormItem,
-    { prop: node.field, ...node.formItemAttrs },
+    { prop: node.formItemAttrs.field, ...node.formItemAttrs },
     {
       default: () =>
         h(
           comp,
           {
             ...node.attrs,
-            modelValue: formData.value[node.field],
+            modelValue: get(formData.value, node.formItemAttrs.field),
             "onUpdate:modelValue": (v: unknown) =>
-              (formData.value[node.field] = v),
+              set(formData.value, node.formItemAttrs.field, v),
           },
           slots
         ),

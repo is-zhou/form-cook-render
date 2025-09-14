@@ -81,21 +81,19 @@ export const testSchema = {
   formContentConfigList: [
     {
       id: "",
-      field: "name",
       componentName: "input",
       componentType: "form",
-      formItemAttrs: { label: "Activity name" },
+      formItemAttrs: { field: "activity.name", label: "Activity name" },
       attrs: {
         placeholder: "Activity name",
       },
-      defaultValue: "",
+      defaultValue: "sdads",
     },
     {
       id: "",
-      field: "region",
       componentName: "select",
       componentType: "form",
-      formItemAttrs: { label: "Activity zone" },
+      formItemAttrs: { field: "region", label: "Activity zone" },
       slots: [
         {
           name: "default",
@@ -119,10 +117,9 @@ export const testSchema = {
     },
     {
       id: "",
-      field: "count",
       componentName: "selectV2",
       componentType: "form",
-      formItemAttrs: { label: "Activity count" },
+      formItemAttrs: { field: "count", label: "Activity count" },
       attrs: {
         placeholder: "Activity count",
         options: [
@@ -149,10 +146,9 @@ export const testSchema = {
       children: [
         {
           id: "",
-          field: "date1",
           componentName: "datePicker",
           componentType: "form",
-          formItemAttrs: {},
+          formItemAttrs: { field: "date1", },
           attrs: {
             placeholder: "Pick a date",
           },
@@ -160,10 +156,9 @@ export const testSchema = {
         },
         {
           id: "",
-          field: "date2",
           componentName: "timePicker",
           componentType: "form",
-          formItemAttrs: {},
+          formItemAttrs: { field: "date2", },
           attrs: {
             placeholder: "Pick a time",
           },
@@ -173,19 +168,17 @@ export const testSchema = {
     },
     {
       id: "",
-      field: "delivery",
       componentName: "switch",
       componentType: "form",
-      formItemAttrs: { label: "Instant delivery" },
+      formItemAttrs: { field: "delivery", label: "Instant delivery" },
       attrs: {},
       defaultValue: true,
     },
     {
       id: "",
-      field: "location",
       componentName: "segmented",
       componentType: "form",
-      formItemAttrs: { label: "Activity location" },
+      formItemAttrs: { field: "location", label: "Activity location" },
       attrs: {
         options: ["Home", "Company", "School"],
       },
@@ -193,10 +186,9 @@ export const testSchema = {
     },
     {
       id: "",
-      field: "type",
       componentName: "checkboxGroup",
       componentType: "form",
-      formItemAttrs: { label: "Activity type" },
+      formItemAttrs: { field: "type", label: "Activity type" },
       attrs: {},
       slots: [
         {
@@ -220,10 +212,9 @@ export const testSchema = {
     },
     {
       id: "",
-      field: "resource",
       componentName: "radioGroup",
       componentType: "form",
-      formItemAttrs: { label: "Resources" },
+      formItemAttrs: { field: "resource", label: "Resources" },
       attrs: {},
       slots: [
         {
@@ -245,10 +236,9 @@ export const testSchema = {
     },
     {
       id: "",
-      field: "desc",
       componentName: "input",
       componentType: "form",
-      formItemAttrs: { label: "Activity form" },
+      formItemAttrs: { field: "desc", label: "Activity form" },
       attrs: {
         type: "textarea",
         placeholder: "Activity form",

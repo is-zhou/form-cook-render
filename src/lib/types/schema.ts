@@ -5,7 +5,7 @@ import { ElementPlusComponentName } from "../core/defaultRegistry";
 
 type TComponentType = 'form' | 'layout'
 
-type TFormItem = { label?: string; required?: boolean;[key: string]: any }
+type TFormItem = { field: string; label?: string; required?: boolean;[key: string]: any }
 
 type TSlot = { name: string, componentName: TComponentName, options?: { label?: string, value?: unknown, name?: string }[], [key: string]: unknown }
 
@@ -14,7 +14,6 @@ export type TComponentName = ElementPlusComponentName
 export type TConfig<T extends TComponentType> = T extends 'form'
   ? {
     id: string
-    field: string
     componentName: TComponentName
     componentType: T
     formItemAttrs: TFormItem
