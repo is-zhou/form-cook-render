@@ -66,6 +66,6 @@ export type ElementPlusComponentName = | 'input'
     | 'checkboxGroup'
     | 'checkbox'
 
-export function defaultRegistry() {
+export function defaultComponents() {
     return component
 }

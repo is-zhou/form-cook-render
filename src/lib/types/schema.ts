@@ -1,6 +1,6 @@
 
 import type { FormRules } from "element-plus";
-import { ElementPlusComponentName } from "../core/defaultRegistry";
+import { ElementPlusComponentName } from "../core/defaultComponents";
 
 
 type TComponentType = 'form' | 'layout'

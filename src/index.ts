@@ -1,7 +1,7 @@
 import type { App } from 'vue'
 import FormRender from './lib/FormRender.vue'
 import { registerComponents } from './lib/core/registry'
-import { defaultRegistry } from './lib/core/defaultRegistry'
+import { defaultComponents } from './lib/core/defaultComponents'
 
 //支持插件模式 允许 app.use() 使用
 export default {
@@ -11,7 +11,7 @@ export default {
 
         registerComponents({
             // 注册默认组件
-            ...defaultRegistry(),
+            ...defaultComponents(),
             //注册传入的组件（重名会覆盖）
             ...options?.components || {}
         })
@@ -19,4 +19,4 @@ export default {
 }
 
 // 支持按需导入
-export { FormRender, registerComponents, defaultRegistry }
+export { FormRender, registerComponents, defaultComponents }
