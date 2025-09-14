@@ -4,14 +4,27 @@
   "description": "",
   "main": "dist/form-render.umd.js",
   "module": "dist/form-render.es.js",
-  "types": "dist/index.d.ts",  
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "build": "vite build",
     "release": "npm publish --access public"
   },
-  "keywords": [],
+  "keywords": [
+    "vue3",
+    "form-render",
+    "component",
+    "element-plus"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/is-zhou/form-render.git"
+  },
+  "homepage": "https://github.com/is-zhou/form-render#readme",
   "author": "zhouzhou",
   "license": "ISC",
   "packageManager": "pnpm@10.13.1",

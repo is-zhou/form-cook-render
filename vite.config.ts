@@ -9,32 +9,34 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 export default defineConfig(({ command }) => {
     const isBuild = command === "build"
 
-    // 公共插件配置
+    // 公共插件
     const plugins = [
         vue(),
-        // 自动导入 Vue API 和 ElementPlus 组件
+        // 开发模式才启用自动导入
+        !isBuild &&
         AutoImport({
             imports: ["vue"],
             resolvers: [ElementPlusResolver()],
-            dts: path.resolve(__dirname, "types/auto-imports.d.ts"), // 自动生成 auto-imports.d.ts
+            dts: path.resolve(__dirname, "types/auto-imports.d.ts"),
         }),
-        // 自动注册 Vue 组件并生成类型声明
+        // 开发模式才启用组件自动注册
+        !isBuild &&
         Components({
             resolvers: [ElementPlusResolver()],
-            dts: path.resolve(__dirname, "types/components.d.ts"), // 自动生成 components.d.ts
-            directoryAsNamespace: true, // 可选：按目录生成命名空间，避免组件名冲突
+            dts: path.resolve(__dirname, "types/components.d.ts"),
+            // directoryAsNamespace: true, // 库模式下建议关闭
         }),
-        // 仅在 build 时生成库类型声明文件
-        isBuild
-            ? dts({
-                outDir: "dist/types", // 输出到 dist/types
-                insertTypesEntry: true, // 自动生成类型入口文件
-            })
-            : null,
+        // build 模式才生成类型声明文件
+        isBuild &&
+        dts({
+            outDir: "dist",
+            insertTypesEntry: true,
+            entryRoot: "src",
+        }),
     ].filter(Boolean)
 
     if (!isBuild) {
-        // serve 模式（example 预览）
+        // 开发预览模式（example）
         return {
             root: path.resolve(__dirname, "example"),
             plugins,
@@ -46,7 +48,7 @@ export default defineConfig(({ command }) => {
         }
     }
 
-    // build 模式（库打包）
+    // 库打包模式
     return {
         plugins,
         build: {
