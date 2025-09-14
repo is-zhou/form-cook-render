@@ -1,29 +1,26 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from "element-plus";
 import { getComponent } from "./core/registry";
-import { ElementPlusComponentName } from "./core/defaultRegistry";
-interface FormSchemaNode {
-  field?: keyof FormData;
-  componentName: ElementPlusComponentName;
-  componentType?: "form" | "layout";
-  formItemAttrs?: Partial<any>;
-  attrs?: Record<string, any>;
-  children?: FormSchemaNode[];
-  slots?: any[];
-}
-const formSchema = {
+import { TComponentConfig, TFormSchema } from "./types/schema";
+
+const formSchema: TFormSchema = {
   formContentConfigList: [
     {
+      id: "",
       field: "name",
       componentName: "input",
+      componentType: "form",
       formItemAttrs: { label: "Activity name" },
       attrs: {
         placeholder: "Activity name",
       },
+      defaultValue: "",
     },
     {
+      id: "",
       field: "region",
       componentName: "select",
+      componentType: "form",
       formItemAttrs: { label: "Activity zone" },
       slots: [
         {
@@ -44,10 +41,13 @@ const formSchema = {
       attrs: {
         placeholder: "Activity zone",
       },
+      defaultValue: "",
     },
     {
+      id: "",
       field: "count",
       componentName: "selectV2",
+      componentType: "form",
       formItemAttrs: { label: "Activity count" },
       attrs: {
         placeholder: "Activity count",
@@ -62,51 +62,66 @@ const formSchema = {
           },
         ],
       },
+      defaultValue: "",
     },
     {
+      id: "",
       componentName: "formItem",
       componentType: "layout",
-      formItemAttrs: { label: "Activity time" },
       attrs: {
         label: "Activity time",
         required: true,
       },
       children: [
         {
+          id: "",
           field: "date1",
           componentName: "datePicker",
+          componentType: "form",
           formItemAttrs: {},
           attrs: {
             placeholder: "Pick a date",
           },
+          defaultValue: "",
         },
         {
+          id: "",
           field: "date2",
           componentName: "timePicker",
+          componentType: "form",
           formItemAttrs: {},
           attrs: {
             placeholder: "Pick a time",
           },
+          defaultValue: "",
         },
       ],
     },
     {
+      id: "",
       field: "delivery",
       componentName: "switch",
+      componentType: "form",
       formItemAttrs: { label: "Instant delivery" },
       attrs: {},
+      defaultValue: "",
     },
     {
+      id: "",
       field: "location",
       componentName: "segmented",
+      componentType: "form",
       formItemAttrs: { label: "Activity location" },
       attrs: {
         options: ["Home", "Company", "School"],
       },
+      defaultValue: "",
     },
     {
+      id: "",
       field: "type",
       componentName: "checkboxGroup",
+      componentType: "form",
       formItemAttrs: { label: "Activity type" },
       attrs: {},
       slots: [
@@ -127,10 +142,13 @@ const formSchema = {
           ],
         },
       ],
+      defaultValue: "",
     },
     {
+      id: "",
       field: "resource",
       componentName: "radioGroup",
+      componentType: "form",
       formItemAttrs: { label: "Resources" },
       attrs: {},
       slots: [
@@ -149,15 +167,19 @@ const formSchema = {
           ],
         },
       ],
+      defaultValue: "",
     },
     {
+      id: "",
       field: "desc",
       componentName: "input",
+      componentType: "form",
       formItemAttrs: { label: "Activity form" },
       attrs: {
         type: "textarea",
         placeholder: "Activity form",
       },
+      defaultValue: "",
     },
   ],
 };
@@ -268,7 +290,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
   formEl.resetFields();
 };
 
-const renderNode = (node: FormSchemaNode) => {
+const renderNode = (node: TComponentConfig) => {
   const comp = getComponent(node.componentName);
 
   if (!comp) {
