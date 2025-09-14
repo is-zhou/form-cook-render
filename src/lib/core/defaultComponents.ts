@@ -20,9 +20,10 @@ import {
     ElCheckbox,
 } from 'element-plus'
 import { Component } from 'vue'
+import { ComponentName } from '../types/schema'
 
 
-const component: Record<string, Component> = {
+const component: Record<ComponentName, Component> = {
     input: ElInput,
     textarea: ElInput,
     inputNumber: ElInputNumber,
@@ -44,27 +45,6 @@ const component: Record<string, Component> = {
     checkboxGroup: ElCheckboxGroup,
     checkbox: ElCheckbox,
 }
-
-export type ElementPlusComponentName = | 'input'
-    | 'textarea'
-    | 'inputNumber'
-    | 'inputTag'
-    | 'rate'
-    | 'radioGroup'
-    | 'radio'
-    | 'radioButton'
-    | 'select'
-    | 'switch'
-    | 'slider'
-    | 'colorPicker'
-    | 'option'
-    | 'selectV2'
-    | 'datePicker'
-    | 'timePicker'
-    | 'formItem'
-    | 'segmented'
-    | 'checkboxGroup'
-    | 'checkbox'
 
 export function defaultComponents() {
     return component

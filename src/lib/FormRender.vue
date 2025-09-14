@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { FormInstance } from "element-plus";
 import { getComponent } from "./core/registry";
-import { TComponentConfig, TFormSchema } from "./types/schema";
+import { ComponentConfig, FormSchema } from "./types/schema";
 import { get, set } from "lodash-es";
 import { ElForm, ElButton, ElFormItem } from "element-plus";
 
@@ -13,7 +13,7 @@ interface FormRenderExpose {
 type FormData = Record<string, unknown>;
 
 const formData = defineModel<FormData>({ default: () => ({}) });
-const formSchema = defineModel<TFormSchema>("formSchema", {
+const formSchema = defineModel<FormSchema>("formSchema", {
   default: () => ({}),
 });
 
@@ -54,7 +54,7 @@ const resetForm = () => {
 
 defineExpose<FormRenderExpose>({ validate, submit, resetFields });
 
-const renderNode = (node: TComponentConfig): VNode | undefined => {
+const renderNode = (node: ComponentConfig): VNode | undefined => {
   const comp = getComponent(node.componentName);
 
   if (!comp) {

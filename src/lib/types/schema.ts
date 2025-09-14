@@ -1,42 +1,65 @@
 
 import type { FormRules } from "element-plus";
-import { ElementPlusComponentName } from "../core/defaultComponents";
 
 
-type TComponentType = 'form' | 'layout'
+type ComponentType = 'form' | 'layout'
 
-type TFormItem = { field: string; label?: string; required?: boolean;[key: string]: any }
+export interface ComponentNameMap {
+  input: unknown,
+  textarea: unknown,
+  inputNumber: unknown,
+  inputTag: unknown,
+  rate: unknown,
+  radioGroup: unknown,
+  radio: unknown,
+  radioButton: unknown,
+  select: unknown,
+  switch: unknown,
+  slider: unknown,
+  colorPicker: unknown,
+  option: unknown,
+  selectV2: unknown,
+  datePicker: unknown,
+  timePicker: unknown,
+  formItem: unknown,
+  segmented: unknown,
+  checkboxGroup: unknown,
+  checkbox: unknown,
+}
 
-type TSlot = { name: string, componentName: TComponentName, options?: { label?: string, value?: unknown, name?: string }[], [key: string]: unknown }
+export type ComponentName = keyof ComponentNameMap
 
-export type TComponentName = ElementPlusComponentName
 
-export type TConfig<T extends TComponentType> = T extends 'form'
-  ? {
-    id: string
-    componentName: TComponentName
-    componentType: T
-    formItemAttrs: TFormItem
-    attrs: { [key: string]: unknown }
-    defaultValue: unknown
-    sort?: number
-    style?: {}
-    slots?: TSlot[]
-  }
-  : {
-    id: string
-    sort?: number
-    componentName: TComponentName
-    componentType: T
-    attrs: { [key: string]: unknown }
-    style?: {}
-    slots?: TSlot[]
-    children?: TComponentConfig[]
-  }
 
-export type TComponentConfig = TConfig<'form'> | TConfig<'layout'>
 
-export type TFormAreaConfig = {
+interface FormItem { field: string; label?: string; required?: boolean;[key: string]: any }
+
+interface Slot { name: string, componentName: ComponentName, options?: { label?: string, value?: unknown, name?: string }[], [key: string]: unknown }
+
+interface BaseConfig {
+  id: string;
+  componentName: ComponentName;
+  componentType: ComponentType;
+  sort?: number;
+  attrs: Record<string, unknown>;
+  style?: Record<string, unknown>;
+  slots?: Slot[];
+}
+
+export interface FormCompConfig extends BaseConfig {
+  componentType: "form";
+  formItemAttrs: FormItem;
+  defaultValue: unknown;
+}
+
+export interface LayoutCompConfig extends BaseConfig {
+  componentType: "layout";
+  children?: ComponentConfig[];
+}
+
+export type ComponentConfig = FormCompConfig | LayoutCompConfig;
+
+export interface FormAreaConfig {
   attrs: {
     rules?: FormRules
     inline?: boolean
@@ -52,10 +75,9 @@ export type TFormAreaConfig = {
   [key: string]: unknown
 }
 
-
-export type TFormSchema = {
-  formAreaConfig: TFormAreaConfig
-  formContentConfigList: TComponentConfig[]
+export interface FormSchema {
+  formAreaConfig: FormAreaConfig
+  formContentConfigList: ComponentConfig[]
 }
 
 

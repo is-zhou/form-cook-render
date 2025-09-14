@@ -1,6 +1,6 @@
 import type { App } from 'vue'
 import FormRender from './lib/FormRender.vue'
-import { registerComponents } from './lib/core/registry'
+import { getComponent, registerComponents } from './lib/core/registry'
 import { defaultComponents } from './lib/core/defaultComponents'
 
 //支持插件模式 允许 app.use() 使用
@@ -19,4 +19,8 @@ export default {
 }
 
 // 支持按需导入
-export { FormRender, registerComponents, defaultComponents }
+export { FormRender, registerComponents, defaultComponents, getComponent }
+
+//类型导出
+export type { FormSchema, ComponentConfig, FormAreaConfig, ComponentName, FormCompConfig, LayoutCompConfig } from './lib/types/schema.ts';
+
