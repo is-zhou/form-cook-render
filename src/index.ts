@@ -5,7 +5,7 @@ import { defaultComponents } from './lib/core/defaultComponents'
 
 //支持插件模式 允许 app.use() 使用
 export default {
-    install: (app: App, options?: { components?: Record<string, Component | (() => Promise<Component>)> }): void => {
+    install: (app: App, options?: { components?: Record<string, string | Component | (() => Promise<Component>)> }): void => {
         // 注册 FormCookRender 组件
         app.component('FormCookRender', FormCookRender)
 

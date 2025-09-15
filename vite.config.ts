@@ -12,15 +12,15 @@ export default defineConfig(({ command }) => {
     // 公共插件
     const plugins = [
         vue(),
-        // 开发模式才启用自动导入
-        !isBuild &&
+        // 启用自动导入
+
         AutoImport({
             imports: ["vue"],
             resolvers: [ElementPlusResolver()],
             dts: path.resolve(__dirname, "types/auto-imports.d.ts"),
         }),
-        // 开发模式才启用组件自动注册
-        !isBuild &&
+        // 启用组件自动注册
+
         Components({
             resolvers: [ElementPlusResolver()],
             dts: path.resolve(__dirname, "types/components.d.ts"),
