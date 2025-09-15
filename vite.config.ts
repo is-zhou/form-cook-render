@@ -54,8 +54,8 @@ export default defineConfig(({ command }) => {
         build: {
             lib: {
                 entry: path.resolve(__dirname, "src/index.ts"),
-                name: "FormRender",
-                fileName: (format) => `form-render.${format}.js`,
+                name: "FormCookRender",
+                fileName: (format) => `form-cook-render.${format}.js`,
             },
             rollupOptions: {
                 // 外部依赖，不打包

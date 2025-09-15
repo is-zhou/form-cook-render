@@ -28,7 +28,7 @@ export function registerComponents(components: Record<string, string | Component
 export function getComponent(name: string) {
     const target = registry[name]
     if (!target) {
-        console.warn(`[FormRender] 组件 "${name}" 未注册`)
+        console.warn(`[FormCookRender] 组件 "${name}" 未注册`)
         return null
     }
     if (target.type === "sync") {

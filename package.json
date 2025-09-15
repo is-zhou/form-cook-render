@@ -1,9 +1,9 @@
 {
-  "name": "form-render",
+  "name": "form-cook-render",
   "version": "0.0.1",
   "description": "",
-  "main": "dist/form-render.umd.js",
-  "module": "dist/form-render.es.js",
+  "main": "dist/form-cook-render.umd.js",
+  "module": "dist/form-cook-render.es.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -16,15 +16,15 @@
   },
   "keywords": [
     "vue3",
-    "form-render",
+    "form-cook-render",
     "component",
     "element-plus"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/is-zhou/form-render.git"
+    "url": "git+https://github.com/is-zhou/form-cook-render.git"
   },
-  "homepage": "https://github.com/is-zhou/form-render#readme",
+  "homepage": "https://github.com/is-zhou/form-cook-render#readme",
   "author": "zhouzhou",
   "license": "ISC",
   "packageManager": "pnpm@10.13.1",

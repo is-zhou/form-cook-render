@@ -35,9 +35,9 @@ export type ComponentName = keyof ComponentNameMap
   (注意:ComponentNameMap必须为interface且在库的入口中被导出)
   
 在使用方（比如 src/main.ts 或某个 .d.ts 文件里）如下声明
-import 'form-render'
+import 'form-cook-render'
 // 扩展内置接口
-declare module 'form-render' {
+declare module 'form-cook-render' {
   export interface ComponentNameMap {
      customInput: unknown
    }

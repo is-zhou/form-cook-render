@@ -254,5 +254,5 @@ const formData = ref({});
 </script>
 
 <template>
-  <FormRender v-model="formData" v-model:formSchema="formeSchema" />
+  <FormCookRender v-model="formData" v-model:formSchema="formeSchema" />
 </template>
