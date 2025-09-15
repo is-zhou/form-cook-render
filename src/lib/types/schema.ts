@@ -29,6 +29,20 @@ export interface ComponentNameMap {
 
 export type ComponentName = keyof ComponentNameMap
 
+/*  
+外部扩展ComponentName类型：
+  外部项目通过声明declare module 方式扩展ComponentName，因为ComponentName是keyof ComponentNameMap所得，所以外部声明扩展 ComponentNameMap即可
+  (注意:ComponentNameMap必须为interface且在库的入口中被导出)
+  
+在使用方（比如 src/main.ts 或某个 .d.ts 文件里）如下声明
+import 'form-render'
+// 扩展内置接口
+declare module 'form-render' {
+  export interface ComponentNameMap {
+     customInput: unknown
+   }
+ } 
+*/
 
 
 

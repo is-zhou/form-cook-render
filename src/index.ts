@@ -22,5 +22,5 @@ export default {
 export { FormRender, registerComponents, defaultComponents, getComponent }
 
 //类型导出
-export type { FormSchema, ComponentConfig, FormAreaConfig, ComponentName, FormCompConfig, LayoutCompConfig } from './lib/types/schema.ts';
+export type { FormSchema, ComponentConfig, FormAreaConfig, ComponentName, FormCompConfig, LayoutCompConfig, ComponentNameMap } from './lib/types/schema.ts';
 
