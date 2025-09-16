@@ -45,12 +45,7 @@ declare module 'form-cook-render' {
 */
 
 
-type Option = {
-  label: string
-  value: string | number
-  disabled?: boolean
-  [key: string]: unknown
-}
+
 type remoteType = {
   url: string
   method?: 'GET' | 'POST'
@@ -59,13 +54,20 @@ type remoteType = {
 type staticType = Option[]
 type functionType = () => Option[] | Promise<Option[]>
 
+export type Option = {
+  label: string
+  value: string | number
+  disabled?: boolean
+  [key: string]: unknown
+} | string | number
+export type OptionsConfig = staticType | functionType | remoteType
 
 interface FormItem { field: string; label?: string; required?: boolean;[key: string]: any }
 
 interface Slot { name: string, componentName: ComponentName, options?: { label?: string, value?: unknown, name?: string }[], [key: string]: unknown }
 
-interface Attrs {
-  options?: staticType | functionType | remoteType;
+export interface Attrs {
+  options?: OptionsConfig;
   [key: string]: unknown
 }
 

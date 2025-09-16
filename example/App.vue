@@ -125,16 +125,22 @@ const formeSchema = ref<FormSchema>({
       formItemAttrs: { field: "count", label: "Activity count" },
       attrs: {
         placeholder: "Activity count",
-        options: [
-          {
-            label: "1",
-            value: "1",
-          },
-          {
-            label: "2",
-            value: "2",
-          },
-        ],
+        options: () =>
+          new Promise((res) => {
+            setTimeout(() => {
+              res([
+                {
+                  label: "1",
+                  value: "1",
+                },
+                {
+                  label: "2",
+                  value: "2",
+                },
+              ]);
+              console.log("获得了结果");
+            }, 1000);
+          }),
       },
       defaultValue: "2",
     },

@@ -1,5 +1,5 @@
 import { get, set } from "lodash-es";
-import { ComponentConfig, FormCompConfig, LayoutCompConfig } from "../types/schema";
+import { Attrs, Option, ComponentConfig, FormCompConfig, LayoutCompConfig, OptionsConfig } from "../types/schema";
 import { getComponent } from "./registry";
 import type { Ref } from "vue";
 
@@ -22,9 +22,19 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             return renderLayout(comp, node)
         }
 
-        let slots = getSlots(node);
-
         setDefaultValue(formData, node)
+
+        setOptions(node.attrs)
+
+        const slots = getSlots(node);
+
+
+        const props: Record<string, any> = {
+            modelValue: get(formData.value, node.formItemAttrs.field),
+            "onUpdate:modelValue": (v: unknown) =>
+                set(formData.value, node.formItemAttrs.field, v),
+            ...node.attrs
+        }
 
         return h(
             ElFormItem,
@@ -33,12 +43,7 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
                 default: () =>
                     h(
                         comp,
-                        {
-                            ...node.attrs,
-                            modelValue: get(formData.value, node.formItemAttrs.field),
-                            "onUpdate:modelValue": (v: unknown) =>
-                                set(formData.value, node.formItemAttrs.field, v),
-                        },
+                        props,
                         slots
                     ),
             }
@@ -51,7 +56,28 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
     return { renderNode }
 }
 
+function setOptions(attrs: Attrs) {
+    const resolvedOptions = ref<Option[]>([])
 
+    if (Array.isArray(attrs.options) || !attrs.options) {
+        return
+    }
+
+    async function handleResolveOptions(options?: OptionsConfig) {
+        if (typeof options === 'function') {
+            const result = await options()
+            resolvedOptions.value = result
+        } else if (typeof options === 'object' && !Array.isArray(options) && options.url) {
+            const res = await fetch(options.url, { method: options.method || 'GET' })
+            const data = await res.json()
+            resolvedOptions.value = options.map ? options.map(data) : data
+        }
+
+    }
+    handleResolveOptions(attrs.options)
+
+    attrs.options = resolvedOptions as unknown as OptionsConfig
+}
 
 function getSlots(node: ComponentConfig) {
     let slots: { [key: string]: () => Array<VNode> } | undefined = undefined;
