@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import type { FormInstance } from "element-plus";
-import { getComponent } from "./core/registry";
-import { ComponentConfig, FormSchema } from "./types/schema";
-import { get, set } from "lodash-es";
+import { FormSchema } from "./types/schema";
 import { ElForm, ElButton, ElFormItem } from "element-plus";
+import { useRenderNode } from "./core/useRenderNode";
 
 interface FormRenderExpose {
   validate: () => Promise<boolean | undefined>;
@@ -21,6 +20,8 @@ const emits = defineEmits<{
   (e: "submit", formData: FormData): void;
   (e: "reset"): void;
 }>();
+
+const { renderNode } = useRenderNode(formData);
 
 const formRef = ref<FormInstance>();
 
@@ -53,74 +54,6 @@ const resetForm = () => {
 };
 
 defineExpose<FormRenderExpose>({ validate, submit, resetFields });
-
-const renderNode = (node: ComponentConfig): VNode | undefined => {
-  const comp = getComponent(node.componentName);
-
-  if (!comp) {
-    return;
-  }
-
-  if (node.componentType === "layout") {
-    return h(comp, node.attrs, {
-      default: () => node.children?.map(renderNode),
-    });
-  }
-
-  let slots: { [key: string]: () => Array<VNode> } | undefined = undefined;
-  if (Array.isArray(node.slots) && node.slots.length > 0) {
-    // {
-    //   slotName: () => [
-    //     h("option", { value: "shanghai" }, "Zone one"),
-    //     h("option", { value: "beijing" }, "Zone two"),
-    //   ];
-    // }
-    slots = {};
-
-    node.slots.forEach((slot) => {
-      const slotComp = getComponent(slot.componentName);
-      if (!slotComp) {
-        return;
-      }
-
-      if (slot.options) {
-        const list = slot.options?.map((opt) => {
-          const { value, name, label } = opt;
-          return h(slotComp, { value, name, label }, { default: () => label });
-        });
-
-        slots![slot.name] = () => list;
-      } else {
-        slots![slot.name] = () => [h(slot.componentName)];
-      }
-    });
-  }
-
-  if (node.defaultValue !== "") {
-    const currentVal = get(formData.value, node.formItemAttrs.field);
-    if (currentVal === undefined) {
-      set(formData.value, node.formItemAttrs.field, node.defaultValue);
-    }
-  }
-
-  return h(
-    ElFormItem,
-    { prop: node.formItemAttrs.field, ...node.formItemAttrs },
-    {
-      default: () =>
-        h(
-          comp,
-          {
-            ...node.attrs,
-            modelValue: get(formData.value, node.formItemAttrs.field),
-            "onUpdate:modelValue": (v: unknown) =>
-              set(formData.value, node.formItemAttrs.field, v),
-          },
-          slots
-        ),
-    }
-  );
-};
 </script>
 <template>
   <el-form
