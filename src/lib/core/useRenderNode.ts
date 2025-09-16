@@ -1,5 +1,5 @@
 import { get, set } from "lodash-es";
-import { Attrs, Option, ComponentConfig, FormCompConfig, LayoutCompConfig, OptionsConfig } from "../types/schema";
+import { Attrs, Slot, Option, ComponentConfig, FormCompConfig, LayoutCompConfig, OptionsConfig } from "../types/schema";
 import { getComponent } from "./registry";
 import type { Ref } from "vue";
 
@@ -50,13 +50,10 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
         );
     };
 
-
-
-
     return { renderNode }
 }
 
-function setOptions(attrs: Attrs) {
+function setOptions(attrs: { options?: OptionsConfig }) {
     const resolvedOptions = ref<Option[]>([])
 
     if (Array.isArray(attrs.options) || !attrs.options) {
@@ -81,32 +78,46 @@ function setOptions(attrs: Attrs) {
 
 function getSlots(node: ComponentConfig) {
     let slots: { [key: string]: () => Array<VNode> } | undefined = undefined;
-    if (Array.isArray(node.slots) && node.slots.length > 0) {
-        // {
-        //   slotName: () => [
-        //     h("option", { value: "shanghai" }, "Zone one"),
-        //     h("option", { value: "beijing" }, "Zone two"),
-        //   ];
-        // }
+
+    if (node.slots && typeof node.slots === "object") {
         slots = {};
 
-        node.slots.forEach((slot) => {
-            const slotComp = getComponent(slot.componentName);
+        Object.keys(node.slots).forEach(key => {
+            const current: Slot = node.slots![key]
+
+            const slotComp = getComponent(current.componentName);
+
             if (!slotComp) {
-                return;
+                return
             }
 
-            if (slot.options) {
-                const list = slot.options?.map((opt) => {
-                    const { value, name, label } = opt;
+            if (!current.options) {
+                slots![key] = () => [h(slotComp)];
+                return
+            }
+
+            if (Array.isArray(current.options)) {
+
+                const list = current.options?.map((opt) => {
+                    const { value, name, label } = opt as any;
                     return h(slotComp, { value, name, label }, { default: () => label });
                 });
 
-                slots![slot.name] = () => list;
-            } else {
-                slots![slot.name] = () => [h(slot.componentName)];
+                slots![key] = () => list;
+                return
             }
-        });
+
+            setOptions(current)
+
+            if (isRef(current.options) && current.options.value && Array.isArray(current.options.value)) {
+                const list = current.options.value.map((opt) => {
+                    const { value, name, label } = opt as any;
+                    return h(slotComp, { value, name, label }, { default: () => label });
+                });
+
+                slots![key] = () => list;
+            }
+        })
     }
     return slots
 }

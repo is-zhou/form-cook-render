@@ -97,9 +97,8 @@ const formeSchema = ref<FormSchema>({
       componentName: "select",
       componentType: "form",
       formItemAttrs: { field: "region", label: "Activity zone" },
-      slots: [
-        {
-          name: "default",
+      slots: {
+        default: {
           componentName: "option",
           options: [
             {
@@ -112,7 +111,7 @@ const formeSchema = ref<FormSchema>({
             },
           ],
         },
-      ],
+      },
       attrs: {
         placeholder: "Activity zone",
       },
@@ -199,24 +198,29 @@ const formeSchema = ref<FormSchema>({
       componentType: "form",
       formItemAttrs: { field: "type", label: "Activity type" },
       attrs: {},
-      slots: [
-        {
-          name: "default",
+      slots: {
+        default: {
           componentName: "checkbox",
-          options: [
-            {
-              value: "Promotion activities",
-              name: "type",
-              label: "Promotion activities",
-            },
-            {
-              value: "Offline activities",
-              name: "type",
-              label: "Offline activities",
-            },
-          ],
+          options: () =>
+            new Promise((res) => {
+              setTimeout(() => {
+                res([
+                  {
+                    value: "Promotion activities",
+                    name: "type",
+                    label: "Promotion activities",
+                  },
+                  {
+                    value: "Offline activities",
+                    name: "type",
+                    label: "Offline activities",
+                  },
+                ]);
+                console.log("获得了结果66666");
+              }, 3000);
+            }),
         },
-      ],
+      },
       defaultValue: "",
     },
     {
@@ -225,9 +229,8 @@ const formeSchema = ref<FormSchema>({
       componentType: "form",
       formItemAttrs: { field: "resource", label: "Resources" },
       attrs: {},
-      slots: [
-        {
-          name: "default",
+      slots: {
+        default: {
           componentName: "radio",
           options: [
             {
@@ -240,7 +243,7 @@ const formeSchema = ref<FormSchema>({
             },
           ],
         },
-      ],
+      },
       defaultValue: "",
     },
     {

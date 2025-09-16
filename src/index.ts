@@ -22,5 +22,17 @@ export default {
 export { FormCookRender, registerComponents, defaultComponents, getComponent }
 
 //类型导出
-export type { FormSchema, ComponentConfig, FormAreaConfig, ComponentName, FormCompConfig, LayoutCompConfig, ComponentNameMap } from './lib/types/schema.ts';
+export type {
+    FormSchema,
+    ComponentConfig,
+    FormAreaConfig,
+    ComponentName,
+    ComponentNameMap,
+    FormCompConfig,
+    LayoutCompConfig,
+    Attrs,
+    OptionsConfig,
+    Option,
+    Slots
+} from './lib/types/schema.ts';
 

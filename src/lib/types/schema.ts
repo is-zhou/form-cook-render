@@ -60,15 +60,24 @@ export type Option = {
   disabled?: boolean
   [key: string]: unknown
 } | string | number
+
 export type OptionsConfig = staticType | functionType | remoteType
 
 interface FormItem { field: string; label?: string; required?: boolean;[key: string]: any }
 
-interface Slot { name: string, componentName: ComponentName, options?: { label?: string, value?: unknown, name?: string }[], [key: string]: unknown }
+export interface Slot {
+  componentName: ComponentName,
+  options?: OptionsConfig,
+  [key: string]: unknown
+}
 
 export interface Attrs {
   options?: OptionsConfig;
   [key: string]: unknown
+}
+
+export interface Slots {
+  [key: string]: Slot
 }
 
 interface BaseConfig {
@@ -78,7 +87,7 @@ interface BaseConfig {
   sort?: number;
   attrs: Attrs;
   style?: Record<string, unknown>;
-  slots?: Slot[];
+  slots?: Slots;
 }
 
 export interface FormCompConfig extends BaseConfig {
