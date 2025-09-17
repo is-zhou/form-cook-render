@@ -91,6 +91,12 @@ const formeSchema = ref<FormSchema>({
         placeholder: "Activity name",
       },
       defaultValue: "sdads",
+      visible(params) {
+        return params.formData.region === "beijing";
+      },
+      disabled(params) {
+        return params.formData.region === "shanghai";
+      },
     },
     {
       id: "",
@@ -116,6 +122,10 @@ const formeSchema = ref<FormSchema>({
         placeholder: "Activity zone",
       },
       defaultValue: "shanghai",
+      disabled(params) {},
+      visible(params) {
+        return params.formData.count === "1";
+      },
     },
     {
       id: "",
@@ -142,6 +152,7 @@ const formeSchema = ref<FormSchema>({
           }),
       },
       defaultValue: "2",
+      disabled(params) {},
     },
     {
       id: "",
@@ -173,6 +184,7 @@ const formeSchema = ref<FormSchema>({
           defaultValue: "",
         },
       ],
+      disabled(params) {},
     },
     {
       id: "",
@@ -181,6 +193,7 @@ const formeSchema = ref<FormSchema>({
       formItemAttrs: { field: "delivery", label: "Instant delivery" },
       attrs: {},
       defaultValue: true,
+      disabled(params) {},
     },
     {
       id: "",
@@ -191,6 +204,7 @@ const formeSchema = ref<FormSchema>({
         options: ["Home", "Company", "School"],
       },
       defaultValue: "School",
+      disabled(params) {},
     },
     {
       id: "",
@@ -217,11 +231,12 @@ const formeSchema = ref<FormSchema>({
                   },
                 ]);
                 console.log("获得了结果66666");
-              }, 3000);
+              }, 2000);
             }),
         },
       },
       defaultValue: "",
+      disabled(params) {},
     },
     {
       id: "",
@@ -245,6 +260,7 @@ const formeSchema = ref<FormSchema>({
         },
       },
       defaultValue: "",
+      disabled(params) {},
     },
     {
       id: "",
@@ -256,6 +272,7 @@ const formeSchema = ref<FormSchema>({
         placeholder: "Activity form",
       },
       defaultValue: "",
+      disabled(params) {},
     },
   ],
 });

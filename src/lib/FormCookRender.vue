@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { FormInstance } from "element-plus";
 import { FormSchema } from "./types/schema";
-import { ElForm, ElButton, ElFormItem } from "element-plus";
+import { ElForm, ElButton, ElFormItem, ElSkeleton } from "element-plus";
 import { useRenderNode } from "./core/useRenderNode";
 
 interface FormRenderExpose {

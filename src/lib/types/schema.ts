@@ -63,7 +63,12 @@ export type Option = {
 
 export type OptionsConfig = staticType | functionType | remoteType
 
-interface FormItem { field: string; label?: string; required?: boolean;[key: string]: any }
+interface FormItem {
+  field: string;
+  label?: string;
+  required?: boolean;
+  [key: string]: any
+}
 
 export interface Slot {
   componentName: ComponentName,
@@ -80,6 +85,7 @@ export interface Slots {
   [key: string]: Slot
 }
 
+
 interface BaseConfig {
   id: string;
   componentName: ComponentName;
@@ -88,6 +94,7 @@ interface BaseConfig {
   attrs: Attrs;
   style?: Record<string, unknown>;
   slots?: Slots;
+  _slots?: { [key: string]: () => Array<unknown> };
 }
 
 export interface FormCompConfig extends BaseConfig {

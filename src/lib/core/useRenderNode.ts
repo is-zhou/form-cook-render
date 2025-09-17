@@ -11,6 +11,98 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
         });
     }
 
+    const renderDefaultChildren = (comp: string | Component, node: FormCompConfig) => {
+        const loading = ref(false);
+        const loadingSlots = ref(false);
+
+        const options = node.attrs.options
+
+        if (!Array.isArray(options) && options) {
+            loading.value = true
+
+            new Promise(async (res, rej) => {
+                node.attrs.options = await getOptions(node.attrs)
+                loading.value = false
+                res(1)
+            })
+        }
+
+        const props: Record<string, any> = {
+            modelValue: get(formData.value, node.formItemAttrs.field),
+            "onUpdate:modelValue": (v: unknown) =>
+                set(formData.value, node.formItemAttrs.field, v),
+            ...node.attrs
+        }
+
+        if (node.slots && !node._slots) {
+            loadingSlots.value = true
+            new Promise(async (res, rej) => {
+                node._slots = await renderSlots(node)
+                loadingSlots.value = false
+                res(1)
+            })
+        }
+
+        return (loading.value || loadingSlots.value) ? h(ElSkeleton, { rows: 0, animated: true }) : h(comp, props, node._slots);
+    }
+
+    const renderSlots = async (node: ComponentConfig) => {
+
+        let slots: { [key: string]: () => Array<VNode> } | undefined = undefined;
+
+        if (node.slots && typeof node.slots === "object") {
+
+            slots = {};
+
+            const promiseList = Object.keys(node.slots).map(key => {
+
+                const current: Slot = node.slots![key]
+                const slotComp = getComponent(current.componentName);
+
+                return new Promise(async (res) => {
+                    if (!slotComp) {
+                        res(true)
+                        return
+                    }
+                    if (!current.options) {
+                        slots![key] = () => [h(slotComp)];
+                        res(true)
+                        return
+                    }
+
+                    if (Array.isArray(current.options)) {
+
+                        const list = current.options?.map((opt) => {
+                            const { value, name, label } = opt as any;
+                            return h(slotComp, { value, name, label }, { default: () => label });
+                        });
+
+                        slots![key] = () => list;
+                        res(true)
+                        return
+                    }
+
+                    node.slots![key].options = await getOptions(current)
+
+                    const list = node.slots![key].options?.map((opt) => {
+                        if (typeof opt === "object") {
+                            return h(slotComp, opt, opt.label ? { default: () => opt.label } : undefined);
+                        } else {
+                            return h(slotComp);
+                        }
+                    }) || []
+
+                    slots![key] = () => list;
+                    res(true)
+                })
+            })
+
+            await Promise.all(promiseList)
+        }
+
+        return slots
+    }
+
     const renderNode = (node: ComponentConfig): VNode | undefined => {
         const comp = getComponent(node.componentName);
 
@@ -24,28 +116,11 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
 
         setDefaultValue(formData, node)
 
-        setOptions(node.attrs)
-
-        const slots = getSlots(node);
-
-
-        const props: Record<string, any> = {
-            modelValue: get(formData.value, node.formItemAttrs.field),
-            "onUpdate:modelValue": (v: unknown) =>
-                set(formData.value, node.formItemAttrs.field, v),
-            ...node.attrs
-        }
-
         return h(
             ElFormItem,
             { prop: node.formItemAttrs.field, ...node.formItemAttrs },
             {
-                default: () =>
-                    h(
-                        comp,
-                        props,
-                        slots
-                    ),
+                default: () => renderDefaultChildren(comp, node)
             }
         );
     };
@@ -53,74 +128,29 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
     return { renderNode }
 }
 
-function setOptions(attrs: { options?: OptionsConfig }) {
-    const resolvedOptions = ref<Option[]>([])
+async function getOptions(attrs: { options?: OptionsConfig }) {
+    let resolvedOptions: Option[] = []
 
     if (Array.isArray(attrs.options) || !attrs.options) {
-        return
+        return attrs.options
     }
 
     async function handleResolveOptions(options?: OptionsConfig) {
         if (typeof options === 'function') {
             const result = await options()
-            resolvedOptions.value = result
+            resolvedOptions = result
         } else if (typeof options === 'object' && !Array.isArray(options) && options.url) {
             const res = await fetch(options.url, { method: options.method || 'GET' })
             const data = await res.json()
-            resolvedOptions.value = options.map ? options.map(data) : data
+            resolvedOptions = options.map ? options.map(data) : data
         }
 
     }
-    handleResolveOptions(attrs.options)
+    await handleResolveOptions(attrs.options)
 
-    attrs.options = resolvedOptions as unknown as OptionsConfig
+    return resolvedOptions
 }
 
-function getSlots(node: ComponentConfig) {
-    let slots: { [key: string]: () => Array<VNode> } | undefined = undefined;
-
-    if (node.slots && typeof node.slots === "object") {
-        slots = {};
-
-        Object.keys(node.slots).forEach(key => {
-            const current: Slot = node.slots![key]
-
-            const slotComp = getComponent(current.componentName);
-
-            if (!slotComp) {
-                return
-            }
-
-            if (!current.options) {
-                slots![key] = () => [h(slotComp)];
-                return
-            }
-
-            if (Array.isArray(current.options)) {
-
-                const list = current.options?.map((opt) => {
-                    const { value, name, label } = opt as any;
-                    return h(slotComp, { value, name, label }, { default: () => label });
-                });
-
-                slots![key] = () => list;
-                return
-            }
-
-            setOptions(current)
-
-            if (isRef(current.options) && current.options.value && Array.isArray(current.options.value)) {
-                const list = current.options.value.map((opt) => {
-                    const { value, name, label } = opt as any;
-                    return h(slotComp, { value, name, label }, { default: () => label });
-                });
-
-                slots![key] = () => list;
-            }
-        })
-    }
-    return slots
-}
 
 function setDefaultValue(formData: Ref<Record<string, unknown>>, node: FormCompConfig) {
     if (node.defaultValue !== "") {
