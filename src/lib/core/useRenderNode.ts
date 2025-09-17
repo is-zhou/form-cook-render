@@ -1,9 +1,9 @@
 import { cloneDeep, get, set } from "lodash-es";
-import { Attrs, Slot, Option, ComponentConfig, FormCompConfig, LayoutCompConfig, OptionsConfig } from "../types/schema";
+import { Attrs, Slot, Option, ComponentConfig, FormCompConfig, LayoutCompConfig, OptionsConfig, FormAreaConfig } from "../types/schema";
 import { getComponent } from "./registry";
 import type { Ref } from "vue";
 const reloadMap = new Map<string, () => Promise<void>>()
-export function useRenderNode(formData: Ref<Record<string, unknown>>) {
+export function useRenderNode(formData: Ref<Record<string, unknown>>, formAreaConfigAttrs: FormAreaConfig["attrs"]) {
 
     const loadOptions = async (node: FormCompConfig) => {
 
@@ -136,9 +136,14 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
 
         setDefaultValue(formData, node)
 
+        const formInjectProps = {
+            "label-position": formAreaConfigAttrs['label-position'],
+            "label-width": formAreaConfigAttrs['label-width'],
+        }
+
         return h(
             ElFormItem,
-            { prop: node.formItemAttrs.field, ...node.formItemAttrs },
+            { ...formInjectProps, prop: node.formItemAttrs.field, ...node.formItemAttrs },
             {
                 default: () => renderDefaultChildren(comp, node)
             }

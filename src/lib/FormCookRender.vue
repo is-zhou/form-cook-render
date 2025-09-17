@@ -21,7 +21,10 @@ const emits = defineEmits<{
   (e: "reset"): void;
 }>();
 
-const { renderNode } = useRenderNode(formData);
+const { renderNode } = useRenderNode(
+  formData,
+  formSchema.value.formAreaConfig.attrs
+);
 
 const formRef = ref<FormInstance>();
 
