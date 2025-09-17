@@ -1,9 +1,18 @@
-import { get, set } from "lodash-es";
+import { cloneDeep, get, set } from "lodash-es";
 import { Attrs, Slot, Option, ComponentConfig, FormCompConfig, LayoutCompConfig, OptionsConfig } from "../types/schema";
 import { getComponent } from "./registry";
 import type { Ref } from "vue";
-
+const reloadMap = new Map<string, () => Promise<void>>()
 export function useRenderNode(formData: Ref<Record<string, unknown>>) {
+
+    const loadOptions = async (node: FormCompConfig) => {
+
+        node.attrs._options = await getOptions(node.attrs, { formData: formData.value, schemaItem: node })
+    }
+
+    const loadSlots = async (node: ComponentConfig) => {
+        node._slots = await renderSlots(node)
+    }
 
     const renderLayout = (comp: string | Component, node: LayoutCompConfig) => {
         return h(comp, node.attrs, {
@@ -11,96 +20,77 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
         });
     }
 
+    watch(() => formData.value, () => {
+        console.log(reloadMap.values());
+        Promise.all([...reloadMap.values()].map(fn => fn()))
+    }, { deep: true, immediate: true })
+
     const renderDefaultChildren = (comp: string | Component, node: FormCompConfig) => {
         const loading = ref(false);
         const loadingSlots = ref(false);
 
-        const options = node.attrs.options
-
-        if (!Array.isArray(options) && options) {
+        // ---- options 异步处理 ----
+        if (node.attrs.options && !node.attrs._options) {
             loading.value = true
-
-            new Promise(async (res, rej) => {
-                node.attrs.options = await getOptions(node.attrs)
-                loading.value = false
-                res(1)
-            })
+            loadOptions(node).finally(() => loading.value = false)
+            reloadMap.set(node.id, () => loadOptions(node))
         }
+
+        // ---- slots 异步处理 ----
+        if (node.slots && !node._slots) {
+            loadingSlots.value = true
+            loadSlots(node).finally(() => loadingSlots.value = false)
+        }
+
+        const { options, _options, ...value } = node.attrs
 
         const props: Record<string, any> = {
             modelValue: get(formData.value, node.formItemAttrs.field),
             "onUpdate:modelValue": (v: unknown) =>
                 set(formData.value, node.formItemAttrs.field, v),
-            ...node.attrs
+            ...value
         }
 
-        if (node.slots && !node._slots) {
-            loadingSlots.value = true
-            new Promise(async (res, rej) => {
-                node._slots = await renderSlots(node)
-                loadingSlots.value = false
-                res(1)
-            })
+        if (_options) {
+            props.options = _options
         }
 
-        return (loading.value || loadingSlots.value) ? h(ElSkeleton, { rows: 0, animated: true }) : h(comp, props, node._slots);
+        return (loading.value || loadingSlots.value)
+            ? h(ElSkeleton, { rows: 0, animated: true })
+            : h(comp, props, node._slots);
     }
 
     const renderSlots = async (node: ComponentConfig) => {
+        if (!node.slots || typeof node.slots !== "object") return;
 
-        let slots: { [key: string]: () => Array<VNode> } | undefined = undefined;
+        const slots: Record<string, () => VNode[]> = {};
 
-        if (node.slots && typeof node.slots === "object") {
+        for (const key in node.slots) {
+            const current: Slot = node.slots[key];
+            const slotComp = getComponent(current.componentName);
+            if (!slotComp) continue;
 
-            slots = {};
+            let opts = current.options;
 
-            const promiseList = Object.keys(node.slots).map(key => {
+            // 异步 options
+            if (typeof opts === "function" || (opts && typeof opts === "object" && "url" in opts)) {
+                opts = await getOptions(current, { formData: formData.value, schemaItem: node });
+                node.slots[key].options = opts;
+            }
 
-                const current: Slot = node.slots![key]
-                const slotComp = getComponent(current.componentName);
-
-                return new Promise(async (res) => {
-                    if (!slotComp) {
-                        res(true)
-                        return
-                    }
-                    if (!current.options) {
-                        slots![key] = () => [h(slotComp)];
-                        res(true)
-                        return
-                    }
-
-                    if (Array.isArray(current.options)) {
-
-                        const list = current.options?.map((opt) => {
-                            const { value, name, label } = opt as any;
-                            return h(slotComp, { value, name, label }, { default: () => label });
-                        });
-
-                        slots![key] = () => list;
-                        res(true)
-                        return
-                    }
-
-                    node.slots![key].options = await getOptions(current)
-
-                    const list = node.slots![key].options?.map((opt) => {
-                        if (typeof opt === "object") {
-                            return h(slotComp, opt, opt.label ? { default: () => opt.label } : undefined);
-                        } else {
-                            return h(slotComp);
-                        }
-                    }) || []
-
-                    slots![key] = () => list;
-                    res(true)
-                })
-            })
-
-            await Promise.all(promiseList)
+            if (Array.isArray(opts)) {
+                slots[key] = () =>
+                    opts.map(opt =>
+                        typeof opt === "object"
+                            ? h(slotComp, opt, opt.label ? { default: () => opt.label } : undefined)
+                            : h(slotComp)
+                    );
+            } else {
+                slots[key] = () => [h(slotComp)];
+            }
         }
 
-        return slots
+        return slots;
     }
 
     const renderNode = (node: ComponentConfig): VNode | undefined => {
@@ -128,29 +118,30 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
     return { renderNode }
 }
 
-async function getOptions(attrs: { options?: OptionsConfig }) {
+async function getOptions(
+    attrs: { options?: OptionsConfig },
+    params: { formData: Record<string, any>; schemaItem: ComponentConfig }) {
+
     let resolvedOptions: Option[] = []
 
     if (Array.isArray(attrs.options) || !attrs.options) {
-        return attrs.options
+        return cloneDeep(attrs.options)
     }
 
     async function handleResolveOptions(options?: OptionsConfig) {
         if (typeof options === 'function') {
-            const result = await options()
+            const result = await options(params)!
             resolvedOptions = result
         } else if (typeof options === 'object' && !Array.isArray(options) && options.url) {
             const res = await fetch(options.url, { method: options.method || 'GET' })
             const data = await res.json()
-            resolvedOptions = options.map ? options.map(data) : data
+            resolvedOptions = options.map ? options.map(data, params) : data
         }
-
     }
     await handleResolveOptions(attrs.options)
 
     return resolvedOptions
 }
-
 
 function setDefaultValue(formData: Ref<Record<string, unknown>>, node: FormCompConfig) {
     if (node.defaultValue !== "") {

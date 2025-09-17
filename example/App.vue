@@ -83,7 +83,7 @@ const formeSchema = ref<FormSchema>({
   },
   formContentConfigList: [
     {
-      id: "",
+      id: "1",
       componentName: "input",
       componentType: "form",
       formItemAttrs: { field: "activity.name", label: "Activity name" },
@@ -99,7 +99,7 @@ const formeSchema = ref<FormSchema>({
       },
     },
     {
-      id: "",
+      id: "2",
       componentName: "select",
       componentType: "form",
       formItemAttrs: { field: "region", label: "Activity zone" },
@@ -128,13 +128,13 @@ const formeSchema = ref<FormSchema>({
       },
     },
     {
-      id: "",
+      id: "3",
       componentName: "selectV2",
       componentType: "form",
       formItemAttrs: { field: "count", label: "Activity count" },
       attrs: {
         placeholder: "Activity count",
-        options: () =>
+        options: (params) =>
           new Promise((res) => {
             setTimeout(() => {
               res([
@@ -147,6 +147,10 @@ const formeSchema = ref<FormSchema>({
                   value: "2",
                 },
               ]);
+
+              if (params.formData.region === "beijing") {
+                params.schemaItem.formItemAttrs.label = "6666";
+              }
               console.log("获得了结果");
             }, 1000);
           }),
@@ -155,7 +159,7 @@ const formeSchema = ref<FormSchema>({
       disabled(params) {},
     },
     {
-      id: "",
+      id: "4",
       componentName: "formItem",
       componentType: "layout",
       attrs: {
@@ -187,7 +191,7 @@ const formeSchema = ref<FormSchema>({
       disabled(params) {},
     },
     {
-      id: "",
+      id: "5",
       componentName: "switch",
       componentType: "form",
       formItemAttrs: { field: "delivery", label: "Instant delivery" },
@@ -196,7 +200,7 @@ const formeSchema = ref<FormSchema>({
       disabled(params) {},
     },
     {
-      id: "",
+      id: "6",
       componentName: "segmented",
       componentType: "form",
       formItemAttrs: { field: "location", label: "Activity location" },
@@ -207,7 +211,7 @@ const formeSchema = ref<FormSchema>({
       disabled(params) {},
     },
     {
-      id: "",
+      id: "7",
       componentName: "checkboxGroup",
       componentType: "form",
       formItemAttrs: { field: "type", label: "Activity type" },
@@ -239,7 +243,7 @@ const formeSchema = ref<FormSchema>({
       disabled(params) {},
     },
     {
-      id: "",
+      id: "8",
       componentName: "radioGroup",
       componentType: "form",
       formItemAttrs: { field: "resource", label: "Resources" },
@@ -263,7 +267,7 @@ const formeSchema = ref<FormSchema>({
       disabled(params) {},
     },
     {
-      id: "",
+      id: "9",
       componentName: "input",
       componentType: "form",
       formItemAttrs: { field: "desc", label: "Activity form" },

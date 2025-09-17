@@ -44,15 +44,21 @@ declare module 'form-cook-render' {
  } 
 */
 
-
+type DynamicProp<T> = (params: {
+  formData: Record<string, any>
+  schemaItem: ComponentConfig
+}) => T | void
 
 type remoteType = {
   url: string
   method?: 'GET' | 'POST'
-  map?: (res: { data: any }) => Array<{ label: string; value: unknown }>
+  map?: (res: { data: any }, params: {
+    formData: Record<string, any>
+    schemaItem: ComponentConfig
+  }) => Array<{ label: string; value: unknown }>
 }
 type staticType = Option[]
-type functionType = () => Option[] | Promise<Option[]>
+type functionType = DynamicProp<Option[] | Promise<Option[]>>
 
 export type Option = {
   label: string
@@ -95,12 +101,14 @@ interface BaseConfig {
   style?: Record<string, unknown>;
   slots?: Slots;
   _slots?: { [key: string]: () => Array<unknown> };
+  visible?: boolean | DynamicProp<boolean>
 }
 
 export interface FormCompConfig extends BaseConfig {
   componentType: "form";
   formItemAttrs: FormItem;
   defaultValue: unknown;
+  disabled: boolean | DynamicProp<boolean>
 }
 
 export interface LayoutCompConfig extends BaseConfig {
