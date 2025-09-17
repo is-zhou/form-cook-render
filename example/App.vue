@@ -86,11 +86,11 @@ const formeSchema = ref<FormSchema>({
       id: "1",
       componentName: "input",
       componentType: "form",
-      formItemAttrs: { field: "activity.name", label: "Activity name" },
+      formItemAttrs: { field: "activity.name", label: "名称" },
       attrs: {
-        placeholder: "Activity name",
+        placeholder: "请输入名称",
       },
-      defaultValue: "sdads",
+      defaultValue: "齐天大圣",
       visible(params) {
         return params.formData.region === "beijing";
       },
@@ -102,24 +102,24 @@ const formeSchema = ref<FormSchema>({
       id: "2",
       componentName: "select",
       componentType: "form",
-      formItemAttrs: { field: "region", label: "Activity zone" },
+      formItemAttrs: { field: "region", label: "Activity region" },
       slots: {
         default: {
           componentName: "option",
           options: [
             {
-              label: "Zone one",
+              label: "shanghai",
               value: "shanghai",
             },
             {
-              label: "Zone two",
+              label: "beijing",
               value: "beijing",
             },
           ],
         },
       },
       attrs: {
-        placeholder: "Activity zone",
+        placeholder: "Activity region",
       },
       defaultValue: "shanghai",
       disabled(params) {},
@@ -148,7 +148,10 @@ const formeSchema = ref<FormSchema>({
                 },
               ]);
 
-              if (params.formData.region === "beijing") {
+              if (
+                params.formData.region === "beijing" &&
+                params.schemaItem.componentType === "form"
+              ) {
                 params.schemaItem.formItemAttrs.label = "6666";
               }
               console.log("获得了结果");
@@ -188,7 +191,6 @@ const formeSchema = ref<FormSchema>({
           defaultValue: "",
         },
       ],
-      disabled(params) {},
     },
     {
       id: "5",
@@ -197,7 +199,9 @@ const formeSchema = ref<FormSchema>({
       formItemAttrs: { field: "delivery", label: "Instant delivery" },
       attrs: {},
       defaultValue: true,
-      disabled(params) {},
+      disabled(params) {
+        return params.formData.region === "shanghai";
+      },
     },
     {
       id: "6",
@@ -216,6 +220,7 @@ const formeSchema = ref<FormSchema>({
       componentType: "form",
       formItemAttrs: { field: "type", label: "Activity type" },
       attrs: {},
+
       slots: {
         default: {
           componentName: "checkbox",
@@ -277,6 +282,9 @@ const formeSchema = ref<FormSchema>({
       },
       defaultValue: "",
       disabled(params) {},
+      readonly(params) {
+        return params.formData.region === "shanghai";
+      },
     },
   ],
 });

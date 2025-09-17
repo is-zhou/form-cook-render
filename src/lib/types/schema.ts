@@ -108,7 +108,8 @@ export interface FormCompConfig extends BaseConfig {
   componentType: "form";
   formItemAttrs: FormItem;
   defaultValue: unknown;
-  disabled: boolean | DynamicProp<boolean>
+  disabled?: boolean | DynamicProp<boolean>
+  readonly?: boolean | DynamicProp<boolean>
 }
 
 export interface LayoutCompConfig extends BaseConfig {

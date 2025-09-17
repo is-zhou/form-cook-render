@@ -42,6 +42,8 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             loadSlots(node).finally(() => loadingSlots.value = false)
         }
 
+
+
         const { options, _options, ...value } = node.attrs
 
         const props: Record<string, any> = {
@@ -51,9 +53,28 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             ...value
         }
 
+
+        if (typeof node.disabled === "boolean" && node.disabled) {
+            props.disabled = node.disabled
+        }
+        if (typeof node.disabled === "function") {
+            const isVisible = node.disabled({ formData: formData.value, schemaItem: node });
+            props.disabled = isVisible
+        }
+
+        if (typeof node.readonly === "boolean" && node.readonly) {
+            props.readonly = node.readonly
+        }
+        if (typeof node.readonly === "function") {
+            const isVisible = node.readonly({ formData: formData.value, schemaItem: node });
+            props.readonly = isVisible
+        }
+
         if (_options) {
             props.options = _options
         }
+
+
 
         return (loading.value || loadingSlots.value)
             ? h(ElSkeleton, { rows: 0, animated: true })
@@ -100,9 +121,18 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             return;
         }
 
+        if (typeof node.visible === "boolean" && !node.visible) {
+            return;
+        }
+        if (typeof node.visible === "function") {
+            const isVisible = node.visible({ formData: formData.value, schemaItem: node });
+            if (!isVisible) return;
+        }
+
         if (node.componentType === "layout") {
             return renderLayout(comp, node)
         }
+
 
         setDefaultValue(formData, node)
 
