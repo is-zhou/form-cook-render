@@ -24,7 +24,12 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             return;
         }
 
-        return h(comp, node.attrs);
+        const props = {
+            ...node.attrs,
+            style: node.style
+        }
+
+        return h(comp, props);
     }
 
     const renderSlots = async (node: ComponentConfig) => {
