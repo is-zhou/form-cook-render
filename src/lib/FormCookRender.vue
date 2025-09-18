@@ -25,9 +25,9 @@ watch(
   async () => {
     if (!formSchema.value.formContentConfigList) return;
 
-    formData.value = setDefaultValues(
+    Object.assign(
       formData.value,
-      formSchema.value.formContentConfigList
+      setDefaultValues(formData.value, formSchema.value.formContentConfigList)
     );
 
     await nextTick();
