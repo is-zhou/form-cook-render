@@ -125,23 +125,23 @@ async function getOptions(
     attrs: { options?: OptionsConfig },
     params: { formData: Record<string, any>; schemaItem: ComponentConfig }) {
 
+    const options = attrs.options
+
     let resolvedOptions: Option[] = []
 
-    if (Array.isArray(attrs.options) || !attrs.options) {
-        return cloneDeep(attrs.options)
+    if (Array.isArray(options) || !options) {
+        resolvedOptions = cloneDeep(options) as Option[]
     }
 
-    async function handleResolveOptions(options?: OptionsConfig) {
-        if (typeof options === 'function') {
-            const result = await options(params)!
-            resolvedOptions = result
-        } else if (typeof options === 'object' && !Array.isArray(options) && options.url) {
-            const res = await fetch(options.url, { method: options.method || 'GET' })
-            const data = await res.json()
-            resolvedOptions = options.map ? options.map(data, params) : data
-        }
+    if (typeof options === 'function') {
+        const result = await options(params)!
+        resolvedOptions = result
+    } else if (typeof options === 'object' && !Array.isArray(options) && options.url) {
+        const res = await fetch(options.url, { method: options.method || 'GET' })
+        const data = await res.json()
+        resolvedOptions = options.map ? options.map(data, params) : data
     }
-    await handleResolveOptions(attrs.options)
+
 
     return resolvedOptions
 }
