@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { FormInstance } from "element-plus";
-import { FormSchema } from "./types/schema";
-import { ElForm, ElButton, ElFormItem, ElSkeleton } from "element-plus";
-import { useRenderNode } from "./core/useRenderNode";
+import { ComponentConfig, FormSchema } from "./types/schema";
+import RenderFormNode from "./components/RenderFormNode.vue";
+import { setDefaultValues } from "./utils";
+import reloadMap from "./utils/reloadMap";
 
 interface FormRenderExpose {
   validate: () => Promise<boolean | undefined>;
@@ -11,20 +12,46 @@ interface FormRenderExpose {
 }
 type FormData = Record<string, unknown>;
 
-const formData = defineModel<FormData>({ default: () => ({}) });
+const formData = defineModel<FormData>({ required: true });
 const formSchema = defineModel<FormSchema>("formSchema", {
   default: () => ({}),
+});
+
+const formContentConfigList = ref<ComponentConfig[]>([]);
+
+watch(
+  () => formSchema.value,
+  async () => {
+    if (!formSchema.value.formContentConfigList) return;
+
+    formData.value = setDefaultValues(
+      formData.value,
+      formSchema.value.formContentConfigList
+    );
+
+    await nextTick();
+
+    formContentConfigList.value = formSchema.value.formContentConfigList;
+  },
+  { immediate: true }
+);
+
+watch(
+  () => formData.value,
+  async () => {
+    await nextTick();
+    reloadMap.triggerUpdate();
+  },
+  { deep: true }
+);
+onBeforeUnmount(() => {
+  reloadMap.clearAll();
 });
 
 const emits = defineEmits<{
   (e: "submit", formData: FormData): void;
   (e: "reset"): void;
 }>();
-
-const { renderNode } = useRenderNode(
-  formData,
-  formSchema.value.formAreaConfig.attrs
-);
 
 const formRef = ref<FormInstance>();
 
@@ -60,15 +87,15 @@ defineExpose<FormRenderExpose>({ validate, submit, resetFields });
 </script>
 <template>
   <el-form
+    v-if="formContentConfigList.length"
     ref="formRef"
     :model="formData"
     v-bind="formSchema.formAreaConfig.attrs"
   >
-    <component
-      v-for="config in formSchema.formContentConfigList"
-      :is="renderNode(config)"
-      :key="config.id"
-    />
+    <RenderFormNode
+      v-model:config-list="formContentConfigList"
+      v-model:form-data="formData"
+    ></RenderFormNode>
 
     <el-form-item>
       <el-button type="primary" @click="submitForm()"> Create </el-button>

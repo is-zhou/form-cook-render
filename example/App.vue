@@ -244,7 +244,7 @@ const formeSchema = ref<FormSchema>({
             }),
         },
       },
-      defaultValue: "",
+      defaultValue: [],
       disabled(params) {},
     },
     {
