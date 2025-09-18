@@ -4,9 +4,10 @@ import { cloneDeep, get, set } from "lodash-es";
 export function setDefaultValues(formData: Record<string, unknown>, componentConfigList: ComponentConfig[]) {
     const _formData = Object.assign({}, cloneDeep(formData))
     componentConfigList.forEach((config) => {
+        const isVisible = getVisible(config, formData)
         if (config.componentType === "form") {
             const field = config.formItemAttrs.field;
-            if (typeof config.defaultValue !== "undefined" && get(_formData, field) === undefined) {
+            if (typeof config.defaultValue !== "undefined" && get(_formData, field) === undefined && isVisible) {
                 set(_formData, field, config.defaultValue);
             }
         } else if (config.children?.length) {
@@ -15,4 +16,27 @@ export function setDefaultValues(formData: Record<string, unknown>, componentCon
     })
 
     return cloneDeep(_formData)
+}
+
+export function getVisible(config: ComponentConfig, formData: Record<string, unknown>) {
+    let isVisible = true;
+    if (typeof config.visible === "boolean" && !config.visible) {
+        isVisible = false;
+    }
+    if (typeof config.visible === "function") {
+        isVisible = !!config.visible({
+            formData: formData,
+            schemaItem: config,
+        });
+    }
+
+    if (
+        !isVisible &&
+        config.componentType === "form" &&
+        get(formData, config.formItemAttrs.field) !== undefined
+    ) {
+        set(formData, config.formItemAttrs.field, undefined);
+    }
+
+    return isVisible;
 }

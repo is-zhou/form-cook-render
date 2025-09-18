@@ -4,6 +4,7 @@ import { ComponentConfig, FormSchema } from "./types/schema";
 import RenderFormNode from "./components/RenderFormNode.vue";
 import { setDefaultValues } from "./utils";
 import reloadMap from "./utils/reloadMap";
+import { cloneDeep } from "lodash-es";
 
 interface FormRenderExpose {
   validate: () => Promise<boolean | undefined>;
@@ -37,10 +38,10 @@ watch(
 );
 
 watch(
-  () => formData.value,
-  async () => {
+  () => cloneDeep(formData.value),
+  async (newData, oldData) => {
     await nextTick();
-    reloadMap.triggerUpdate();
+    reloadMap.triggerUpdate(newData, oldData);
   },
   { deep: true }
 );

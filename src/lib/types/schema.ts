@@ -49,16 +49,21 @@ type DynamicProp<T> = (params: {
   schemaItem: ComponentConfig
 }) => T | void
 
+type DynamicPropOption<T> = (params: {
+  formData: Record<string, any>
+  schemaItem: ComponentConfig
+}) => [T, string[]] | Promise<[T, string[]]> | void
+
 type remoteType = {
   url: string
   method?: 'GET' | 'POST'
-  map?: (res: { data: any }, params: {
+  map: (res: { data: any }, params: {
     formData: Record<string, any>
     schemaItem: ComponentConfig
-  }) => Array<{ label: string; value: unknown }>
+  }) => [Array<Option>, string[]]
 }
 type staticType = Option[]
-type functionType = DynamicProp<Option[] | Promise<Option[]>>
+type functionType = DynamicPropOption<Option[]>
 
 export type Option = {
   label: string

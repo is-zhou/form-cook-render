@@ -6,7 +6,11 @@ import reloadMap from "../utils/reloadMap";
 export function useRenderNode(formData: Ref<Record<string, unknown>>) {
 
     const loadOptions = async (node: FormCompConfig) => {
-        node.attrs._options = await getOptions(node.attrs, { formData: formData.value, schemaItem: node })
+        const result = await getOptions(node.attrs, { formData: formData.value, schemaItem: node })
+
+        node.attrs._options = result.resolvedOptions
+
+        return result.effect
     }
 
     const loadSlots = async (node: ComponentConfig) => {
@@ -37,8 +41,9 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
 
             // 异步 options
             if (typeof opts === "function" || (opts && typeof opts === "object" && "url" in opts)) {
-                opts = await getOptions(current, { formData: formData.value, schemaItem: node });
-                node.slots[key].options = opts;
+                const result = await getOptions(current, { formData: formData.value, schemaItem: node });
+                node.slots[key].options = result.resolvedOptions;
+                opts = result.resolvedOptions;
             }
 
             if (Array.isArray(opts)) {
@@ -69,8 +74,9 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
         // ---- options 异步处理 ----
         if (node.attrs.options && !node.attrs._options) {
             loading.value = true
-            loadOptions(node).finally(() => loading.value = false)
-            reloadMap.addReloadMap(node.id, () => loadOptions(node))
+            loadOptions(node).then((effect) => {
+                reloadMap.addReloadMap(node.id, [() => loadOptions(node), effect])
+            }).finally(() => loading.value = false)
         }
 
         // ---- slots 异步处理 ----
@@ -78,8 +84,6 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             loadingSlots.value = true
             loadSlots(node).finally(() => loadingSlots.value = false)
         }
-
-
 
         const { options, _options, ...value } = node.attrs
 
@@ -127,23 +131,28 @@ async function getOptions(
 
     const options = attrs.options
 
-    let resolvedOptions: Option[] = []
+    const resolved: { resolvedOptions: Option[], effect: string[] } = { resolvedOptions: [], effect: [] }
+
 
     if (Array.isArray(options) || !options) {
-        resolvedOptions = cloneDeep(options) as Option[]
+        resolved.resolvedOptions = cloneDeep(options) as Option[]
+
     }
 
     if (typeof options === 'function') {
         const result = await options(params)!
-        resolvedOptions = result
+        resolved.resolvedOptions = result[0]
+        resolved.effect = result[1]
     } else if (typeof options === 'object' && !Array.isArray(options) && options.url) {
         const res = await fetch(options.url, { method: options.method || 'GET' })
         const data = await res.json()
-        resolvedOptions = options.map ? options.map(data, params) : data
+        const result = await options.map(data, params)
+        resolved.resolvedOptions = result[0]
+        resolved.effect = result[1]
     }
 
 
-    return resolvedOptions
+    return resolved
 }
 
 

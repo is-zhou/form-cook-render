@@ -1,9 +1,9 @@
-import { debounce } from "lodash-es";
+import { debounce, get } from "lodash-es";
 
-const reloadMap = new Map<string, () => Promise<void>>();
+const reloadMap = new Map<string, [() => Promise<unknown>, string[]]>();
 
 
-function addReloadMap(id: string, value: () => Promise<void>) {
+function addReloadMap(id: string, value: [() => Promise<unknown>, string[]]) {
     reloadMap.set(id, value)
 }
 
@@ -11,15 +11,23 @@ function clearAll() {
     reloadMap.clear()
 }
 
-const handleReloadMap = () => {
-    Promise.all([...reloadMap.values()].map((fn) => fn()));
+const handleReloadMap = (newFormData: Record<string, unknown>, oldFormData: Record<string, unknown>) => {
+
+    [...reloadMap.values()].forEach((item) => {
+        const [fn, list] = item
+
+        if (list.some((path: string) => get(newFormData, path) !== get(oldFormData, path)) || list.length <= 0) {
+            fn()
+        }
+
+    })
 };
 
 const debouncedFormDataChange = debounce(handleReloadMap, 500);
 
-function triggerUpdate() {
+function triggerUpdate(newFormData: Record<string, unknown>, oldFormData: Record<string, unknown>) {
 
-    debouncedFormDataChange()
+    debouncedFormDataChange(newFormData, oldFormData)
 }
 
 export default {

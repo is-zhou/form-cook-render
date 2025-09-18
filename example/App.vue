@@ -138,14 +138,17 @@ const formeSchema = ref<FormSchema>({
           new Promise((res) => {
             setTimeout(() => {
               res([
-                {
-                  label: "1",
-                  value: "1",
-                },
-                {
-                  label: "2",
-                  value: "2",
-                },
+                [
+                  {
+                    label: "1",
+                    value: "1",
+                  },
+                  {
+                    label: "2",
+                    value: "2",
+                  },
+                ],
+                ["activity.name"],
               ]);
 
               if (
@@ -228,16 +231,19 @@ const formeSchema = ref<FormSchema>({
             new Promise((res) => {
               setTimeout(() => {
                 res([
-                  {
-                    value: "Promotion activities",
-                    name: "type",
-                    label: "Promotion activities",
-                  },
-                  {
-                    value: "Offline activities",
-                    name: "type",
-                    label: "Offline activities",
-                  },
+                  [
+                    {
+                      value: "Promotion activities",
+                      name: "type",
+                      label: "Promotion activities",
+                    },
+                    {
+                      value: "Offline activities",
+                      name: "type",
+                      label: "Offline activities",
+                    },
+                  ],
+                  [],
                 ]);
                 console.log("获得了结果66666");
               }, 2000);
