@@ -102,7 +102,6 @@ interface BaseConfig {
   componentName: ComponentName;
   componentType: ComponentType;
   sort?: number;
-  attrs: Attrs;
   style?: Record<string, unknown>;
   slots?: Slots;
   _slots?: { [key: string]: () => Array<unknown> };
@@ -113,12 +112,15 @@ export interface FormCompConfig extends BaseConfig {
   componentType: "form";
   formItemAttrs: FormItem;
   defaultValue?: unknown;
-  disabled?: boolean | DynamicProp<boolean>
-  readonly?: boolean | DynamicProp<boolean>
+  attrs: Attrs & {
+    disabled?: boolean | DynamicProp<boolean>
+    readonly?: boolean | DynamicProp<boolean>
+  };
 }
 
 export interface LayoutCompConfig extends BaseConfig {
   componentType: "layout";
+  attrs: Attrs;
   children?: ComponentConfig[];
 }
 

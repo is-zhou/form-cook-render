@@ -94,27 +94,19 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             ...value
         }
 
-
-        if (typeof node.disabled === "boolean" && node.disabled) {
-            props.disabled = node.disabled
-        }
-        if (typeof node.disabled === "function") {
-            const isVisible = node.disabled({ formData: formData.value, schemaItem: node });
-            props.disabled = isVisible
+        if (typeof node.attrs.disabled === "function") {
+            const isVisible = node.attrs.disabled({ formData: formData.value, schemaItem: node });
+            node.attrs.disabled = !!isVisible
         }
 
-        if (typeof node.readonly === "boolean" && node.readonly) {
-            props.readonly = node.readonly
-        }
-        if (typeof node.readonly === "function") {
-            const isVisible = node.readonly({ formData: formData.value, schemaItem: node });
-            props.readonly = isVisible
+        if (typeof node.attrs.readonly === "function") {
+            const isVisible = node.attrs.readonly({ formData: formData.value, schemaItem: node });
+            node.attrs.readonly = !!isVisible
         }
 
         if (_options) {
             props.options = _options
         }
-
 
 
         return (loading.value || loadingSlots.value)
