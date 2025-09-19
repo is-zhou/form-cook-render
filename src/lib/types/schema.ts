@@ -135,6 +135,8 @@ export interface LayoutCompConfig extends BaseConfig {
 export type ComponentConfig = FormCompConfig | LayoutCompConfig;
 
 export interface FormAreaConfig {
+  defaultCreateBtn?: string | boolean;
+  defaultRestBtn?: string | boolean;
   attrs: {
     rules?: FormRules
     inline?: boolean

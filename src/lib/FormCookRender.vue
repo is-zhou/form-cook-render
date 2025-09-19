@@ -107,8 +107,27 @@ defineExpose<FormRenderExpose>({ validate, submit, resetFields });
     ></RenderFormNode>
 
     <el-form-item>
-      <el-button type="primary" @click="submitForm()"> Create </el-button>
-      <el-button @click="resetForm()">Reset</el-button>
+      <el-button
+        v-if="formSchema.formAreaConfig.defaultCreateBtn"
+        :type="'primary'"
+        @click="submitForm()"
+      >
+        {{
+          typeof formSchema.formAreaConfig.defaultCreateBtn === "string"
+            ? formSchema.formAreaConfig.defaultCreateBtn
+            : "创建"
+        }}
+      </el-button>
+      <el-button
+        v-if="formSchema.formAreaConfig.defaultRestBtn"
+        @click="resetForm()"
+      >
+        {{
+          typeof formSchema.formAreaConfig.defaultRestBtn === "string"
+            ? formSchema.formAreaConfig.defaultRestBtn
+            : "重置"
+        }}</el-button
+      >
     </el-form-item>
   </el-form>
 </template>
