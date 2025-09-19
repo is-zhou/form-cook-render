@@ -1,8 +1,10 @@
 import { cloneDeep, debounce, get, set } from "lodash-es";
-import { Slot, Option, ComponentConfig, FormCompConfig, LayoutCompConfig, OptionsConfig } from "../types/schema";
+import { Slot, Option, ComponentConfig, FormCompConfig, LayoutCompConfig, OptionsConfig, EventConfig } from "../types/schema";
 import { getComponent } from "./registry";
 import type { Ref } from "vue";
 import reloadMap from "../utils/reloadMap";
+import { getGlobalFn } from "../utils/globalFunctions";
+
 export function useRenderNode(formData: Ref<Record<string, unknown>>) {
 
     const loadOptions = async (node: FormCompConfig) => {
@@ -92,11 +94,18 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
 
         const { options, _options, ...value } = node.attrs
 
+        const { events } = node
+        let eventProps = {}
+        if (events) {
+            eventProps = buildEventProps(events, formData.value)
+        }
+
         const props: Record<string, any> = {
             modelValue: get(formData.value, node.formItemAttrs.field),
             "onUpdate:modelValue": (v: unknown) =>
                 set(formData.value, node.formItemAttrs.field, v),
-            ...value
+            ...value,
+            ...eventProps
         }
 
         if (typeof node.attrs.disabled === "function") {
@@ -150,6 +159,28 @@ async function getOptions(
 
 
     return resolved
+}
+
+function buildEventProps(events: EventConfig[], formData: Record<string, unknown>) {
+    const props: Record<string, Function> = {}
+
+    events.forEach(evt => {
+        if (!evt.eventName) return
+
+        const eventKey = 'on' + evt.eventName[0].toUpperCase() + evt.eventName.slice(1)
+
+        if (evt.handlerType === 'fn' && evt.fn) {
+            const fn = evt.fn
+            props[eventKey] = () => fn(formData)
+
+        } else if (evt.handlerType === 'globalFn' && evt.fnName) {
+            const fn = getGlobalFn(evt.fnName)
+            if (fn) props[eventKey] = fn
+
+        }
+    })
+
+    return props
 }
 
 

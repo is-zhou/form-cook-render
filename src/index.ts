@@ -2,6 +2,7 @@ import type { App } from 'vue'
 import FormCookRender from './lib/FormCookRender.vue'
 import { getComponent, registerComponents } from './lib/core/registry'
 import { defaultComponents } from './lib/core/defaultComponents'
+import { getGlobalFn } from './lib/utils/globalFunctions'
 
 //支持插件模式 允许 app.use() 使用
 export default {
@@ -19,7 +20,7 @@ export default {
 }
 
 // 支持按需导入
-export { FormCookRender, registerComponents, defaultComponents, getComponent }
+export { FormCookRender, registerComponents, defaultComponents, getComponent, getGlobalFn }
 
 //类型导出
 export type {
@@ -33,6 +34,7 @@ export type {
     Attrs,
     OptionsConfig,
     Option,
-    Slots
+    Slots,
+    EventConfig,
 } from './lib/types/schema.ts';
 

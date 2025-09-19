@@ -96,6 +96,13 @@ export interface Slots {
   [key: string]: Slot
 }
 
+type eventName = 'click' | 'change' | 'input' | 'focus' | 'blur'
+export interface EventConfig {
+  eventName: eventName | string
+  handlerType: 'fn' | 'globalFn'
+  fn?: (formData: Record<string, unknown>) => unknown
+  fnName?: string
+}
 
 interface BaseConfig {
   id: string;
@@ -106,6 +113,7 @@ interface BaseConfig {
   slots?: Slots;
   _slots?: { [key: string]: () => Array<unknown> };
   visible?: boolean | DynamicProp<boolean>
+  events?: EventConfig[]
 }
 
 export interface FormCompConfig extends BaseConfig {

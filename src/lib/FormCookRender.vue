@@ -5,6 +5,7 @@ import RenderFormNode from "./components/RenderFormNode.vue";
 import { setDefaultValues } from "./utils";
 import reloadMap from "./utils/reloadMap";
 import { cloneDeep } from "lodash-es";
+import { setGlobalFn } from "./utils/globalFunctions";
 
 interface FormRenderExpose {
   validate: () => Promise<boolean | undefined>;
@@ -83,6 +84,13 @@ const resetForm = () => {
   formRef.value.resetFields();
   emits("reset");
 };
+
+setGlobalFn("validate", () => validate());
+setGlobalFn("submitForm", () => {
+  submitForm();
+});
+
+setGlobalFn("resetForm", () => resetFields());
 
 defineExpose<FormRenderExpose>({ validate, submit, resetFields });
 </script>
