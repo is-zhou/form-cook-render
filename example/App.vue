@@ -89,13 +89,13 @@ const formeSchema = ref<FormSchema>({
       formItemAttrs: { field: "activity.name", label: "名称" },
       attrs: {
         placeholder: "请输入名称",
+        disabled(params) {
+          return params.formData.region === "shanghai";
+        },
       },
       defaultValue: "齐天大圣",
       visible(params) {
         return params.formData.region === "beijing";
-      },
-      disabled(params) {
-        return params.formData.region === "shanghai";
       },
     },
     {
@@ -120,9 +120,9 @@ const formeSchema = ref<FormSchema>({
       },
       attrs: {
         placeholder: "Activity region",
+        disabled(params) {},
       },
       defaultValue: "shanghai",
-      disabled(params) {},
       visible(params) {
         return params.formData.count === "1";
       },
@@ -160,9 +160,9 @@ const formeSchema = ref<FormSchema>({
               console.log("获得了结果");
             }, 1000);
           }),
+        disabled(params) {},
       },
       defaultValue: "2",
-      disabled(params) {},
     },
     {
       id: "4",
@@ -200,11 +200,12 @@ const formeSchema = ref<FormSchema>({
       componentName: "switch",
       componentType: "form",
       formItemAttrs: { field: "delivery", label: "Instant delivery" },
-      attrs: {},
-      defaultValue: true,
-      disabled(params) {
-        return params.formData.region === "shanghai";
+      attrs: {
+        disabled(params) {
+          return params.formData.region === "shanghai";
+        },
       },
+      defaultValue: true,
     },
     {
       id: "6",
@@ -213,17 +214,18 @@ const formeSchema = ref<FormSchema>({
       formItemAttrs: { field: "location", label: "Activity location" },
       attrs: {
         options: ["Home", "Company", "School"],
+        disabled(params) {},
       },
       defaultValue: "School",
-      disabled(params) {},
     },
     {
       id: "7",
       componentName: "checkboxGroup",
       componentType: "form",
       formItemAttrs: { field: "type", label: "Activity type" },
-      attrs: {},
-
+      attrs: {
+        disabled(params) {},
+      },
       slots: {
         default: {
           componentName: "checkbox",
@@ -251,14 +253,15 @@ const formeSchema = ref<FormSchema>({
         },
       },
       defaultValue: [],
-      disabled(params) {},
     },
     {
       id: "8",
       componentName: "radioGroup",
       componentType: "form",
       formItemAttrs: { field: "resource", label: "Resources" },
-      attrs: {},
+      attrs: {
+        disabled(params) {},
+      },
       slots: {
         default: {
           componentName: "radio",
@@ -275,7 +278,6 @@ const formeSchema = ref<FormSchema>({
         },
       },
       defaultValue: "",
-      disabled(params) {},
     },
     {
       id: "9",
@@ -285,18 +287,45 @@ const formeSchema = ref<FormSchema>({
       attrs: {
         type: "textarea",
         placeholder: "Activity form",
+        disabled(params) {},
+        readonly(params) {
+          return params.formData.region === "shanghai";
+        },
       },
       defaultValue: "",
-      disabled(params) {},
-      readonly(params) {
-        return params.formData.region === "shanghai";
-      },
     },
   ],
 });
 const formData = ref({});
+
+const reset = () => {};
+const submit = () => {};
+
+const renderRef = ref();
+
+function submitForm() {
+  renderRef.value?.submit();
+}
+
+function restForm() {
+  renderRef.value?.resetFields();
+}
+
+function validateForm() {
+  renderRef.value?.validate();
+}
 </script>
 
 <template>
-  <FormCookRender v-model="formData" v-model:formSchema="formeSchema" />
+  <form-cook-render
+    v-model="formData"
+    @reset="reset"
+    @submit="submit"
+    ref="renderRef"
+    v-model:formSchema="formeSchema"
+  />
+
+  <el-button :type="'primary'" @click="submitForm()"> 创建 </el-button>
+  <el-button :type="'primary'" @click="restForm()"> 重置 </el-button>
+  <el-button :type="'primary'" @click="validateForm()"> 校验 </el-button>
 </template>
