@@ -18,6 +18,8 @@ import {
     ElSegmented,
     ElCheckboxGroup,
     ElCheckbox,
+    ElRow,
+    ElCol,
 } from 'element-plus'
 import { Component } from 'vue'
 import { ComponentName } from '../types/schema'
@@ -44,6 +46,8 @@ const component: Record<ComponentName, Component> = {
     segmented: ElSegmented,
     checkboxGroup: ElCheckboxGroup,
     checkbox: ElCheckbox,
+    row: ElRow,
+    col: ElCol,
 }
 
 export function defaultComponents() {

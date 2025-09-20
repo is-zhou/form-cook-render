@@ -25,6 +25,8 @@ export interface ComponentNameMap {
   segmented: unknown,
   checkboxGroup: unknown,
   checkbox: unknown,
+  row: unknown,
+  col: unknown,
 }
 
 export type ComponentName = keyof ComponentNameMap
