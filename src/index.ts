@@ -25,6 +25,7 @@ export { FormCookRender, registerComponents, defaultComponents, getComponent, ge
 //类型导出
 export type {
     FormSchema,
+    BaseConfig,
     ComponentConfig,
     FormAreaConfig,
     ComponentName,

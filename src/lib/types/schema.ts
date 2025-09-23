@@ -106,7 +106,7 @@ export interface EventConfig {
   fnName?: string
 }
 
-interface BaseConfig {
+export interface BaseConfig {
   id: string;
   componentName: ComponentName;
   componentType: ComponentType;
