@@ -76,7 +76,7 @@ export type Option = {
 
 export type OptionsConfig = staticType | functionType | remoteType
 
-interface FormItem {
+export interface FormItem {
   field: string;
   label?: string;
   required?: boolean;

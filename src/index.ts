@@ -37,5 +37,6 @@ export type {
     Option,
     Slots,
     EventConfig,
+    FormItem
 } from './lib/types/schema.ts';
 
