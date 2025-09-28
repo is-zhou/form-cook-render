@@ -11,6 +11,7 @@ export interface ComponentNameMap {
   inputTag: unknown,
   rate: unknown,
   radioGroup: unknown,
+  radioGroupButton: unknown,
   radio: unknown,
   radioButton: unknown,
   select: unknown,

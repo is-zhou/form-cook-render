@@ -32,6 +32,7 @@ const component: Record<ComponentName, Component> = {
     inputTag: ElInputTag,
     rate: ElRate,
     radioGroup: ElRadioGroup,
+    radioGroupButton: ElRadioGroup,
     radio: ElRadio,
     radioButton: ElRadioButton,
     select: ElSelect,
