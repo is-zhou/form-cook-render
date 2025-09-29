@@ -1,6 +1,4 @@
-# form-cook
-
-form-cook-render
+# form-cook-render
 
 一个基于 Vue 3 + Element Plus 的表单渲染器，通过 Schema 配置即可动态生成表单。
 支持扩展组件、远程/动态选项、全局函数事件绑定等，方便在低代码、表单设计器、可视化平台中使用。
