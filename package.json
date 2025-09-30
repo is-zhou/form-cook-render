@@ -1,6 +1,6 @@
 {
   "name": "form-cook-render",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "main": "dist/form-cook-render.umd.js",
   "module": "dist/form-cook-render.es.js",
@@ -27,7 +27,7 @@
     "type": "git",
     "url": "git+https://github.com/is-zhou/form-cook-render.git"
   },
-  "homepage": "https://github.com/is-zhou/form-cook-render#readme",
+  "homepage": "https://is-zhou.github.io/form-cook-render/",
   "author": "zhouzhou",
   "license": "ISC",
   "packageManager": "pnpm@10.13.1",
