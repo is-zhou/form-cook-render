@@ -9,15 +9,15 @@ $ npm add -D form-cook-render
 ```
 
 ```sh [pnpm]
-$ pnpm add -D form-cook-render
+$ pnpm add form-cook-render
 ```
 
 ```sh [yarn]
-$ yarn add -D form-cook-render
+$ yarn add form-cook-render
 ```
 
 ```sh [bun]
-$ bun add -D form-cook-render
+$ bun add form-cook-render
 ```
 
 :::
