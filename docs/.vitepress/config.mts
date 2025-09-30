@@ -61,15 +61,10 @@ export default defineConfig({
         text: '进阶',
         items: [
           { text: 'schema结构', link: '/advanced/schema' },
-          { text: '动态字段配置', link: '/advanced/dynamic' },
-          { text: '动态选项', link: '' },
-          { text: '全局函数', link: '' },
-          { text: '自定义组件', link: '' },
-          { text: '事件', link: '' },
-          { text: '插槽', link: '' },
-
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' },
+          { text: '联动配置', link: '/advanced/dynamic' },
+          { text: '选项配置', link: '/advanced/dynamic-options' },
+          { text: '事件与全局函数', link: '/advanced/events' },
+          { text: '自定义组件', link: '/advanced/custom' },
         ]
       }
     ],
@@ -77,6 +72,9 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/is-zhou/form-cook-render' }
     ],
-
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2025-present zhouzhou'
+    }
   },
 })

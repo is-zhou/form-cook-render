@@ -29,7 +29,7 @@
   },
   "homepage": "https://is-zhou.github.io/form-cook-render/",
   "author": "zhouzhou",
-  "license": "ISC",
+  "license": "MIT",
   "packageManager": "pnpm@10.13.1",
   "peerDependencies": {
     "element-plus": "^2.11.2",
