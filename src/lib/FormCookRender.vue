@@ -129,5 +129,6 @@ defineExpose<FormRenderExpose>({ validate, submit, resetFields });
         }}</el-button
       >
     </el-form-item>
+    <slot></slot>
   </el-form>
 </template>

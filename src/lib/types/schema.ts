@@ -28,6 +28,7 @@ export interface ComponentNameMap {
   checkbox: unknown,
   row: unknown,
   col: unknown,
+  span?: unknown,
 }
 
 export type ComponentName = keyof ComponentNameMap
@@ -87,6 +88,7 @@ export interface FormItem {
 export interface Slot {
   componentName: ComponentName,
   options?: OptionsConfig,
+  text?: string,
   [key: string]: unknown
 }
 
@@ -126,6 +128,7 @@ export interface FormCompConfig extends BaseConfig {
   attrs: Attrs & {
     disabled?: boolean | DynamicProp<boolean>
     readonly?: boolean | DynamicProp<boolean>
+    rules?: FormRules
   };
 }
 

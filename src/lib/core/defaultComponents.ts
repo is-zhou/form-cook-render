@@ -25,7 +25,7 @@ import { Component } from 'vue'
 import { ComponentName } from '../types/schema'
 
 
-const component: Record<ComponentName, Component> = {
+const component: Record<ComponentName, Component | string> = {
     input: ElInput,
     textarea: ElInput,
     inputNumber: ElInputNumber,
@@ -49,6 +49,7 @@ const component: Record<ComponentName, Component> = {
     checkbox: ElCheckbox,
     row: ElRow,
     col: ElCol,
+    span: 'span'
 }
 
 export function defaultComponents() {

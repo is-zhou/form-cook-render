@@ -63,6 +63,10 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             } else {
                 slots[key] = () => [h(slotComp)];
             }
+
+            if (current.text) {
+                slots[key] = () => [h(slotComp, {}, { default: () => current.text })];
+            }
         }
 
         return slots;
