@@ -3,6 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "form-cook-render",
   description: "一个基于 Vue3 + Element Plus 的表单渲染器",
+  base: "/form-cook-render/",
   themeConfig: {
     siteTitle: 'form-cook-render',
     // https://vitepress.dev/reference/default-theme-config
