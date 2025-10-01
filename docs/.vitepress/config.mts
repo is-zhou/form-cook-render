@@ -1,12 +1,14 @@
 import { defineConfig } from 'vitepress'
+const isProd = process.env.NODE_ENV === 'production'
+const repoBase = isProd ? '/form-cook-render/' : '/'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "form-cook-render",
   description: "一个基于 Vue3 + Element Plus 的表单渲染器",
-  base: "/form-cook-render/",
+  base: repoBase,
   head: [
     // ico 格式
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['link', { rel: 'icon', href: `${repoBase}favicon.ico` }],
     // png/svg 格式（可选）
     // ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }]
   ],
