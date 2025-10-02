@@ -51,8 +51,19 @@ function getVisible(config: ComponentConfig) {
       </el-form-item>
     </template>
     <template v-else>
+      <el-form-item
+        v-if="config.componentName === 'formItem'"
+        v-bind="config.attrs"
+      >
+        <template v-if="config.children">
+          <RenderFormNode
+            v-model:config-list="config.children"
+            v-model:form-data="formData"
+          ></RenderFormNode>
+        </template>
+      </el-form-item>
       <component
-        v-if="config.componentName !== 'formItem'"
+        v-else-if="config.children?.length"
         :is="renderLayout(config)"
         :key="config.id"
       >
@@ -63,14 +74,8 @@ function getVisible(config: ComponentConfig) {
           ></RenderFormNode>
         </template>
       </component>
-      <el-form-item v-else v-bind="config.attrs">
-        <template v-if="config.children">
-          <RenderFormNode
-            v-model:config-list="config.children"
-            v-model:form-data="formData"
-          ></RenderFormNode>
-        </template>
-      </el-form-item>
+      <component v-else-if="config.slots" :is="renderLayout(config)">
+      </component>
     </template>
   </template>
 </template>

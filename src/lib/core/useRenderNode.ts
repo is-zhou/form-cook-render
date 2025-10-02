@@ -37,8 +37,13 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             ...node.attrs,
             style: node.style
         }
+        const loadingSlots = ref(false);
 
-        return h(comp, props);
+        if (node.slots && !node._slots) {
+            loadingSlots.value = true
+            loadSlots(node).finally(() => loadingSlots.value = false)
+        }
+        return !loadingSlots.value && !node._slots ? h(comp, props) : h(comp, props, node._slots);
     }
 
     const renderSlots = async (node: ComponentConfig) => {

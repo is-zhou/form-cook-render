@@ -85,6 +85,20 @@ const formeSchema = ref<FormSchema>({
   formContentConfigList: [
     {
       id: "",
+      componentName: "button",
+      componentType: "layout",
+      attrs: {
+        type: "primary",
+      },
+      slots: {
+        default: {
+          componentName: "span",
+          text: "按钮",
+        },
+      },
+    },
+    {
+      id: "",
       componentName: "upload",
       componentType: "form",
       formItemAttrs: {
