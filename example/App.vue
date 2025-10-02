@@ -85,6 +85,26 @@ const formeSchema = ref<FormSchema>({
   formContentConfigList: [
     {
       id: "",
+      componentName: "upload",
+      componentType: "form",
+      formItemAttrs: {
+        field: "",
+        label: "上传",
+      },
+      attrs: {},
+      slots: {
+        default: {
+          componentName: "button",
+          text: "Click to upload",
+          attrs: {
+            type: "primary",
+          },
+        },
+      },
+    },
+
+    {
+      id: "",
       componentName: "slider",
       componentType: "form",
       formItemAttrs: {

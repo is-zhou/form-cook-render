@@ -28,7 +28,13 @@ export interface ComponentNameMap {
   checkbox: unknown,
   row: unknown,
   col: unknown,
+  cascader: unknown,
   span?: unknown,
+  mention?: unknown,
+  transfer: unknown,
+  treeSelect: unknown,
+  upload: unknown,
+  button: unknown,
 }
 
 export type ComponentName = keyof ComponentNameMap
@@ -73,6 +79,7 @@ export type Option = {
   label: string
   value: string | number
   disabled?: boolean
+  children?: Option[]
   [key: string]: unknown
 } | string | number
 
@@ -86,14 +93,16 @@ export interface FormItem {
 }
 
 export interface Slot {
-  componentName: ComponentName,
-  options?: OptionsConfig,
-  text?: string,
+  componentName: ComponentName;
+  options?: OptionsConfig;
+  text?: string;
+  attrs?: Attrs;
   [key: string]: unknown
 }
 
 export interface Attrs {
   options?: OptionsConfig;
+  data?: OptionsConfig;
   [key: string]: unknown
 }
 

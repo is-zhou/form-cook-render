@@ -20,6 +20,11 @@ import {
     ElCheckbox,
     ElRow,
     ElCol,
+    ElCascader,
+    ElMention,
+    ElTransfer,
+    ElTreeSelect,
+    ElUpload
 } from 'element-plus'
 import { Component } from 'vue'
 import { ComponentName } from '../types/schema'
@@ -49,7 +54,13 @@ const component: Record<ComponentName, Component | string> = {
     checkbox: ElCheckbox,
     row: ElRow,
     col: ElCol,
-    span: 'span'
+    span: 'span',
+    cascader: ElCascader,
+    mention: ElMention,
+    transfer: ElTransfer,
+    treeSelect: ElTreeSelect,
+    upload: ElUpload,
+    button: ElButton
 }
 
 export function defaultComponents() {

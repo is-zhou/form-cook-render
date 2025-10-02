@@ -15,6 +15,13 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
         return result.effect
     }
 
+    const loadData = async (node: FormCompConfig) => {
+        const result = await getDataList(node.attrs, { formData: formData.value, schemaItem: node })
+
+        node.attrs._data = result.resolvedData
+
+        return result.effect
+    }
     const loadSlots = async (node: ComponentConfig) => {
         node._slots = await renderSlots(node)
     }
@@ -65,7 +72,7 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             }
 
             if (current.text) {
-                slots[key] = () => [h(slotComp, {}, { default: () => current.text })];
+                slots[key] = () => [h(slotComp, current.attrs, { default: () => current.text })];
             }
         }
 
@@ -90,13 +97,21 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             }).finally(() => loading.value = false)
         }
 
+        // ---- data 异步处理 ----
+        if (node.attrs.data && !node.attrs._data) {
+            loading.value = true
+            loadData(node).then((effect) => {
+                reloadMap.addReloadMap(node.id, [() => loadData(node), effect])
+            }).finally(() => loading.value = false)
+        }
+
         // ---- slots 异步处理 ----
         if (node.slots && !node._slots) {
             loadingSlots.value = true
             loadSlots(node).finally(() => loadingSlots.value = false)
         }
 
-        const { options, _options, ...value } = node.attrs
+        const { options, _options, data, _data, ...value } = node.attrs
 
         const { events } = node
         let eventProps = {}
@@ -124,6 +139,10 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
 
         if (_options) {
             props.options = _options
+        }
+
+        if (_data) {
+            props.data = _data
         }
 
 
@@ -162,6 +181,34 @@ async function getOptions(
     }
 
 
+    return resolved
+}
+
+async function getDataList(
+    attrs: { data?: OptionsConfig },
+    params: { formData: Record<string, any>; schemaItem: ComponentConfig }) {
+
+    const data = attrs.data
+
+    const resolved: { resolvedData: Option[], effect: string[] } = { resolvedData: [], effect: [] }
+
+
+    if (Array.isArray(data) || !data) {
+        resolved.resolvedData = cloneDeep(data) as Option[]
+
+    }
+
+    if (typeof data === 'function') {
+        const result = await data(params)!
+        resolved.resolvedData = result[0]
+        resolved.effect = result[1]
+    } else if (typeof data === 'object' && !Array.isArray(data) && data.url) {
+        const res = await fetch(data.url, { method: data.method || 'GET' })
+        const dataJson = await res.json()
+        const result = await data.map(dataJson, params)
+        resolved.resolvedData = result[0]
+        resolved.effect = result[1]
+    }
     return resolved
 }
 
