@@ -103,11 +103,17 @@ export interface Slot {
 export interface Attrs {
   options?: OptionsConfig;
   data?: OptionsConfig;
+  clearable?: boolean;
+  precision?: number;
+  max?: number;
+  placeholder?: string;
+  autosize?: boolean | { minRows?: number; maxRows?: number };
+  serializeType?: string | string[]
   [key: string]: unknown
 }
 
 export interface Slots {
-  [key: string]: Slot
+  [key: string]: Slot | string
 }
 
 type eventName = 'click' | 'change' | 'input' | 'focus' | 'blur'
@@ -125,7 +131,7 @@ export interface BaseConfig {
   sort?: number;
   style?: Record<string, unknown>;
   slots?: Slots;
-  _slots?: { [key: string]: () => Array<unknown> };
+  _slots?: { [key: string]: () => (Array<unknown> | string) };
   visible?: boolean | DynamicProp<boolean>
   events?: EventConfig[]
 }

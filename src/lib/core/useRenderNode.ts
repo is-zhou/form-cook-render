@@ -49,35 +49,46 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
     const renderSlots = async (node: ComponentConfig) => {
         if (!node.slots || typeof node.slots !== "object") return;
 
-        const slots: Record<string, () => VNode[]> = {};
+        const slots: Record<string, () => VNode[] | string> = {};
 
         for (const key in node.slots) {
-            const current: Slot = node.slots[key];
-            const slotComp = getComponent(current.componentName);
-            if (!slotComp) continue;
+            const current: Slot | string = node.slots[key];
 
-            let opts = current.options;
+            if (typeof current === "string") {
+                slots[key] = () => current;
 
-            // 异步 options
-            if (typeof opts === "function" || (opts && typeof opts === "object" && "url" in opts)) {
-                const result = await getOptions(current, { formData: formData.value, schemaItem: node });
-                node.slots[key].options = result.resolvedOptions;
-                opts = result.resolvedOptions;
-            }
-
-            if (Array.isArray(opts)) {
-                slots[key] = () =>
-                    opts.map(opt =>
-                        typeof opt === "object"
-                            ? h(slotComp, opt, opt.label ? { default: () => opt.label } : undefined)
-                            : h(slotComp)
-                    );
             } else {
-                slots[key] = () => [h(slotComp)];
-            }
 
-            if (current.text) {
-                slots[key] = () => [h(slotComp, current.attrs, { default: () => current.text })];
+                if (typeof node.slots[key] !== "object") return;
+
+
+
+                const slotComp = getComponent(current.componentName);
+                if (!slotComp) continue;
+
+                let opts = current.options;
+
+                // 异步 options
+                if (typeof opts === "function" || (opts && typeof opts === "object" && "url" in opts)) {
+                    const result = await getOptions(current, { formData: formData.value, schemaItem: node });
+                    node.slots[key].options = result.resolvedOptions;
+                    opts = result.resolvedOptions;
+                }
+
+                if (Array.isArray(opts)) {
+                    slots[key] = () =>
+                        opts.map(opt =>
+                            typeof opt === "object"
+                                ? h(slotComp, opt, opt.label ? { default: () => opt.label } : undefined)
+                                : h(slotComp)
+                        );
+                } else {
+                    slots[key] = () => [h(slotComp)];
+                }
+
+                if (current.text) {
+                    slots[key] = () => [h(slotComp, current.attrs, { default: () => current.text })];
+                }
             }
         }
 

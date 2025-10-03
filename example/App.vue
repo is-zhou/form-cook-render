@@ -91,10 +91,7 @@ const formeSchema = ref<FormSchema>({
         type: "primary",
       },
       slots: {
-        default: {
-          componentName: "span",
-          text: "按钮",
-        },
+        default: "按钮",
       },
     },
     {
