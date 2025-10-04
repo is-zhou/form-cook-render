@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ComponentConfig } from "../types/schema";
+import { ComponentConfig, FormCompConfig } from "../types/schema";
 import { useRenderNode } from "../core/useRenderNode";
 import { get, set } from "lodash-es";
 
@@ -38,6 +38,34 @@ function getVisible(config: ComponentConfig) {
 
   return isVisible;
 }
+
+function getDisabled(config: FormCompConfig) {
+  let isDisabled = false;
+  if (typeof config.attrs.disabled === "boolean") {
+    isDisabled = config.attrs.disabled;
+  }
+  if (typeof config.attrs.disabled === "function") {
+    isDisabled = !!config.attrs.disabled({
+      formData: formData.value,
+      schemaItem: config,
+    });
+  }
+  return isDisabled;
+}
+
+function getReadonly(config: FormCompConfig) {
+  let isReadonly = false;
+  if (typeof config.attrs.readonly === "boolean") {
+    isReadonly = config.attrs.readonly;
+  }
+  if (typeof config.attrs.readonly === "function") {
+    isReadonly = !!config.attrs.readonly({
+      formData: formData.value,
+      schemaItem: config,
+    });
+  }
+  return isReadonly;
+}
 </script>
 <template>
   <template v-for="config in configList">
@@ -47,7 +75,12 @@ function getVisible(config: ComponentConfig) {
         v-bind="config.formItemAttrs"
         :prop="config.formItemAttrs.field"
       >
-        <component :is="renderForm(config)" :key="config.id" />
+        <component
+          :is="renderForm(config)"
+          :key="config.id"
+          :disabled="getDisabled(config)"
+          :readonly="getReadonly(config)"
+        />
       </el-form-item>
     </template>
     <template v-else>

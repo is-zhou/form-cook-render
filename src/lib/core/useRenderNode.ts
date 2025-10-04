@@ -127,7 +127,7 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             loadSlots(node).finally(() => loadingSlots.value = false)
         }
 
-        const { options, _options, data, _data, ...value } = node.attrs
+        const { options, _options, data, _data, disabled, readonly, ...value } = node.attrs
 
         const { events } = node
         let eventProps = {}
@@ -154,15 +154,7 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
 
 
 
-        if (typeof node.attrs.disabled === "function") {
-            const isVisible = node.attrs.disabled({ formData: formData.value, schemaItem: node });
-            node.attrs.disabled = !!isVisible
-        }
 
-        if (typeof node.attrs.readonly === "function") {
-            const isVisible = node.attrs.readonly({ formData: formData.value, schemaItem: node });
-            node.attrs.readonly = !!isVisible
-        }
 
         if (_options) {
             props.options = _options
