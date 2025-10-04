@@ -1,6 +1,6 @@
 {
   "name": "form-cook-render",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "",
   "main": "dist/form-cook-render.umd.js",
   "module": "dist/form-cook-render.es.js",

@@ -1,18 +1,18 @@
-# input 输入框
+# Input 输入框
 
 ## 基础用法
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "Input",
   componentType: "form",
   formItemAttrs: {
-    field: "username",
+    field: "",
     label: "用户名",
   },
   attrs: {
-    placeholder: "请输入用户名",
+    placeholder: "请输入",
   }
 }
 ```
@@ -21,15 +21,15 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "Input",
   componentType: "form",
   formItemAttrs: {
-    field: "username",
+    field: "",
     label: "用户名",
   },
   attrs: {
-    placeholder: "请输入用户名",
+    placeholder: "请输入",
     disabled: true, // [!code ++]
   }
 }
@@ -39,15 +39,15 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "Input",
   componentType: "form",
   formItemAttrs: {
-    field: "username",
+    field: "",
     label: "用户名",
   },
   attrs: {
-    placeholder: "请输入用户名",
+    placeholder: "请输入",
     clearable: true, // [!code ++]
   }
 }
@@ -57,15 +57,15 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "Input",
   componentType: "form",
   formItemAttrs: {
-    field: "username",
+    field: "",
     label: "用户名",
   },
   attrs: {
-    placeholder: "请输入用户名",
+    placeholder: "请输入",
     formatter: (value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ","),// [!code ++]
     parser: (value) => value.replace(/\$\s?|(,*)/g, ""),// [!code ++]
   }
@@ -76,15 +76,15 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "Input",
   componentType: "form",
   formItemAttrs: {
-    field: "password",
+    field: "",
     label: "密码",
   },
   attrs: {
-    placeholder: "请输入密码",
+    placeholder: "请输入",
     type: "password", // [!code ++]
     'show-password': true,// [!code ++]
   }
@@ -95,15 +95,15 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "Input",
   componentType: "form",
   formItemAttrs: {
-    field: "username",
+    field: "",
     label: "用户名",
   },
   attrs: {
-    placeholder: "请输入用户名",
+    placeholder: "请输入",
     'suffix-icon': Calendar,// [!code ++]
     //'prefix-icon': Search // [!code ++]
   }
@@ -121,7 +121,7 @@
 ```ts
 
   {
-    id: "input1",
+    id: "",
     componentName: "Input",
     componentType: "form",
     formItemAttrs: {
@@ -142,11 +142,11 @@
 
 ```ts
   {
-    id: "input2",
+    id: "",
     componentName: "Input",
     componentType: "form",
     formItemAttrs: {
-      field: "input2",
+      field: "",
       label: "",
     },
     attrs: {
@@ -165,15 +165,15 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "Input",
   componentType: "form",
   formItemAttrs: {
-    field: "username",
+    field: "",
     label: "用户名",
   },
   attrs: {
-    placeholder: "请输入用户名",
+    placeholder: "请输入",
     size: 'large', // 'small'|'default' // [!code ++]
   }
 }
@@ -183,15 +183,15 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "Input",
   componentType: "form",
   formItemAttrs: {
-    field: "username",
+    field: "",
     label: "用户名",
   },
   attrs: {
-    placeholder: "请输入用户名",
+    placeholder: "请输入",
     maxlength: '10',  // [!code ++]
     "show-word-limit": true, // [!code ++]
   }

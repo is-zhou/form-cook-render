@@ -1,15 +1,15 @@
-# inputNumber 数字输入框
+# InputNumber 数字输入框
 
 ## 基础用法
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
-    field: "num",
-     label: "",
+    field: "",
+    label: "",
   },
   attrs: {
     min: 1,
@@ -23,11 +23,11 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
-    field: "num",
+    field: "",
     label: "",
   },
   attrs: {
@@ -43,11 +43,11 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
-    field: "num",
+    field: "",
     label: "",
   },
   attrs: {
@@ -64,11 +64,11 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
-    field: "num",
+    field: "",
     label: "",
   },
   attrs: {
@@ -84,11 +84,11 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
-    field: "num",
+    field: "",
     label: "",
   },
   attrs: {
@@ -104,11 +104,11 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
-    field: "num",
+    field: "",
     label: "",
   },
   attrs: {
@@ -124,11 +124,11 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
-    field: "num",
+    field: "",
     label: "",
   },
   attrs: {
@@ -148,11 +148,11 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
-    field: "num",
+    field: "",
     label: "",
   },
   attrs: {

@@ -1,4 +1,4 @@
-# slider 滑块
+# Slider 滑块
 
 ## 基础用法
 

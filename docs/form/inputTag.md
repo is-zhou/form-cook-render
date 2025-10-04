@@ -1,4 +1,4 @@
-# inputTag 输入框
+# InputTag 输入框
 
 ## 基础用法
 
@@ -6,7 +6,7 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
@@ -23,7 +23,7 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
@@ -41,7 +41,7 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
@@ -59,7 +59,7 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
@@ -79,7 +79,7 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
@@ -98,7 +98,7 @@
 
 ```ts
 {
-  id: "input1",
+  id: "",
   componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {

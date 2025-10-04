@@ -1,4 +1,4 @@
-# row col 分栏
+# Row Col 分栏
 
 ## 基础用法
 
