@@ -85,7 +85,7 @@ const formeSchema = ref<FormSchema>({
   formContentConfigList: [
     {
       id: "",
-      componentName: "button",
+      componentName: "Button",
       componentType: "layout",
       attrs: {
         type: "primary",
@@ -96,7 +96,7 @@ const formeSchema = ref<FormSchema>({
     },
     {
       id: "",
-      componentName: "upload",
+      componentName: "Upload",
       componentType: "form",
       formItemAttrs: {
         field: "",
@@ -105,7 +105,7 @@ const formeSchema = ref<FormSchema>({
       attrs: {},
       slots: {
         default: {
-          componentName: "button",
+          componentName: "Button",
           text: "Click to upload",
           attrs: {
             type: "primary",
@@ -116,7 +116,7 @@ const formeSchema = ref<FormSchema>({
 
     {
       id: "",
-      componentName: "slider",
+      componentName: "Slider",
       componentType: "form",
       formItemAttrs: {
         field: "",
@@ -127,7 +127,7 @@ const formeSchema = ref<FormSchema>({
     },
     {
       id: "1",
-      componentName: "input",
+      componentName: "Input",
       componentType: "form",
       formItemAttrs: { field: "activity.name", label: "名称" },
       attrs: {
@@ -143,12 +143,12 @@ const formeSchema = ref<FormSchema>({
     },
     {
       id: "2",
-      componentName: "select",
+      componentName: "Select",
       componentType: "form",
       formItemAttrs: { field: "region", label: "Activity region" },
       slots: {
         default: {
-          componentName: "option",
+          componentName: "Option",
           options: [
             {
               label: "shanghai",
@@ -172,7 +172,7 @@ const formeSchema = ref<FormSchema>({
     },
     {
       id: "3",
-      componentName: "selectV2",
+      componentName: "SelectV2",
       componentType: "form",
       formItemAttrs: { field: "count", label: "Activity count" },
       attrs: {
@@ -209,7 +209,7 @@ const formeSchema = ref<FormSchema>({
     },
     {
       id: "4",
-      componentName: "formItem",
+      componentName: "FormItem",
       componentType: "layout",
       attrs: {
         label: "Activity time",
@@ -218,7 +218,7 @@ const formeSchema = ref<FormSchema>({
       children: [
         {
           id: "",
-          componentName: "datePicker",
+          componentName: "DatePicker",
           componentType: "form",
           formItemAttrs: { field: "date1" },
           attrs: {
@@ -228,7 +228,7 @@ const formeSchema = ref<FormSchema>({
         },
         {
           id: "",
-          componentName: "timePicker",
+          componentName: "TimePicker",
           componentType: "form",
           formItemAttrs: { field: "date2" },
           attrs: {
@@ -240,7 +240,7 @@ const formeSchema = ref<FormSchema>({
     },
     {
       id: "5",
-      componentName: "switch",
+      componentName: "Switch",
       componentType: "form",
       formItemAttrs: { field: "delivery", label: "Instant delivery" },
       attrs: {
@@ -252,7 +252,7 @@ const formeSchema = ref<FormSchema>({
     },
     {
       id: "6",
-      componentName: "segmented",
+      componentName: "Segmented",
       componentType: "form",
       formItemAttrs: { field: "location", label: "Activity location" },
       attrs: {
@@ -263,7 +263,7 @@ const formeSchema = ref<FormSchema>({
     },
     {
       id: "7",
-      componentName: "checkboxGroup",
+      componentName: "CheckboxGroup",
       componentType: "form",
       formItemAttrs: { field: "type", label: "Activity type" },
       attrs: {
@@ -271,7 +271,7 @@ const formeSchema = ref<FormSchema>({
       },
       slots: {
         default: {
-          componentName: "checkbox",
+          componentName: "Checkbox",
           options: () =>
             new Promise((res) => {
               setTimeout(() => {
@@ -299,7 +299,7 @@ const formeSchema = ref<FormSchema>({
     },
     {
       id: "8",
-      componentName: "radioGroup",
+      componentName: "RadioGroup",
       componentType: "form",
       formItemAttrs: { field: "resource", label: "Resources" },
       attrs: {
@@ -307,7 +307,7 @@ const formeSchema = ref<FormSchema>({
       },
       slots: {
         default: {
-          componentName: "radio",
+          componentName: "Radio",
           options: [
             {
               value: "Sponsorship",
@@ -324,7 +324,7 @@ const formeSchema = ref<FormSchema>({
     },
     {
       id: "9",
-      componentName: "input",
+      componentName: "Input",
       componentType: "form",
       formItemAttrs: { field: "desc", label: "Activity form" },
       attrs: {

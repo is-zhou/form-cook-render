@@ -52,7 +52,7 @@ function getVisible(config: ComponentConfig) {
     </template>
     <template v-else>
       <el-form-item
-        v-if="config.componentName === 'formItem'"
+        v-if="config.componentName === 'FormItem'"
         v-bind="config.attrs"
       >
         <template v-if="config.children">

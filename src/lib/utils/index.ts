@@ -12,7 +12,7 @@ export function setDefaultValues(formData: Record<string, unknown>, componentCon
             }
             if (!config.attrs.placeholder) {
                 const text: { [key: string]: string } = {
-                    select: "选择",
+                    Select: "选择",
                 }
                 config.attrs.placeholder = `请${text[config.componentName] || '输入'}${config.formItemAttrs.label}`
             }
@@ -46,4 +46,9 @@ export function getVisible(config: ComponentConfig, formData: Record<string, unk
     }
 
     return isVisible;
+}
+
+export function isUpperCaseFirst(str: string) {
+    // 检查字符串的第一个字符是否为大写字母
+    return str.charAt(0) === str.charAt(0).toUpperCase();
 }

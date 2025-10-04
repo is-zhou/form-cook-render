@@ -5,54 +5,42 @@ import type { FormRules } from "element-plus";
 type ComponentType = 'form' | 'layout'
 
 export interface ComponentNameMap {
-  input: unknown;
-  textarea: unknown;
-  inputNumber: unknown;
-  inputTag: unknown;
-  rate: unknown;
-  radioGroup: unknown;
-  radioGroupButton: unknown;
-  radio: unknown;
-  radioButton: unknown;
-  select: unknown;
-  switch: unknown;
-  slider: unknown;
-  colorPicker: unknown;
-  option: unknown;
-  selectV2: unknown;
-  datePicker: unknown;
-  timePicker: unknown;
-  formItem: unknown;
-  segmented: unknown;
-  checkboxGroup: unknown;
-  checkbox: unknown;
-  row: unknown;
-  col: unknown;
-  cascader: unknown;
-  span?: unknown;
-  mention?: unknown;
-  transfer: unknown;
-  treeSelect: unknown;
-  upload: unknown;
-  button: unknown;
+  Input: unknown;
+  Textarea: unknown;
+  InputNumber: unknown;
+  InputTag: unknown;
+  Rate: unknown;
+  RadioGroup: unknown;
+  RadioGroupButton: unknown;
+  Radio: unknown;
+  RadioButton: unknown;
+  Select: unknown;
+  Switch: unknown;
+  Slider: unknown;
+  ColorPicker: unknown;
+  Option: unknown;
+  SelectV2: unknown;
+  DatePicker: unknown;
+  TimePicker: unknown;
+  FormItem: unknown;
+  Segmented: unknown;
+  CheckboxGroup: unknown;
+  Checkbox: unknown;
+  Row: unknown;
+  Col: unknown;
+  Cascader: unknown;
+  Mention: unknown;
+  Transfer: unknown;
+  TreeSelect: unknown;
+  Upload: unknown;
+  Button: unknown;
 }
-
-export type ComponentName = keyof ComponentNameMap
-
-/*  
-外部扩展ComponentName类型：
-  外部项目通过声明declare module 方式扩展ComponentName，因为ComponentName是keyof ComponentNameMap所得，所以外部声明扩展 ComponentNameMap即可
-  (注意:ComponentNameMap必须为interface且在库的入口中被导出)
-  
-在使用方（比如 src/main.ts 或某个 .d.ts 文件里）如下声明
-import 'form-cook-render'
-// 扩展内置接口
-declare module 'form-cook-render' {
-  export interface ComponentNameMap {
-     customInput: unknown
-   }
- } 
-*/
+//string & {} 代表“任意字符串但不是字面量类型的泛型字符串”
+// type MyType = "foo" | "bar" | string
+// ❌ 这样写其实等价于 string，TS 不会再提示 "foo" "bar"。
+// 所以必须用 string & {} 的写法来保留字面量提示。
+type EnumLike<T extends string> = T | (string & {});
+export type ComponentName = EnumLike<keyof ComponentNameMap>
 
 type DynamicProp<T> = (params: {
   formData: Record<string, any>

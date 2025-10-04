@@ -1,4 +1,5 @@
 import { defineAsyncComponent, type Component } from 'vue'
+import { isUpperCaseFirst } from '../utils';
 
 type RegistryItem =
     | { type: 'sync'; component: string | Component }
@@ -26,11 +27,20 @@ export function registerComponents(components: Record<string, string | Component
  * 通过注册名称获取组件（同步或者异步）
  */
 export function getComponent(name: string) {
+    if (!name) {
+        console.error(`[FormCookRender] 请传入组件名称或者原生Html元素，组件请以大写字母开头，原生Html元素小写字母开头`)
+        return null
+    }
     const target = registry[name]
-    if (!target) {
+    if (!target && isUpperCaseFirst(name)) {
         console.warn(`[FormCookRender] 组件 "${name}" 未注册`)
         return null
     }
+
+    if (!target && !isUpperCaseFirst(name)) {
+        return name
+    }
+
     if (target.type === "sync") {
         return target.component
     }

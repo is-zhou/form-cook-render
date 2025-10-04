@@ -138,7 +138,7 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
             ...value,
             ...eventProps
         }
-        if (node.componentName === 'upload') {
+        if (node.componentName === 'Upload') {
             Object.assign(props, {
                 "file-list": get(formData.value, node.formItemAttrs.field),
                 "onUpdate:file-list": (v: unknown) =>
