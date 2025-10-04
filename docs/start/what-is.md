@@ -4,9 +4,13 @@
 
 只需提供一份 Schema 配置，就能生成一整套完整表单，无需再手写大量模板。
 
-![npm](https://img.shields.io/npm/v/form-cook-render?style=flat-square)
-![npm](https://img.shields.io/npm/dt/form-cook-render?style=flat-square)
-![NPM](https://img.shields.io/npm/l/form-cook-render?style=flat-square)
+<div style="display:flex;align-items:center;gap:6px;">
+  <img src="https://img.shields.io/npm/v/form-cook-render?style=flat-square" alt="npm version" />
+  <img src="https://img.shields.io/npm/dt/form-cook-render?style=flat-square" alt="downloads" />
+  <img src="https://img.shields.io/npm/l/form-cook-render?style=flat-square" alt="license" />
+</div>
+
+<Badges />
 
 ## 使用场景
 

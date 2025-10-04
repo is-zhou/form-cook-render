@@ -5,7 +5,7 @@
 ```ts
 {
   id: '',
-  componentName: 'switch',
+  componentName: 'Switch',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -20,7 +20,7 @@
 ```ts
 {
   id: '',
-  componentName: 'switch',
+  componentName: 'Switch',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -37,7 +37,7 @@
 ```ts
 {
   id: '',
-  componentName: 'switch',
+  componentName: 'Switch',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -56,7 +56,7 @@
 ```ts
 {
   id: '',
-  componentName: 'switch',
+  componentName: 'Switch',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -74,7 +74,7 @@
 ```ts
 {
   id: '',
-  componentName: 'switch',
+  componentName: 'Switch',
   componentType: 'form',
   formItemAttrs: {
     field: '',

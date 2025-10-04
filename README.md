@@ -62,7 +62,7 @@ const formSchema: FormSchema = {
   formContentConfigList: [
     {
       id: "input1",
-      componentName: "input",
+      componentName: "Input",
       componentType: "form",
       formItemAttrs: {
         field: "username",
@@ -75,7 +75,7 @@ const formSchema: FormSchema = {
     },
     {
       id: "select1",
-      componentName: "select",
+      componentName: "Select",
       componentType: "form",
       formItemAttrs: {
         field: "gender",

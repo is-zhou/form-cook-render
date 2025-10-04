@@ -7,7 +7,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputTag",
+  componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
     field: "input",
@@ -24,7 +24,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputTag",
+  componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
     field: "input",
@@ -42,7 +42,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputTag",
+  componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
     field: "input",
@@ -60,7 +60,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputTag",
+  componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
     field: "input",
@@ -80,7 +80,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputTag",
+  componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
     field: "input",
@@ -99,7 +99,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputTag",
+  componentName: "InputTag",
   componentType: "form",
   formItemAttrs: {
     field: "input",

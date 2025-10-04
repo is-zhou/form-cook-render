@@ -7,13 +7,13 @@
 ```ts
 {
   id: '',
-  componentName: 'row',
+  componentName: 'Row',
   componentType: 'layout',
   attrs: {},
   children: [
     {
       id: '',
-      componentName: 'col',
+      componentName: 'Col',
       componentType: 'layout',
       attrs: {
         span: 12
@@ -23,7 +23,7 @@
     },
     {
       id: '',
-      componentName: 'col',
+      componentName: 'Col',
       componentType: 'layout',
       attrs: {
         span: 12
@@ -41,13 +41,13 @@
 ```ts
 {
   id: '',
-  componentName: 'row',
+  componentName: 'Row',
   componentType: 'layout',
   attrs: {},
   children: [
     {
       id: '',
-      componentName: 'col',
+      componentName: 'Col',
       componentType: 'layout',
       attrs: {
         span: 6,
@@ -58,7 +58,7 @@
     },
     {
       id: '',
-      componentName: 'col',
+      componentName: 'Col',
       componentType: 'layout',
       attrs: {
         span: 6,
@@ -77,7 +77,7 @@
 ```ts
 {
   id: '',
-  componentName: 'row',
+  componentName: 'Row',
   componentType: 'layout',
   attrs: {
     gutter: 20,//[!code ++]
@@ -91,7 +91,7 @@
 ```ts
 {
   id: '',
-  componentName: 'row',
+  componentName: 'Row',
   componentType: 'layout',
   attrs: {
     justify: 'center', //'center'|'end'|'space-between'|'space-around'|'space-evenly' //[!code ++]
@@ -105,13 +105,13 @@
 ```ts
 {
   id: '',
-  componentName: 'row',
+  componentName: 'Row',
   componentType: 'layout',
   attrs: {},
   children: [
     {
       id: '',
-      componentName: 'col',
+      componentName: 'Col',
       componentType: 'layout',
       attrs: {
         span: 6,
@@ -126,7 +126,7 @@
     },
     {
       id: '',
-      componentName: 'col',
+      componentName: 'Col',
       componentType: 'layout',
       attrs: {
         span: 6,

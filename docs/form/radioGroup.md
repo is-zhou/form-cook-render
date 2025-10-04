@@ -5,12 +5,12 @@
 ```ts
 {
   id: '',
-  componentName: 'radioGroup',
+  componentName: 'RadioGroup',
   componentType: 'form',
   formItemAttrs: { field: '', label: '单选框' },
   slots: {
     default: {
-      componentName: 'radio',
+      componentName: 'Radio',
       options: [
         { value: 'large', label: 'large' },
         { value: 'default', label: 'default' },
@@ -27,12 +27,12 @@
 ```ts
 {
   id: '',
-  componentName: 'radioGroup',
+  componentName: 'RadioGroup',
   componentType: 'form',
   formItemAttrs: { field: '', label: '单选框' },
   slots: {
     default: {
-      componentName: 'radio',
+      componentName: 'Radio',
       options: [
         { value: 'large', label: 'large' }, //[!code --]
         { value: 'large', label: 'large', disabled: true }, //[!code ++]
@@ -50,7 +50,7 @@
 ```ts
 {
   id: "",
-  componentName: "radioGroup",
+  componentName: "RadioGroup",
   componentType: "form",
   formItemAttrs: { field: "", label: "单选框" },
   attrs: {//[!code ++]
@@ -68,13 +68,13 @@
 ```ts
 {
   id: '',
-  componentName: 'radioGroup',
+  componentName: 'RadioGroup',
   componentType: 'form',
   formItemAttrs: { field: '', label: '单选框' },
   slots: {
     default: {
-      componentName: 'radio',//[!code --]
-      componentName: 'radioButton',//[!code ++]
+      componentName: 'Radio',//[!code --]
+      componentName: 'RadioButton',//[!code ++]
       options: [
         { value: 'large', label: 'large' },
         { value: 'default', label: 'default' },

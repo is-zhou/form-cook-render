@@ -23,7 +23,7 @@
 ```ts:line-numbers {13-19}
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -48,7 +48,7 @@
 ```ts:line-numbers {13-19}
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -73,7 +73,7 @@
 ```ts:line-numbers {13-19}
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -98,7 +98,7 @@
 ```ts:line-numbers {13-19}
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -123,7 +123,7 @@
 ```ts:line-numbers {13-20}
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -149,7 +149,7 @@
 ```ts:line-numbers {13-20}
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -175,7 +175,7 @@
 ```ts:line-numbers {13-20}
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",

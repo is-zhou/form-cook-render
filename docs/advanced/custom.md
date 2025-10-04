@@ -22,11 +22,15 @@ const app = createApp(App);
 
 app.use(formRender, {
   components: {
-    serializeInput: SerializeInput,  //注册想要使用的组件
+    SerializeInput,  //注册想要使用的组件
   },
 });
 app.mount("#app");
 ```
+
+:::tip
+外部组件注册时，组件名称请以大写字母开头,小写字母开头将默认为原生 html 标签,原生标签无需注册！
+:::
 
 ## 外部注册主键类型拓展
 
@@ -42,7 +46,7 @@ declare module "form-cook-render" {
   export interface ComponentNameMap {
     // 在这里添加你想要扩展的组件名
     // 属性值设为 unknown 即可，与原始定义保持一致
-    serializeInput: unknown;
+    SerializeInput: unknown;
   }
 }
 ```

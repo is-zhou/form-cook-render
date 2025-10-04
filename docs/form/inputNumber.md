@@ -5,7 +5,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputNumber",
+  componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
     field: "num",
@@ -24,7 +24,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputNumber",
+  componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
     field: "num",
@@ -44,7 +44,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputNumber",
+  componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
     field: "num",
@@ -65,7 +65,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputNumber",
+  componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
     field: "num",
@@ -85,7 +85,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputNumber",
+  componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
     field: "num",
@@ -105,7 +105,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputNumber",
+  componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
     field: "num",
@@ -125,7 +125,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputNumber",
+  componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
     field: "num",
@@ -149,7 +149,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "inputNumber",
+  componentName: "InputNumber",
   componentType: "form",
   formItemAttrs: {
     field: "num",

@@ -5,7 +5,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "textarea",
+  componentName: "Textarea",
   componentType: "form",
   formItemAttrs: {
     field: "input",
@@ -23,7 +23,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "textarea",
+  componentName: "Textarea",
   componentType: "form",
   formItemAttrs: {
     field: "input",
@@ -42,7 +42,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "textarea",
+  componentName: "Textarea",
   componentType: "form",
   formItemAttrs: {
     field: "input",
@@ -62,7 +62,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "textarea",
+  componentName: "Textarea",
   componentType: "form",
   formItemAttrs: {
     field: "input",

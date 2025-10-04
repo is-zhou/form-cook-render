@@ -22,36 +22,40 @@ app.use(formRender);
 app.mount("#app");
 ```
 
+:::tip
+外部组件注册时，组件名称请以大写字母开头,小写字母开头将默认为原生 html 标签,原生标签无需注册！
+:::
+
 ## 内置组件
 
 | 组件名称         | 组件              | 说明       |
 | ---------------- | ----------------- | ---------- |
-| input            | `ElInput`         | 输入框     |
-| textarea         | `ElInput`         | 文本域     |
-| inputNumber      | `ElInputNumber`   | 数字输入框 |
-| inputTag         | `ElInputTag`      | 标签输入框 |
-| rate             | `ElRate`          | 评分       |
-| radioGroup       | `ElRadioGroup`    | 单选组     |
-| radioGroupButton | `ElRadioGroup`    | 单选按钮组 |
-| radio            | `ElRadio`         | 单选       |
-| radioButton      | `ElRadioButton`   | 单选按钮   |
-| select           | `ElSelect`        | 下拉框     |
-| switch           | `ElSwitch`        | 开关       |
-| slider           | `ElSlider`        | 滑块       |
-| colorPicker      | `ElColorPicker`   | 色盘       |
-| option           | `ElOption`        | 选项       |
-| selectV2         | `ElSelectV2`      | 下拉框     |
-| datePicker       | `ElDatePicker`    | 日期       |
-| timePicker       | `ElTimePicker`    | 时间       |
-| formItem         | `ElFormItem`      | FormItem   |
-| segmented        | `ElSegmented`     | 分段控制器 |
-| checkboxGroup    | `ElCheckboxGroup` | 复选按钮组 |
-| checkbox         | `ElCheckbox`      | 复选框     |
-| row              | `ElRow`           | 分栏 Row   |
-| col              | `ElCol`           | 分栏 Col   |
-| cascader         | ElCascader        | 级联选择器 |
-| mention          | ElMention         | 提及       |
-| transfer         | ElTransfer        | 穿梭框     |
-| treeSelect       | ElTreeSelect      | 树形选择   |
-| upload           | ElUpload          | 上传       |
-| button           | ElButton          | 按钮       |
+| Input            | `ElInput`         | 输入框     |
+| Textarea         | `ElInput`         | 文本域     |
+| InputNumber      | `ElInputNumber`   | 数字输入框 |
+| InputTag         | `ElInputTag`      | 标签输入框 |
+| Rate             | `ElRate`          | 评分       |
+| RadioGroup       | `ElRadioGroup`    | 单选组     |
+| RadioGroupButton | `ElRadioGroup`    | 单选按钮组 |
+| Radio            | `ElRadio`         | 单选       |
+| RadioButton      | `ElRadioButton`   | 单选按钮   |
+| Select           | `ElSelect`        | 下拉框     |
+| Switch           | `ElSwitch`        | 开关       |
+| Slider           | `ElSlider`        | 滑块       |
+| ColorPicker      | `ElColorPicker`   | 色盘       |
+| Option           | `ElOption`        | 选项       |
+| SelectV2         | `ElSelectV2`      | 下拉框     |
+| DatePicker       | `ElDatePicker`    | 日期       |
+| TimePicker       | `ElTimePicker`    | 时间       |
+| FormItem         | `ElFormItem`      | FormItem   |
+| Segmented        | `ElSegmented`     | 分段控制器 |
+| CheckboxGroup    | `ElCheckboxGroup` | 复选按钮组 |
+| Checkbox         | `ElCheckbox`      | 复选框     |
+| Row              | `ElRow`           | 分栏 Row   |
+| Col              | `ElCol`           | 分栏 Col   |
+| Cascader         | `ElCascader`      | 级联选择器 |
+| Mention          | `ElMention`       | 提及       |
+| Transfer         | `ElTransfer`      | 穿梭框     |
+| TreeSelect       | `ElTreeSelect`    | 树形选择   |
+| Upload           | `ElUpload`        | 上传       |
+| Button           | `ElButton`        | 按钮       |

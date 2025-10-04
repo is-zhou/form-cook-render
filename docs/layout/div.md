@@ -24,7 +24,7 @@
   children: [
     {// [!code ++]
       id: "input1",// [!code ++]
-      componentName: "input",// [!code ++]
+      componentName: "Input",// [!code ++]
       componentType: "form",// [!code ++]
       formItemAttrs: {// [!code ++]
         field: "username",// [!code ++]

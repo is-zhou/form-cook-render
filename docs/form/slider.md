@@ -5,7 +5,7 @@
 ```ts
 {
   id: '',
-  componentName: 'slider',
+  componentName: 'Slider',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -21,7 +21,7 @@
 ```ts
 {
   id: '',
-  componentName: 'slider',
+  componentName: 'Slider',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -40,7 +40,7 @@
 ```ts
 {
   id: '',
-  componentName: 'slider',
+  componentName: 'Slider',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -58,7 +58,7 @@
 ```ts
 {
   id: '',
-  componentName: 'slider',
+  componentName: 'Slider',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -76,7 +76,7 @@
 ```ts
 {
   id: '',
-  componentName: 'slider',
+  componentName: 'Slider',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -96,7 +96,7 @@
 ```ts
 {
   id: '',
-  componentName: 'slider',
+  componentName: 'Slider',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -115,7 +115,7 @@
 ```ts
 {
   id: '',
-  componentName: 'slider',
+  componentName: 'Slider',
   componentType: 'form',
   formItemAttrs: {
     field: '',

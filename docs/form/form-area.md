@@ -104,7 +104,7 @@ const formSchema: FormSchema = {
   formContentConfigList: [
     {
       id: "1",
-      componentName: "input",
+      componentName: "Input",
       componentType: "form",
       formItemAttrs: { field: "activity.name", label: "名称" },
       attrs: {

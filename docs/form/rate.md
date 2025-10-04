@@ -5,7 +5,7 @@
 ```ts
 {
   id: '',
-  componentName: 'rate',
+  componentName: 'Rate',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -20,7 +20,7 @@
 ```ts
 {
   id: "",
-  componentName: "rate",
+  componentName: "Rate",
   componentType: "form",
   formItemAttrs: {
     field: "",
@@ -37,7 +37,7 @@
 ```ts
 {
   id: "",
-  componentName: "rate",
+  componentName: "Rate",
   componentType: "form",
   formItemAttrs: {
     field: "",
@@ -55,7 +55,7 @@
 ```ts
 {
   id: "",
-  componentName: "rate",
+  componentName: "Rate",
   componentType: "form",
   formItemAttrs: {
     field: "",
@@ -72,7 +72,7 @@
 ```ts
 {
   id: "",
-  componentName: "rate",
+  componentName: "Rate",
   componentType: "form",
   formItemAttrs: {
     field: "",

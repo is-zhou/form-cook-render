@@ -5,7 +5,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -22,7 +22,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -40,7 +40,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -58,7 +58,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -77,7 +77,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "password",
@@ -96,7 +96,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -122,7 +122,7 @@
 
   {
     id: "input1",
-    componentName: "input",
+    componentName: "Input",
     componentType: "form",
     formItemAttrs: {
       field: "input1",
@@ -143,7 +143,7 @@
 ```ts
   {
     id: "input2",
-    componentName: "input",
+    componentName: "Input",
     componentType: "form",
     formItemAttrs: {
       field: "input2",
@@ -166,7 +166,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -184,7 +184,7 @@
 ```ts
 {
   id: "input1",
-  componentName: "input",
+  componentName: "Input",
   componentType: "form",
   formItemAttrs: {
     field: "username",
@@ -211,7 +211,7 @@ const formSchema: FormSchema = {
   formContentConfigList: [
     {
       id: "input1",
-      componentName: "input",
+      componentName: "Input",
       componentType: "form",
       formItemAttrs: {
         field: "username",

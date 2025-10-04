@@ -5,7 +5,7 @@
 ```ts:line-numbers {10-23}
 {
   id: '',
-  componentName: 'select',
+  componentName: 'Select',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -35,7 +35,7 @@
 ```ts:line-numbers {10-25}
 {
   id: '',
-  componentName: 'select',
+  componentName: 'Select',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -67,7 +67,7 @@
 ```ts:line-numbers {10-14}
 {
   id: '',
-  componentName: 'select',
+  componentName: 'Select',
   componentType: 'form',
   formItemAttrs: {
     field: '',

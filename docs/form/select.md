@@ -5,7 +5,7 @@
 ```ts
 {
   id: '',
-  componentName: 'select',
+  componentName: 'Select',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -35,7 +35,7 @@
 ```ts
 {
   id: '',
-  componentName: 'select',
+  componentName: 'Select',
   componentType: 'form',
   formItemAttrs: {
     field: '',
@@ -69,7 +69,7 @@
 ```ts
 {
   id: '',
-  componentName: 'select',
+  componentName: 'Select',
   componentType: 'form',
   formItemAttrs: {
     field: '',
