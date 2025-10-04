@@ -134,14 +134,25 @@ export function useRenderNode(formData: Ref<Record<string, unknown>>) {
         if (events) {
             eventProps = buildEventProps(events, formData.value)
         }
-
         const props: Record<string, any> = {
-            modelValue: get(formData.value, node.formItemAttrs.field),
-            "onUpdate:modelValue": (v: unknown) =>
-                set(formData.value, node.formItemAttrs.field, v),
             ...value,
             ...eventProps
         }
+        if (node.componentName === 'upload') {
+            Object.assign(props, {
+                "file-list": get(formData.value, node.formItemAttrs.field),
+                "onUpdate:file-list": (v: unknown) =>
+                    set(formData.value, node.formItemAttrs.field, v),
+            })
+        } else {
+            Object.assign(props, {
+                modelValue: get(formData.value, node.formItemAttrs.field),
+                "onUpdate:modelValue": (v: unknown) =>
+                    set(formData.value, node.formItemAttrs.field, v),
+            })
+        }
+
+
 
         if (typeof node.attrs.disabled === "function") {
             const isVisible = node.attrs.disabled({ formData: formData.value, schemaItem: node });
