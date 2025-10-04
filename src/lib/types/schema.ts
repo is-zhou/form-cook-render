@@ -5,36 +5,36 @@ import type { FormRules } from "element-plus";
 type ComponentType = 'form' | 'layout'
 
 export interface ComponentNameMap {
-  input: unknown,
-  textarea: unknown,
-  inputNumber: unknown,
-  inputTag: unknown,
-  rate: unknown,
-  radioGroup: unknown,
-  radioGroupButton: unknown,
-  radio: unknown,
-  radioButton: unknown,
-  select: unknown,
-  switch: unknown,
-  slider: unknown,
-  colorPicker: unknown,
-  option: unknown,
-  selectV2: unknown,
-  datePicker: unknown,
-  timePicker: unknown,
-  formItem: unknown,
-  segmented: unknown,
-  checkboxGroup: unknown,
-  checkbox: unknown,
-  row: unknown,
-  col: unknown,
-  cascader: unknown,
-  span?: unknown,
-  mention?: unknown,
-  transfer: unknown,
-  treeSelect: unknown,
-  upload: unknown,
-  button: unknown,
+  input: unknown;
+  textarea: unknown;
+  inputNumber: unknown;
+  inputTag: unknown;
+  rate: unknown;
+  radioGroup: unknown;
+  radioGroupButton: unknown;
+  radio: unknown;
+  radioButton: unknown;
+  select: unknown;
+  switch: unknown;
+  slider: unknown;
+  colorPicker: unknown;
+  option: unknown;
+  selectV2: unknown;
+  datePicker: unknown;
+  timePicker: unknown;
+  formItem: unknown;
+  segmented: unknown;
+  checkboxGroup: unknown;
+  checkbox: unknown;
+  row: unknown;
+  col: unknown;
+  cascader: unknown;
+  span?: unknown;
+  mention?: unknown;
+  transfer: unknown;
+  treeSelect: unknown;
+  upload: unknown;
+  button: unknown;
 }
 
 export type ComponentName = keyof ComponentNameMap

@@ -49,3 +49,9 @@ app.mount("#app");
 | checkbox         | `ElCheckbox`      | 复选框     |
 | row              | `ElRow`           | 分栏 Row   |
 | col              | `ElCol`           | 分栏 Col   |
+| cascader         | ElCascader        | 级联选择器 |
+| mention          | ElMention         | 提及       |
+| transfer         | ElTransfer        | 穿梭框     |
+| treeSelect       | ElTreeSelect      | 树形选择   |
+| upload           | ElUpload          | 上传       |
+| button           | ElButton          | 按钮       |
