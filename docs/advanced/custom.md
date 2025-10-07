@@ -32,6 +32,31 @@ app.mount("#app");
 外部组件注册时，组件名称请以大写字母开头,小写字母开头将默认为原生 html 标签,原生标签无需注册！
 :::
 
+## 注册异步组件
+
+```ts:line-numbers {}
+import { createApp } from "vue";
+import App from "./App.vue";
+import formRender from "form-cook-render";
+
+const app = createApp(App);
+
+app.use(formRender, {
+  components: {
+    CustomComp:() => import('...'),// [!code focus]
+  },
+});
+app.mount("#app");
+```
+
+```ts:line-numbers {}
+import { registerComponents } from "form-cook-render";
+import { SerializeInput } from 'vue-serialize-input'
+registerComponents({
+  CustomComp:() => import('...'), // [!code focus]
+});
+```
+
 ## 外部注册主键类型拓展
 
 ```ts
