@@ -5,7 +5,7 @@
 ::: code-group
 
 ```sh [npm]
-$ npm add -D form-cook-render
+$ npm add form-cook-render
 ```
 
 ```sh [pnpm]
@@ -27,15 +27,11 @@ $ bun add form-cook-render
 ```ts
 import { createApp } from "vue";
 import App from "./App.vue";
-import formRender from "form-cook-render";
+import FormCookRender from "form-cook-render";
 
 const app = createApp(App);
 
-app.use(formRender, {
-  components: {
-    //可在此处扩展外部组件（自定义组件）
-  },
-});
+app.use(FormCookRender);
 
 app.mount("#app");
 ```
@@ -44,11 +40,7 @@ app.mount("#app");
 
 ```vue
 <script setup lang="ts">
-import FormCookRender, {
-  defaultComponents,
-  registerComponents,
-} from "form-cook-render";
-import type { FormSchema } from "form-cook-render";
-registerComponents(defaultComponents());
+import { FormCookRender, registerDefaultComps } from "form-cook-render";
+registerDefaultComps();
 </script>
 ```

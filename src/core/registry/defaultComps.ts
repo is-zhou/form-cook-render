@@ -1,0 +1,65 @@
+import { Component } from 'vue'
+
+import {
+    ElInput,
+    ElSwitch,
+    ElRate,
+    ElRadioGroup,
+    ElRadio,
+    ElRadioButton,
+    ElSelect,
+    ElInputNumber,
+    ElInputTag,
+    ElSlider,
+    ElColorPicker,
+    ElOption,
+    ElSelectV2,
+    ElDatePicker,
+    ElFormItem,
+    ElTimePicker,
+    ElSegmented,
+    ElCheckboxGroup,
+    ElCheckbox,
+    ElRow,
+    ElCol,
+    ElCascader,
+    ElMention,
+    ElTransfer,
+    ElTreeSelect,
+    ElUpload
+} from 'element-plus'
+import { ComponentName } from '@/types/schema'
+
+export function defaultComps(): Record<ComponentName, Component | string> {
+    return {
+        Input: ElInput,
+        Textarea: ElInput,
+        InputNumber: ElInputNumber,
+        InputTag: ElInputTag,
+        Rate: ElRate,
+        RadioGroup: ElRadioGroup,
+        RadioGroupButton: ElRadioGroup,
+        Radio: ElRadio,
+        RadioButton: ElRadioButton,
+        Select: ElSelect,
+        Switch: ElSwitch,
+        Slider: ElSlider,
+        ColorPicker: ElColorPicker,
+        Option: ElOption,
+        SelectV2: ElSelectV2,
+        DatePicker: ElDatePicker,
+        TimePicker: ElTimePicker,
+        FormItem: ElFormItem,
+        Segmented: ElSegmented,
+        CheckboxGroup: ElCheckboxGroup,
+        Checkbox: ElCheckbox,
+        Row: ElRow,
+        Col: ElCol,
+        Cascader: ElCascader,
+        Mention: ElMention,
+        Transfer: ElTransfer,
+        TreeSelect: ElTreeSelect,
+        Upload: ElUpload,
+        Button: ElButton
+    }
+}

@@ -107,7 +107,7 @@ export interface Slots {
 type eventName = 'click' | 'change' | 'input' | 'focus' | 'blur'
 export interface EventConfig {
   eventName: eventName | string
-  handlerType: 'fn' | 'globalFn'
+  handlerType: 'fn' | 'builtinFn'
   fn?: (formData: Record<string, unknown>) => unknown
   fnName?: string
 }

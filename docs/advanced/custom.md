@@ -15,12 +15,12 @@ registerComponents({
 ```ts:line-numbers {}
 import { createApp } from "vue";
 import App from "./App.vue";
-import formRender from "form-cook-render";
+import FormCookRender from "form-cook-render";
 import { SerializeInput } from 'vue-serialize-input'
 
 const app = createApp(App);
 
-app.use(formRender, {
+app.use(FormCookRender, {
   components: {
     SerializeInput,  //注册想要使用的组件
   },
@@ -37,11 +37,11 @@ app.mount("#app");
 ```ts:line-numbers {}
 import { createApp } from "vue";
 import App from "./App.vue";
-import formRender from "form-cook-render";
+import FormCookRender from "form-cook-render";
 
 const app = createApp(App);
 
-app.use(formRender, {
+app.use(FormCookRender, {
   components: {
     CustomComp:() => import('...'),// [!code focus]
   },

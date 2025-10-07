@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { FormCookRender, registerDefaultComps } from "../src/index";
 import type { FormSchema } from "../src/index";
 import { Calendar, Search } from "@element-plus/icons-vue";
+registerDefaultComps();
 const formeSchema = ref<FormSchema>({
   formAreaConfig: {
     attrs: {
@@ -99,7 +101,7 @@ const formeSchema = ref<FormSchema>({
       componentName: "Upload",
       componentType: "form",
       formItemAttrs: {
-        field: "",
+        field: "upload",
         label: "上传",
       },
       attrs: {},
@@ -112,6 +114,7 @@ const formeSchema = ref<FormSchema>({
           },
         },
       },
+      defaultValue: [],
     },
 
     {

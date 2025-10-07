@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import type { FormInstance } from "element-plus";
-import { ComponentConfig, FormSchema } from "./types/schema";
-import RenderFormNode from "./components/RenderFormNode.vue";
-import { setDefaultValues } from "./utils";
-import reloadMap from "./utils/reloadMap";
+import { ComponentConfig, FormSchema } from "../types/schema";
+import FormNodes from "./FormNodes.vue";
 import { cloneDeep } from "lodash-es";
-import { setGlobalFn } from "./utils/globalFunctions";
+import { setDefaultValues } from "@/core/defaultValues";
+import { clearReloadAll, triggerReload } from "@/core/reload";
+import { registerBuiltinFn } from "@/core/registry";
 
-interface FormRenderExpose {
+interface FormCookRenderExpose {
   validate: () => Promise<boolean | undefined>;
   submit: () => Promise<FormData>;
   resetFields: () => void;
@@ -42,12 +42,12 @@ watch(
   () => cloneDeep(formData.value),
   async (newData, oldData) => {
     await nextTick();
-    reloadMap.triggerUpdate(newData, oldData);
+    triggerReload(newData, oldData);
   },
   { deep: true }
 );
 onBeforeUnmount(() => {
-  reloadMap.clearAll();
+  clearReloadAll();
 });
 
 const emits = defineEmits<{
@@ -85,14 +85,13 @@ const resetForm = () => {
   emits("reset");
 };
 
-setGlobalFn("validate", () => validate());
-setGlobalFn("submitForm", () => {
+registerBuiltinFn("validate", () => validate());
+registerBuiltinFn("submitForm", () => {
   submitForm();
 });
+registerBuiltinFn("resetForm", () => resetFields());
 
-setGlobalFn("resetForm", () => resetFields());
-
-defineExpose<FormRenderExpose>({ validate, submit, resetFields });
+defineExpose<FormCookRenderExpose>({ validate, submit, resetFields });
 </script>
 <template>
   <el-form
@@ -101,10 +100,10 @@ defineExpose<FormRenderExpose>({ validate, submit, resetFields });
     :model="formData"
     v-bind="formSchema.formAreaConfig.attrs"
   >
-    <RenderFormNode
+    <FormNodes
       v-model:config-list="formContentConfigList"
       v-model:form-data="formData"
-    ></RenderFormNode>
+    ></FormNodes>
 
     <el-form-item>
       <el-button

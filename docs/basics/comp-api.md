@@ -84,7 +84,7 @@ const formSchema: FormSchema = {};
 <script lang="ts" setup>
 import { ref } from "vue";
 import type { FormSchema } from "form-cook-render";
-const formRef = ref<FormRenderExpose>();
+const formRef = ref<FormCookRenderExpose>();
 const formSchema: FormSchema = {};
 
 await formRef.value?.validate();

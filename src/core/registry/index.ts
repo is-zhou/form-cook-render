@@ -1,11 +1,14 @@
 import { defineAsyncComponent, type Component } from 'vue'
-import { isUpperCaseFirst } from '../utils';
+import { isUpperCaseFirst } from '../../utils';
+import { defaultComps } from './defaultComps';
+
+export * from './builtinFunctions'
 
 type RegistryItem =
     | { type: 'sync'; component: string | Component }
     | { type: 'async'; loader: () => Promise<Component> }
 
-let registry: Record<string, RegistryItem> = {}
+const componentMap: Record<string, RegistryItem> = {}
 
 /**
  * 用户注册组件
@@ -16,9 +19,9 @@ export function registerComponents(components: Record<string, string | Component
         const comp = components[key]
         // 支持同步组件和异步组件
         if (typeof comp === 'function' && comp.prototype === undefined) {
-            registry[key] = { type: "async", loader: comp as (() => Promise<Component>) }
+            componentMap[key] = { type: "async", loader: comp as (() => Promise<Component>) }
         } else {
-            registry[key] = { type: "sync", component: comp }
+            componentMap[key] = { type: "sync", component: comp }
         }
     }
 }
@@ -31,7 +34,7 @@ export function getComponent(name: string) {
         console.error(`[FormCookRender] 请传入组件名称或者原生Html元素，组件请以大写字母开头，原生Html元素小写字母开头`)
         return null
     }
-    const target = registry[name]
+    const target = componentMap[name]
     if (!target && isUpperCaseFirst(name)) {
         console.warn(`[FormCookRender] 组件 "${name}" 未注册`)
         return null
@@ -45,4 +48,18 @@ export function getComponent(name: string) {
         return target.component
     }
     return defineAsyncComponent(target.loader)
+}
+
+/**
+ * 获取所有组测组件的名称数组
+ */
+export function getAllCompNames(): string[] {
+    return Object.keys(componentMap.value)
+}
+
+/**
+ * 注册默认组件
+ */
+export function registerDefaultComps() {
+    registerComponents(defaultComps())
 }

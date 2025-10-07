@@ -17,13 +17,13 @@ export default defineConfig(({ command }) => {
         AutoImport({
             imports: ["vue"],
             resolvers: [ElementPlusResolver()],
-            dts: path.resolve(__dirname, "types/auto-imports.d.ts"),
+            dts: path.resolve(__dirname, "auto-imports.d.ts"),
         }),
         // 启用组件自动注册
 
         Components({
             resolvers: [ElementPlusResolver()],
-            dts: path.resolve(__dirname, "types/components.d.ts"),
+            dts: path.resolve(__dirname, "components.d.ts"),
             // directoryAsNamespace: true, // 库模式下建议关闭
         }),
         // build 模式才生成类型声明文件
@@ -35,22 +35,25 @@ export default defineConfig(({ command }) => {
         }),
     ].filter(Boolean)
 
+    const resolve = {
+        alias: {
+            "@": path.resolve(__dirname, "src"),
+        },
+    }
+
     if (!isBuild) {
         // 开发预览模式（example）
         return {
-            root: path.resolve(__dirname, "example"),
+            root: path.resolve(__dirname, "examples"),
             plugins,
-            resolve: {
-                alias: {
-                    "@": path.resolve(__dirname, "src"),
-                },
-            },
+            resolve
         }
     }
 
     // 库打包模式
     return {
         plugins,
+        resolve,
         build: {
             lib: {
                 entry: path.resolve(__dirname, "src/index.ts"),

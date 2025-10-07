@@ -43,12 +43,9 @@ pnpm add form-cook-render
 ```vue
 <script setup lang="ts">
 import { ref } from "vue";
-import FormCookRender, {
-  defaultComponents,
-  registerComponents,
-} from "form-cook-render";
+import { FormCookRender, registerDefaultComps } from "form-cook-render";
 import type { FormSchema } from "form-cook-render";
-registerComponents(defaultComponents());
+registerDefaultComps();
 
 const formData = ref({});
 const formSchema: FormSchema = {
@@ -107,11 +104,11 @@ const formSchema: FormSchema = {
 ```ts
 import { createApp } from "vue";
 import App from "./App.vue";
-import formRender from "form-cook-render";
+import FormCookRender from "form-cook-render";
 
 const app = createApp(App);
 
-app.use(formRender, {
+app.use(FormCookRender, {
   components: {},
 });
 

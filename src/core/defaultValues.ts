@@ -1,4 +1,5 @@
-import { ComponentConfig } from "../types/schema";
+import { getVisible } from "@/core/renderer/conditions";
+import { ComponentConfig } from "@/types/schema";
 import { cloneDeep, get, set } from "lodash-es";
 
 export function setDefaultValues(formData: Record<string, unknown>, componentConfigList: ComponentConfig[]) {
@@ -23,32 +24,4 @@ export function setDefaultValues(formData: Record<string, unknown>, componentCon
     })
 
     return cloneDeep(_formData)
-}
-
-export function getVisible(config: ComponentConfig, formData: Record<string, unknown>) {
-    let isVisible = true;
-    if (typeof config.visible === "boolean" && !config.visible) {
-        isVisible = false;
-    }
-    if (typeof config.visible === "function") {
-        isVisible = !!config.visible({
-            formData: formData,
-            schemaItem: config,
-        });
-    }
-
-    if (
-        !isVisible &&
-        config.componentType === "form" &&
-        get(formData, config.formItemAttrs.field) !== undefined
-    ) {
-        set(formData, config.formItemAttrs.field, undefined);
-    }
-
-    return isVisible;
-}
-
-export function isUpperCaseFirst(str: string) {
-    // 检查字符串的第一个字符是否为大写字母
-    return str.charAt(0) === str.charAt(0).toUpperCase();
 }

@@ -3,12 +3,9 @@
 ```vue
 <script setup lang="ts">
 import { ref } from "vue";
-import FormCookRender, {
-  defaultComponents,
-  registerComponents,
-} from "form-cook-render";
+import { registerDefaultComps, FormCookRender } from "form-cook-render";
 import type { FormSchema } from "form-cook-render";
-registerComponents(defaultComponents());
+registerDefaultComps();
 
 const formData = ref({});
 const formSchema: FormSchema = {

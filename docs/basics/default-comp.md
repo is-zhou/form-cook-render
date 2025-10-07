@@ -5,8 +5,8 @@
 ### 手动注册
 
 ```ts
-import { defaultComponents, registerComponents } from "form-cook-render";
-registerComponents(defaultComponents());
+import { registerDefaultComps } from "form-cook-render";
+registerDefaultComps();
 ```
 
 ### 插件注册
@@ -14,11 +14,11 @@ registerComponents(defaultComponents());
 ```ts
 import { createApp } from "vue";
 import App from "./App.vue";
-import formRender from "form-cook-render";
+import FormCookRender from "form-cook-render";
 
 const app = createApp(App);
 
-app.use(formRender);
+app.use(FormCookRender);
 app.mount("#app");
 ```
 

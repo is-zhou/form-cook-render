@@ -136,7 +136,7 @@
   events: [
     {
       eventName: 'blur',
-      handlerType: 'globalFn',
+      handlerType: 'builtinFn',
       fn: undefined,
       fnName: 'validate'
     }
@@ -162,7 +162,7 @@
   events: [
     {
       eventName: 'blur',
-      handlerType: 'globalFn',
+      handlerType: 'builtinFn',
       fn: undefined,
       fnName: 'resetFields'
     }
@@ -188,7 +188,7 @@
   events: [
     {
       eventName: 'blur',
-      handlerType: 'globalFn',
+      handlerType: 'builtinFn',
       fn: undefined,
       fnName: 'submitForm'
     }

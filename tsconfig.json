@@ -17,7 +17,7 @@
   },
   "include": [
     "src",             // 源码
-    "types/**/*.d.ts"  // 自动生成的类型声明
+    "*.d.ts"  // 自动生成的类型声明
   ],
   "exclude": [
     "node_modules",
