@@ -68,6 +68,7 @@ export default defineConfig(({ command }) => {
                         vue: "Vue",
                         "element-plus": "ElementPlus",
                     },
+                    exports: 'named',
                 },
             },
             cssCodeSplit: true,

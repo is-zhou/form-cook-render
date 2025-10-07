@@ -350,6 +350,8 @@ const submit = () => {};
 const renderRef = ref();
 
 function submitForm() {
+  console.log(formData.value);
+
   renderRef.value?.submit();
 }
 

@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts">
 import type { FormInstance } from "element-plus";
 import { ComponentConfig, FormSchema } from "../types/schema";
 import FormNodes from "./FormNodes.vue";
@@ -14,91 +14,107 @@ interface FormCookRenderExpose {
 }
 type FormData = Record<string, unknown>;
 
-const formData = defineModel<FormData>({ required: true });
-const formSchema = defineModel<FormSchema>("formSchema", {
-  default: () => ({}),
-});
+export default defineComponent({
+  name: "FormCookRender",
+  components: { FormNodes },
+  props: {
+    modelValue: {
+      type: Object as () => FormData,
+      required: true,
+    },
+    formSchema: {
+      type: Object as () => FormSchema,
+      default: () => ({}),
+    },
+  },
+  emits: ["submit", "reset"],
+  setup(props, { emit, expose }) {
+    const formRef = shallowRef<FormInstance | null>(null);
+    const formContentConfigList = ref<ComponentConfig[]>([]);
+    const formAreaConfig = computed(() => props.formSchema.formAreaConfig);
 
-const formContentConfigList = ref<ComponentConfig[]>([]);
+    watch(
+      () => props.formSchema,
+      async () => {
+        if (!props.formSchema.formContentConfigList) return;
 
-watch(
-  () => formSchema.value,
-  async () => {
-    if (!formSchema.value.formContentConfigList) return;
+        Object.assign(
+          props.modelValue,
+          setDefaultValues(
+            props.modelValue,
+            props.formSchema.formContentConfigList
+          )
+        );
 
-    Object.assign(
-      formData.value,
-      setDefaultValues(formData.value, formSchema.value.formContentConfigList)
+        await nextTick();
+        formContentConfigList.value = props.formSchema.formContentConfigList;
+      },
+      { immediate: true }
     );
 
-    await nextTick();
+    watch(
+      () => cloneDeep(props.modelValue),
+      async (newData, oldData) => {
+        await nextTick();
+        triggerReload(newData, oldData);
+      },
+      { deep: true }
+    );
 
-    formContentConfigList.value = formSchema.value.formContentConfigList;
+    onBeforeUnmount(() => {
+      clearReloadAll();
+    });
+
+    const validate = async () => {
+      if (!formRef.value) return;
+      return await formRef.value.validate();
+    };
+
+    const submit = async () => {
+      await validate();
+      return props.modelValue;
+    };
+
+    const resetFields = () => {
+      if (!formRef.value) return;
+      formRef.value.resetFields();
+    };
+
+    const submitForm = async () => {
+      await validate();
+      emit("submit", props.modelValue);
+    };
+
+    const resetForm = () => {
+      if (!formRef.value) return;
+      formRef.value.resetFields();
+      emit("reset");
+    };
+
+    registerBuiltinFn("validate", () => validate());
+    registerBuiltinFn("submitForm", () => submitForm());
+    registerBuiltinFn("resetForm", () => resetFields());
+
+    expose<FormCookRenderExpose>({ validate, submit, resetFields });
+
+    return {
+      formRef,
+      formAreaConfig,
+      formContentConfigList,
+      formData: props.modelValue,
+      formSchema: props.formSchema,
+      submitForm,
+      resetForm,
+    };
   },
-  { immediate: true }
-);
-
-watch(
-  () => cloneDeep(formData.value),
-  async (newData, oldData) => {
-    await nextTick();
-    triggerReload(newData, oldData);
-  },
-  { deep: true }
-);
-onBeforeUnmount(() => {
-  clearReloadAll();
 });
-
-const emits = defineEmits<{
-  (e: "submit", formData: FormData): void;
-  (e: "reset"): void;
-}>();
-
-const formRef = ref<FormInstance>();
-
-const validate = async () => {
-  if (!formRef.value) return;
-  return await formRef.value.validate();
-};
-
-const submit = async () => {
-  await validate();
-  return formData.value;
-};
-
-const resetFields = () => {
-  if (!formRef.value) return;
-  formRef.value.resetFields();
-};
-
-const submitForm = async () => {
-  console.log(formData.value);
-
-  await validate();
-  emits("submit", formData.value);
-};
-
-const resetForm = () => {
-  if (!formRef.value) return;
-  formRef.value.resetFields();
-  emits("reset");
-};
-
-registerBuiltinFn("validate", () => validate());
-registerBuiltinFn("submitForm", () => {
-  submitForm();
-});
-registerBuiltinFn("resetForm", () => resetFields());
-
-defineExpose<FormCookRenderExpose>({ validate, submit, resetFields });
 </script>
 <template>
   <el-form
     v-if="formContentConfigList.length"
     ref="formRef"
     :model="formData"
-    v-bind="formSchema.formAreaConfig.attrs"
+    v-bind="formAreaConfig.attrs"
   >
     <FormNodes
       v-model:config-list="formContentConfigList"
@@ -107,26 +123,23 @@ defineExpose<FormCookRenderExpose>({ validate, submit, resetFields });
 
     <el-form-item>
       <el-button
-        v-if="formSchema.formAreaConfig.defaultCreateBtn"
+        v-if="formAreaConfig.defaultCreateBtn"
         :type="'primary'"
         @click="submitForm()"
       >
         {{
-          typeof formSchema.formAreaConfig.defaultCreateBtn === "string"
-            ? formSchema.formAreaConfig.defaultCreateBtn
+          typeof formAreaConfig.defaultCreateBtn === "string"
+            ? formAreaConfig.defaultCreateBtn
             : "创建"
         }}
       </el-button>
-      <el-button
-        v-if="formSchema.formAreaConfig.defaultRestBtn"
-        @click="resetForm()"
-      >
+      <el-button v-if="formAreaConfig.defaultRestBtn" @click="resetForm()">
         {{
-          typeof formSchema.formAreaConfig.defaultRestBtn === "string"
-            ? formSchema.formAreaConfig.defaultRestBtn
+          typeof formAreaConfig.defaultRestBtn === "string"
+            ? formAreaConfig.defaultRestBtn
             : "重置"
-        }}</el-button
-      >
+        }}
+      </el-button>
     </el-form-item>
     <slot></slot>
   </el-form>
