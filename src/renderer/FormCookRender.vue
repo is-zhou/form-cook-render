@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { FormInstance } from "element-plus";
-import { ComponentConfig, FormSchema } from "../types/schema";
+import { ComponentConfig, FormAreaConfig, FormSchema } from "../types/schema";
 import FormNodes from "./FormNodes.vue";
 import { cloneDeep } from "lodash-es";
 import { setDefaultValues } from "@/core/defaultValues";
@@ -30,24 +30,25 @@ export default defineComponent({
   emits: ["submit", "reset"],
   setup(props, { emit, expose }) {
     const formRef = shallowRef<FormInstance | null>(null);
-    const formContentConfigList = ref<ComponentConfig[]>([]);
-    const formAreaConfig = computed(() => props.formSchema.formAreaConfig);
+    const contentConfigList = ref<ComponentConfig[]>([]);
+    const areaConfig = ref<FormAreaConfig>();
 
     watch(
       () => props.formSchema,
       async () => {
-        if (!props.formSchema.formContentConfigList) return;
+        const { formAreaConfig, formContentConfigList } = cloneDeep(
+          props.formSchema
+        );
 
         Object.assign(
           props.modelValue,
-          setDefaultValues(
-            props.modelValue,
-            props.formSchema.formContentConfigList
-          )
+          setDefaultValues(props.modelValue, formContentConfigList)
         );
 
         await nextTick();
-        formContentConfigList.value = props.formSchema.formContentConfigList;
+
+        areaConfig.value = formAreaConfig;
+        contentConfigList.value = formContentConfigList;
       },
       { immediate: true }
     );
@@ -99,8 +100,8 @@ export default defineComponent({
 
     return {
       formRef,
-      formAreaConfig,
-      formContentConfigList,
+      formAreaConfig: areaConfig,
+      formContentConfigList: contentConfigList,
       formData: props.modelValue,
       formSchema: props.formSchema,
       submitForm,
@@ -114,7 +115,7 @@ export default defineComponent({
     v-if="formContentConfigList.length"
     ref="formRef"
     :model="formData"
-    v-bind="formAreaConfig.attrs"
+    v-bind="formAreaConfig?.attrs"
   >
     <FormNodes
       v-model:config-list="formContentConfigList"
@@ -123,7 +124,7 @@ export default defineComponent({
 
     <el-form-item>
       <el-button
-        v-if="formAreaConfig.defaultCreateBtn"
+        v-if="formAreaConfig?.defaultCreateBtn"
         :type="'primary'"
         @click="submitForm()"
       >
@@ -133,7 +134,7 @@ export default defineComponent({
             : "创建"
         }}
       </el-button>
-      <el-button v-if="formAreaConfig.defaultRestBtn" @click="resetForm()">
+      <el-button v-if="formAreaConfig?.defaultRestBtn" @click="resetForm()">
         {{
           typeof formAreaConfig.defaultRestBtn === "string"
             ? formAreaConfig.defaultRestBtn

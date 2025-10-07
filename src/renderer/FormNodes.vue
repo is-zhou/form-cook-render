@@ -54,12 +54,10 @@ const { renderNode } = createVNodeRenderer(formData);
         :is="renderNode(config)"
         :key="config.id"
       >
-        <template v-if="config.children">
-          <FormNodes
-            v-model:config-list="config.children"
-            v-model:form-data="formData"
-          ></FormNodes>
-        </template>
+        <FormNodes
+          v-model:config-list="config.children"
+          v-model:form-data="formData"
+        ></FormNodes>
       </component>
       <component v-else-if="config.slots" :is="renderNode(config)"> </component>
     </template>
