@@ -1,9 +1,9 @@
-import { Slot, Option, ComponentConfig, FormCompConfig, LayoutCompConfig, OptionsConfig, EventConfig } from "@/types/schema"
+import { Slot, Option, ComponentConfig, FormCompConfig, OptionsConfig, EventConfig } from "@/types/schema"
 import { cloneDeep } from "lodash-es"
 import { getComponent, getBuiltinFn } from "../registry"
 
 const loadOptions = async (node: FormCompConfig, formData: Ref<Record<string, unknown>>) => {
-    const result = await getOptions(node.attrs, { formData: formData.value, schemaItem: node })
+    const result = await getOptions(node.attrs.options, { formData: formData.value, schemaItem: node })
 
     node.attrs._options = result.resolvedOptions
 
@@ -11,15 +11,15 @@ const loadOptions = async (node: FormCompConfig, formData: Ref<Record<string, un
 }
 
 const loadData = async (node: FormCompConfig, formData: Ref<Record<string, unknown>>) => {
-    const result = await getDataList(node.attrs, { formData: formData.value, schemaItem: node })
+    const result = await getOptions(node.attrs.data, { formData: formData.value, schemaItem: node })
 
-    node.attrs._data = result.resolvedData
+    node.attrs._data = result.resolvedOptions
 
     return result.effect
 }
 
 const loadSlots = async (node: ComponentConfig, formData: Ref<Record<string, unknown>>) => {
-    node._slots = await renderSlots(node, formData)
+    node._slots = await getSlots(node, formData)
 }
 
 
@@ -50,10 +50,9 @@ export { loadOptions, loadData, loadSlots, loadEvents }
 
 
 async function getOptions(
-    attrs: { options?: OptionsConfig },
+    options: OptionsConfig | undefined,
     params: { formData: Record<string, any>; schemaItem: ComponentConfig }) {
 
-    const options = attrs.options
 
     const resolved: { resolvedOptions: Option[], effect: string[] } = { resolvedOptions: [], effect: [] }
 
@@ -79,35 +78,8 @@ async function getOptions(
     return resolved
 }
 
-async function getDataList(
-    attrs: { data?: OptionsConfig },
-    params: { formData: Record<string, any>; schemaItem: ComponentConfig }) {
 
-    const data = attrs.data
-
-    const resolved: { resolvedData: Option[], effect: string[] } = { resolvedData: [], effect: [] }
-
-
-    if (Array.isArray(data) || !data) {
-        resolved.resolvedData = cloneDeep(data) as Option[]
-
-    }
-
-    if (typeof data === 'function') {
-        const result = await data(params)!
-        resolved.resolvedData = result[0]
-        resolved.effect = result[1]
-    } else if (typeof data === 'object' && !Array.isArray(data) && data.url) {
-        const res = await fetch(data.url, { method: data.method || 'GET' })
-        const dataJson = await res.json()
-        const result = await data.map(dataJson, params)
-        resolved.resolvedData = result[0]
-        resolved.effect = result[1]
-    }
-    return resolved
-}
-
-async function renderSlots(node: ComponentConfig, formData: Ref<Record<string, unknown>>) {
+async function getSlots(node: ComponentConfig, formData: Ref<Record<string, unknown>>) {
     if (!node.slots || typeof node.slots !== "object") return;
 
     const slots: Record<string, () => VNode[] | string> = {};
@@ -122,8 +94,6 @@ async function renderSlots(node: ComponentConfig, formData: Ref<Record<string, u
 
             if (typeof node.slots[key] !== "object") return;
 
-
-
             const slotComp = getComponent(current.componentName);
             if (!slotComp) continue;
 
@@ -131,7 +101,7 @@ async function renderSlots(node: ComponentConfig, formData: Ref<Record<string, u
 
             // 异步 options
             if (typeof opts === "function" || (opts && typeof opts === "object" && "url" in opts)) {
-                const result = await getOptions(current, { formData: formData.value, schemaItem: node });
+                const result = await getOptions(current.options, { formData: formData.value, schemaItem: node });
                 node.slots[key].options = result.resolvedOptions;
                 opts = result.resolvedOptions;
             }

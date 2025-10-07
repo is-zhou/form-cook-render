@@ -120,8 +120,8 @@ export interface BaseConfig {
   style?: Record<string, unknown>;
   slots?: Slots;
   _slots?: { [key: string]: () => (Array<unknown> | string) };
-  visible?: boolean | DynamicProp<boolean>
-  events?: EventConfig[]
+  visible?: boolean | DynamicProp<boolean>;
+  events?: EventConfig[];
 }
 
 export interface FormCompConfig extends BaseConfig {
