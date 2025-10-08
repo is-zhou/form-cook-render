@@ -35,7 +35,7 @@ import type { FormSchema } from "form-cook-render";
 registerDefaultComps();
 
 const formData = ref({});
-const formSchema: FormSchema = {
+const formSchema = ref<FormSchema>({
   formAreaConfig: {
     defaultCreateBtn: "提交",
     defaultRestBtn: "重置",
@@ -207,7 +207,7 @@ const formSchema: FormSchema = {
       defaultValue: "",
     },
   ],
-};
+});
 </script>
 
 <template>

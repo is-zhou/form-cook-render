@@ -26,24 +26,29 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [AutoImport({
-      imports: ["vue"],
-      resolvers: [ElementPlusResolver()],
-      dts: path.resolve(__dirname, "../../auto-imports.d.ts"),
-    }),
+    plugins: [
+      AutoImport({
+        imports: ["vue"],
+        resolvers: [ElementPlusResolver()],
+        dts: path.resolve(__dirname, "../../auto-imports.d.ts"),
+      }),
 
-    Components({
-      resolvers: [ElementPlusResolver()],
-      dts: path.resolve(__dirname, "../../components.d.ts"),
-    }),
+      Components({
+        resolvers: [ElementPlusResolver()],
+        dts: path.resolve(__dirname, "../../components.d.ts"),
+      }),
     ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '../../src'),
       },
     },
+    ssr: {
+      noExternal: ['element-plus', 'vitepress-demo-plugin'],
+    },
   },
   themeConfig: {
+    logo: '/logo_big.png',
     siteTitle: 'form-cook-render',
     // https://vitepress.dev/reference/default-theme-config
     nav: [
