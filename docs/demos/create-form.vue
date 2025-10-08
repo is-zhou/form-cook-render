@@ -1,38 +1,6 @@
-# 快速完成一个表单
-
-## 全局挂载渲染
-
-全局挂载方式适用于整个应用都需要使用 FormCookRender 表单组件的场景。
-
-```ts
-import { createApp } from "vue";
-import App from "./App.vue";
-import FormCookRender from "form-cook-render";
-import ElementPlus from "element-plus";
-import "element-plus/dist/index.css";
-
-const app = createApp(App);
-app.use(ElementPlus); //挂载 ElementPlus
-app.use(FormCookRender); //挂载 FormCookRender
-
-app.mount("#app");
-```
-
-通过全局挂载，您可以在应用的任意位置如下使用 form-cook-render 组件
-<demo
-vue="../demos/create-form.vue"
-/>
-
-## setup 中挂载渲染
-
-在组合式 API 风格 `setup` 中挂载
-
-```vue
 <script setup lang="ts">
 import { ref } from "vue";
-import { registerDefaultComps, FormCookRender } from "form-cook-render";
 import type { FormSchema } from "form-cook-render";
-registerDefaultComps();
 
 const formData = ref({});
 const formSchema: FormSchema = {
@@ -218,4 +186,3 @@ const formSchema: FormSchema = {
     @reset="console.log('表单已重置')"
   />
 </template>
-```

@@ -1,6 +1,14 @@
 import { defineConfig } from 'vitepress'
+import { vitepressDemoPlugin } from 'vitepress-demo-plugin';
+import path from 'path';
+import AutoImport from "unplugin-auto-import/vite"
+import Components from "unplugin-vue-components/vite"
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
+
 const isProd = process.env.NODE_ENV === 'production'
 const repoBase = isProd ? '/form-cook-render/' : '/'
+
+const resolvedSrcPath = path.resolve(__dirname, '../../src');
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "form-cook-render",
@@ -12,6 +20,29 @@ export default defineConfig({
     // png/svg 格式（可选）
     // ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }]
   ],
+  markdown: {
+    config(md) {
+      md.use(vitepressDemoPlugin);
+    },
+  },
+  vite: {
+    plugins: [AutoImport({
+      imports: ["vue"],
+      resolvers: [ElementPlusResolver()],
+      dts: path.resolve(__dirname, "../../auto-imports.d.ts"),
+    }),
+
+    Components({
+      resolvers: [ElementPlusResolver()],
+      dts: path.resolve(__dirname, "../../components.d.ts"),
+    }),
+    ],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, '../../src'),
+      },
+    },
+  },
   themeConfig: {
     siteTitle: 'form-cook-render',
     // https://vitepress.dev/reference/default-theme-config
@@ -63,7 +94,6 @@ export default defineConfig({
       {
         text: '进阶',
         items: [
-          { text: 'schema结构', link: '/advanced/schema' },
           { text: '联动配置', link: '/advanced/dynamic' },
           { text: '选项配置', link: '/advanced/dynamic-options' },
           { text: '事件与全局函数', link: '/advanced/events' },
