@@ -31,9 +31,10 @@ export default defineConfig({
       {
         text: '基础',
         items: [
-          { text: '创建一个表单', link: '/basics/create-form' },
-          { text: '配置API', link: '/basics/comp-api' },
+          { text: '渲染组件', link: '/basics/comp-api' },
+          { text: '渲染协议结构', link: '/basics/comp-schema' },
           { text: '内置组件', link: '/basics/default-comp' },
+          { text: '完成一个表单', link: '/basics/create-form' },
         ]
       },
       {

@@ -36,7 +36,7 @@ const formSchema: FormSchema = {
 ```vue
 <script lang="ts" setup>
 import { ref } from "vue";
-import FormCookRender from "../../src/index.ts";
+import FormCookRender from "form-cook-render";
 import type { FormSchema } from "form-cook-render";
 const formData = ref({});
 const formSchema: FormSchema = {

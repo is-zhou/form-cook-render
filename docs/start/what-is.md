@@ -1,8 +1,8 @@
 # 什么是 Form Cook Render？
 
-**Form Cook Render** 是一个基于 **Vue3 + Element Plus + TypeScript** 的表单渲染器，通过 Schema 来快速渲染复杂表单。
+**Form Cook Render** 是一个基于 **Vue3 + Element Plus + TypeScript** 的动态表单渲染组件，通过 Schema 来快速渲染可校验、可提交、可重置、字段显示隐藏、禁用只读等动态联动的复杂表单，且支持数据对象嵌套和数组嵌套。
 
-只需提供一份 Schema 配置，就能生成一整套完整表单，无需再手写大量模板。
+只需提供一份 Schema 配置，就能生成一整套完整表单，无需再手写大量模板。内置 30+ 种常用表单组件此外还可以外部注册扩展 vue 组件。
 
 <div style="display:flex;align-items:center;gap:6px;">
   <img src="https://img.shields.io/npm/v/form-cook-render?style=flat-square" alt="npm version" />

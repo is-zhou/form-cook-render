@@ -77,7 +77,7 @@ export interface FormItem {
   field: string;
   label?: string;
   required?: boolean;
-  [key: string]: any
+  [key: string]: unknown
 }
 
 export interface Slot {
