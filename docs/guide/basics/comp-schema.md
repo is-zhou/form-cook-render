@@ -11,12 +11,6 @@ interface formSchema {
 }
 ```
 
-- 组件类型
-
-```ts
-type ComponentConfig = FormCompConfig | LayoutCompConfig;
-```
-
 ## 表单域
 
 ```ts
@@ -41,7 +35,13 @@ interface FormAreaConfig {
 }
 ```
 
-## 表单项
+## 表单节点
+
+- 组件类型
+
+```ts
+type ComponentConfig = FormCompConfig | LayoutCompConfig;
+```
 
 - 基础配置
 
@@ -66,7 +66,11 @@ interface BaseConfig {
 }
 ```
 
-- 表单组件
+:::tip
+组件名称 `componentName` 必须是内置已注册组件名称、不然会提示未注册组件
+:::
+
+## 表单组件
 
 ```ts
 interface FormCompConfig extends BaseConfig {
@@ -97,7 +101,7 @@ interface FormCompConfig extends BaseConfig {
 }
 ```
 
-- 布局组件
+## 布局组件
 
 ```ts
 export interface LayoutCompConfig extends BaseConfig {

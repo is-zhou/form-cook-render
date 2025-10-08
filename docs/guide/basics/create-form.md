@@ -1,4 +1,4 @@
-# 快速完成一个表单
+# 快速渲染一个表单
 
 ## 全局挂载渲染
 
@@ -20,7 +20,7 @@ app.mount("#app");
 
 通过全局挂载，您可以在应用的任意位置如下使用 form-cook-render 组件
 <demo
-vue="../demos/create-form.vue"
+vue="create-form.vue"
 />
 
 ## setup 中挂载渲染

@@ -12,10 +12,10 @@ hero:
   actions:
     - theme: brand
       text: 什么是 form-cook-render ？
-      link: /start/what-is
+      link: /guide/start/what-is
     - theme: alt
       text: 快速开始
-      link: /start/getting-started
+      link: /guide/start/getting-started
     - theme: alt
       text: GitHub
       link: "https://github.com/is-zhou/form-cook-render"
