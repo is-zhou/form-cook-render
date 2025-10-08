@@ -138,7 +138,7 @@ export interface FormCompConfig extends BaseConfig {
 export interface LayoutCompConfig extends BaseConfig {
   componentType: "layout";
   attrs: Attrs;
-  children?: ComponentConfig[];
+  children?: Array<ComponentConfig | string>;
 }
 
 export type ComponentConfig = FormCompConfig | LayoutCompConfig;

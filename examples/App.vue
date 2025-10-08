@@ -87,6 +87,13 @@ const formeSchema = ref<FormSchema>({
   formContentConfigList: [
     {
       id: "",
+      componentName: "div",
+      componentType: "layout",
+      attrs: {},
+      children: ["666渲染文本"],
+    },
+    {
+      id: "",
       componentName: "Button",
       componentType: "layout",
       attrs: {

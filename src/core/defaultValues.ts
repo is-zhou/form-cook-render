@@ -2,9 +2,12 @@ import { getVisible } from "@/core/renderer/conditions";
 import { ComponentConfig } from "@/types/schema";
 import { cloneDeep, get, set } from "lodash-es";
 
-export function setDefaultValues(formData: Record<string, unknown>, componentConfigList: ComponentConfig[]) {
+export function setDefaultValues(formData: Record<string, unknown>, componentConfigList: Array<ComponentConfig | string>) {
     const _formData = Object.assign({}, cloneDeep(formData))
     componentConfigList.forEach((config) => {
+        if (typeof config === "string") {
+            return
+        }
         const isVisible = getVisible(config, formData)
         if (config.componentType === "form") {
             const field = config.formItemAttrs.field;

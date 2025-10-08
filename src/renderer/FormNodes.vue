@@ -10,7 +10,7 @@ import { createVNodeRenderer } from "@/core/renderer";
 
 type FormData = Record<string, unknown>;
 
-const configList = defineModel<ComponentConfig[]>("configList", {
+const configList = defineModel<Array<ComponentConfig | string>>("configList", {
   required: true,
 });
 
@@ -23,7 +23,10 @@ const { renderNode } = createVNodeRenderer(formData);
 </script>
 <template>
   <template v-for="config in configList">
-    <template v-if="config.componentType === 'form'">
+    <template v-if="typeof config === 'string'">
+      {{ config }}
+    </template>
+    <template v-else-if="config.componentType === 'form'">
       <el-form-item
         v-if="getVisible(config, formData)"
         v-bind="config.formItemAttrs"
@@ -37,7 +40,7 @@ const { renderNode } = createVNodeRenderer(formData);
         />
       </el-form-item>
     </template>
-    <template v-else>
+    <template v-else-if="config.componentType === 'layout'">
       <el-form-item
         v-if="config.componentName === 'FormItem'"
         v-bind="config.attrs"
