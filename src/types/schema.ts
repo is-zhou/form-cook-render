@@ -77,6 +77,7 @@ export interface FormItem {
   field: string;
   label?: string;
   required?: boolean;
+  rules?: FormRules
   [key: string]: unknown
 }
 
@@ -89,6 +90,7 @@ export interface Slot {
 }
 
 export interface Attrs {
+  style?: Record<string, unknown>;
   options?: OptionsConfig;
   data?: OptionsConfig;
   clearable?: boolean;
@@ -117,7 +119,6 @@ export interface BaseConfig {
   componentName: ComponentName;
   componentType: ComponentType;
   sort?: number;
-  style?: Record<string, unknown>;
   slots?: Slots;
   _slots?: { [key: string]: () => (Array<unknown> | string) };
   visible?: boolean | DynamicProp<boolean>;
@@ -131,7 +132,6 @@ export interface FormCompConfig extends BaseConfig {
   attrs: Attrs & {
     disabled?: boolean | DynamicProp<boolean>
     readonly?: boolean | DynamicProp<boolean>
-    rules?: FormRules
   };
   modifiers?: { trim?: boolean; number?: boolean; }
 }

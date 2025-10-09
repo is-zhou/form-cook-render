@@ -11,10 +11,8 @@ const renderLayoutNode = (node: LayoutCompConfig, formData: Ref<Record<string, u
     if (!comp) {
         return;
     }
-
     const props = {
         ...node.attrs,
-        style: node.style
     }
     const loadingSlots = ref(false);
 
