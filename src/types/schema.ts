@@ -133,6 +133,7 @@ export interface FormCompConfig extends BaseConfig {
     readonly?: boolean | DynamicProp<boolean>
     rules?: FormRules
   };
+  modifiers?: { trim?: boolean; number?: boolean; }
 }
 
 export interface LayoutCompConfig extends BaseConfig {

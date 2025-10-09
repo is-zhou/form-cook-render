@@ -50,7 +50,7 @@ export default defineComponent({
         areaConfig.value = formAreaConfig;
         contentConfigList.value = formContentConfigList;
       },
-      { immediate: true }
+      { immediate: true, deep: true }
     );
 
     watch(

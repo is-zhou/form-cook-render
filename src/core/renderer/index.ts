@@ -77,8 +77,14 @@ const renderFormNode = (node: FormCompConfig, formData: Ref<Record<string, unkno
     } else {
         Object.assign(props, {
             modelValue: get(formData.value, node.formItemAttrs.field),
-            "onUpdate:modelValue": (v: unknown) =>
-                set(formData.value, node.formItemAttrs.field, v),
+            "onUpdate:modelValue": (v: unknown) => {
+                if (node.modifiers?.number && typeof v === "string" && v !== "") {
+                    const n = Number(v);
+                    v = isNaN(n) ? v : n;
+                }
+                if (node.modifiers?.trim && typeof v === "string") v = v.trim();
+                set(formData.value, node.formItemAttrs.field, v)
+            }
         })
     }
 
