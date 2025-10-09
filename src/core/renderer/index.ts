@@ -11,8 +11,14 @@ const renderLayoutNode = (node: LayoutCompConfig, formData: Ref<Record<string, u
     if (!comp) {
         return;
     }
+    const { events } = node
+    let eventProps = {}
+    if (events) {
+        eventProps = loadEvents(events, formData.value)
+    }
     const props = {
         ...node.attrs,
+        ...eventProps
     }
     const loadingSlots = ref(false);
 
