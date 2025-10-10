@@ -40,8 +40,20 @@ export default defineConfig({
           { text: '创建一个表单', link: '/guide/basics/create-form' },
           { text: '渲染组件', link: '/guide/basics/comp-api' },
           { text: '渲染协议结构', link: '/guide/basics/comp-schema' },
-          { text: '表单域配置', link: '/guide/basics/form-area' },
           { text: '内置组件', link: '/guide/basics/default-comp' },
+          { text: '表单域配置', link: '/guide/basics/form-area' },
+          { text: '表单项配置', link: '/guide/basics/form-item' },
+          { text: '表单节点配置', link: '/guide/basics/form-node' },
+          { text: '布局节点配置', link: '/guide/basics/layout-node' },
+        ]
+      },
+      {
+        text: '进阶',
+        items: [
+          { text: '联动配置', link: '/guide/advanced/dynamic' },
+          { text: '选项配置', link: '/guide/advanced/dynamic-options' },
+          { text: '事件与全局函数', link: '/guide/advanced/events' },
+          { text: '自定义组件', link: '/guide/advanced/custom' },
         ]
       },
       {
@@ -59,17 +71,7 @@ export default defineConfig({
           { text: '分栏', link: '/guide/layout/row' },
         ]
       },
-      {
-        text: '进阶',
-        items: [
-          { text: '联动配置', link: '/guide/advanced/dynamic' },
-          { text: '选项配置', link: '/guide/advanced/dynamic-options' },
-          { text: '事件与全局函数', link: '/guide/advanced/events' },
-          { text: '自定义组件', link: '/guide/advanced/custom' },
-        ]
-      }
     ],
-
     socialLinks: [
       { icon: 'github', link: 'https://github.com/is-zhou/form-cook-render' }
     ],

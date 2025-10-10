@@ -1,36 +1,8 @@
 # options
 
-## 静态选项
-
-```ts:line-numbers {10-23}
-{
-  id: '',
-  componentName: 'Select',
-  componentType: 'form',
-  formItemAttrs: {
-    field: '',
-    label: '选择器',
-  },
-  attrs: {
-    options: [
-      {
-        value: 'Option1',
-        label: 'Option1',
-      },
-      {
-        value: 'Option2',
-        label: 'Option2',
-      },
-      {
-        value: 'Option3',
-        label: 'Option3',
-      },
-    ],
-  },
-}
-```
-
 ## 动态函数
+
+<demo vue="dynamic-options/Fn.vue"></demo>
 
 ```ts:line-numbers {10-25}
 {

@@ -55,8 +55,6 @@ interface BaseConfig {
   componentType: ComponentType;
   //排序
   sort?: number;
-  //组件的内联样式
-  style?: string | Record<string, unknown>;
   //组件插槽
   slots?: Slots;
   //组件发是否可见
@@ -78,12 +76,14 @@ interface FormCompConfig extends BaseConfig {
   componentType: "form";
   //字段、标签、规则等配置
   formItemAttrs: {
-    //字典
+    //字段
     field: string;
     //标签
     label?: string;
     //必填配置
     required?: boolean;
+    //字段校验规则配置
+    rules?: FormRules;
     //其他扩展字段
     [key: string]: unknown;
   };
@@ -95,8 +95,6 @@ interface FormCompConfig extends BaseConfig {
     disabled?: boolean | DynamicProp<boolean>;
     //只读配置
     readonly?: boolean | DynamicProp<boolean>;
-    //字段校验规则配置
-    rules?: FormRules;
   };
 }
 ```
@@ -120,6 +118,8 @@ export interface LayoutCompConfig extends BaseConfig {
 interface Attrs {
   //选项配置
   options?: OptionsConfig;
+  //组件的内联样式
+  style?: string | Record<string, unknown>;
   //输入提示配置
   placeholder?: string;
   //根据配置的组件所需要的属性自行配置

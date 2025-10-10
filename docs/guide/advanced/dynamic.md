@@ -1,23 +1,11 @@
-# 联动字段
+# 组件联动
 
-支持动态函数
+## 显示隐藏联动 visible
 
-```ts
-type DynamicProp<T> = (params: {
-  formData: Record<string, any>;
-  schemaItem: ComponentConfig;
-}) => T | void;
-```
+表单组件和布局组件都可通过 `visible` 和数据进行动态控制`显示隐藏`
 
-选项数据支持 静态数组 / 动态函数 / 远程请求：
-
-```ts
-type OptionsConfig = Option[] | DynamicPropOption<Option[]> | remoteType;
-```
-
-### visible 是否可见
-
-动态配置 ComponentConfig 渲染时是否动态可见
+- 开启即时配送才需要输入姓名
+  <demo vue="dynamic/Visible.vue"></demo>
 
 ```ts
 visible(params{
@@ -28,9 +16,10 @@ visible(params{
 }
 ```
 
-### disabled 是否禁用
+## 表单禁用联动 disabled
 
-动态配置表单渲染时是否禁用
+- 开启即时配送才可以输入姓名
+  <demo vue="dynamic/Disabled.vue"></demo>
 
 ```ts
 disabled(params{
@@ -41,9 +30,10 @@ disabled(params{
 }
 ```
 
-### readonly 是否只读
+## 表单只读联动 readonly
 
-动态配置表单渲染时是否只读
+- 开启即时配送才可以修改姓名
+  <demo vue="dynamic/Readonly.vue"></demo>
 
 ```ts
 readonly(params{
@@ -53,3 +43,8 @@ readonly(params{
     return params.formData.count === "1";
 }
 ```
+
+## 表单配置联动
+
+- 开启即时配送第二项 **姓名** 修改为 **配送员**
+  <demo vue="dynamic/Config.vue"></demo>
