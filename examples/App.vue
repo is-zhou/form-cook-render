@@ -86,6 +86,48 @@ const formeSchema = ref<FormSchema>({
   },
   formContentConfigList: [
     {
+      id: "arrayDesc",
+      componentName: "ArrayContainer",
+      componentType: "layout",
+      attrs: {
+        addText: "新增活动形式",
+        removeText: "删除",
+        min: 1,
+        max: 5,
+        arrayKeyPath: "arrayDesc",
+        isSetDefaultValue: true,
+        limitButtonDisplay: true,
+      },
+      children: [
+        {
+          id: "content",
+          componentName: "Input",
+          componentType: "form",
+          formItemAttrs: {
+            field: "content",
+            label: "活动形式",
+            rules: [
+              { required: true, message: "请输入用户名", trigger: "blur" },
+            ],
+          },
+          attrs: { type: "textarea", placeholder: "请输入活动形式" },
+          defaultValue: "活动形式是...",
+        },
+        {
+          id: "num",
+          componentName: "InputNumber",
+          componentType: "form",
+          formItemAttrs: {
+            field: "num",
+            label: "数量",
+          },
+          attrs: { type: "textarea", placeholder: "请输入活动形式" },
+          defaultValue: 0,
+        },
+      ],
+      slots: {},
+    },
+    {
       id: "",
       componentName: "div",
       componentType: "layout",
@@ -93,7 +135,7 @@ const formeSchema = ref<FormSchema>({
       children: ["666渲染文本"],
     },
     {
-      id: "",
+      id: "666",
       componentName: "Button",
       componentType: "layout",
       attrs: {
@@ -102,9 +144,18 @@ const formeSchema = ref<FormSchema>({
       slots: {
         default: "按钮",
       },
+      events: [
+        {
+          eventName: "click",
+          handlerType: "fn",
+          fn: (formData) => {
+            console.log("点点点");
+          },
+        },
+      ],
     },
     {
-      id: "",
+      id: "upload",
       componentName: "Upload",
       componentType: "form",
       formItemAttrs: {
@@ -125,11 +176,11 @@ const formeSchema = ref<FormSchema>({
     },
 
     {
-      id: "",
+      id: "Slider",
       componentName: "Slider",
       componentType: "form",
       formItemAttrs: {
-        field: "",
+        field: "Slider",
         label: "滑块",
       },
       attrs: {},

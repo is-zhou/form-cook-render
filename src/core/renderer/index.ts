@@ -2,9 +2,10 @@ import { ComponentConfig, EventConfig, FormCompConfig, LayoutCompConfig } from "
 import { getComponent } from "../registry";
 import type { Ref } from "vue";
 import { loadData, loadEvents, loadOptions, loadSlots } from "./load";
-import { get, set } from "lodash-es";
+import { cloneDeep, get, set } from "lodash-es";
 import { addReload } from "../reload";
-
+import { replaceIndexInSchema } from "@/utils";
+import { ElButton, ElCard } from "element-plus";
 const renderLayoutNode = (node: LayoutCompConfig, formData: Ref<Record<string, unknown>>) => {
     const comp = getComponent(node.componentName);
 
@@ -106,8 +107,51 @@ const renderFormNode = (node: FormCompConfig, formData: Ref<Record<string, unkno
         : h(comp, props, node._slots);
 };
 
+const renderArrayContainer = (
+    node: LayoutCompConfig,
+    formData: Ref<Record<string, any>>
+) => {
+    const comp = getComponent(node.componentName);
+    if (!comp) {
+        return;
+    }
+    const { arrayKeyPath } = node.attrs || {};
+    if (!arrayKeyPath && node.componentType !== "layout") {
+        console.error("ArrayContainer 配置有误: 缺少 arrayKeyPath");
+        return h("div", {}, "配置有误");
+    }
+    const loadingSlots = ref(false);
+    // ---- slots 异步处理 ----
+    if (node.slots && !node._slots) {
+        loadingSlots.value = true
+        loadSlots(node, formData).finally(() => loadingSlots.value = false)
+    }
+
+    const props = {
+        ...node.attrs,
+        children: node.children
+    }
+
+    Object.assign(props, {
+        node: node,
+        formData: formData.value,
+        "onUpdate:formData": (v: Record<string, unknown>) => {
+            Object.assign(formData.value, v);
+        }
+    })
+
+    return (node._slots && !loadingSlots.value)
+        ? h(comp, props, node._slots)
+        : h(comp, props);
+}
+
 export function createVNodeRenderer(formData: Ref<Record<string, unknown>>) {
     const renderNode = (node: ComponentConfig) => {
+
+        if (node.componentType === 'layout' && node.componentName === "ArrayContainer") {
+            return renderArrayContainer(node, formData);
+        }
+
         if (node.componentType === 'form') {
             return renderFormNode(node, formData)
         }

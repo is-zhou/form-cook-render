@@ -34,6 +34,7 @@ export interface ComponentNameMap {
   TreeSelect: unknown;
   Upload: unknown;
   Button: unknown;
+  ArrayContainer: unknown;
 }
 //string & {} 代表“任意字符串但不是字面量类型的泛型字符串”
 // type MyType = "foo" | "bar" | string
@@ -138,7 +139,7 @@ export interface FormCompConfig extends BaseConfig {
 
 export interface LayoutCompConfig extends BaseConfig {
   componentType: "layout";
-  attrs: Attrs;
+  attrs: Attrs & { arrayKeyPath?: string };
   children?: Array<ComponentConfig | string>;
 }
 

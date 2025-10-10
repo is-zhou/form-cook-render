@@ -44,6 +44,7 @@ export default defineComponent({
           props.modelValue,
           setDefaultValues(props.modelValue, formContentConfigList)
         );
+        console.log(props.modelValue);
 
         await nextTick();
 

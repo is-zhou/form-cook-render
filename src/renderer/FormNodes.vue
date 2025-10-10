@@ -53,6 +53,11 @@ const { renderNode } = createVNodeRenderer(formData);
         </template>
       </el-form-item>
       <component
+        v-else-if="config.componentName === 'ArrayContainer'"
+        :is="renderNode(config)"
+      >
+      </component>
+      <component
         v-else-if="config.children?.length"
         :is="renderNode(config)"
         :key="config.id"

@@ -1,14 +1,16 @@
 import { defineAsyncComponent, type Component } from 'vue'
 import { isUpperCaseFirst } from '../../utils';
 import { defaultComps } from './defaultComps';
-
+import ArrayContainer from "../components/ArrayContainer.vue"
 export * from './builtinFunctions'
 
 type RegistryItem =
     | { type: 'sync'; component: string | Component }
     | { type: 'async'; loader: () => Promise<Component> }
 
-const componentMap: Record<string, RegistryItem> = {}
+const componentMap: Record<string, RegistryItem> = {
+    ArrayContainer: { type: 'sync', component: ArrayContainer }
+}
 
 /**
  * 用户注册组件

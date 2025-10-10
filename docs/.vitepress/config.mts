@@ -52,6 +52,7 @@ export default defineConfig({
         items: [
           { text: '联动配置', link: '/guide/advanced/dynamic' },
           { text: '选项配置', link: '/guide/advanced/dynamic-options' },
+          { text: '添加/删除表单项', link: '/guide/advanced/add-del' },
           { text: '事件与全局函数', link: '/guide/advanced/events' },
           { text: '自定义组件', link: '/guide/advanced/custom' },
         ]

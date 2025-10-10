@@ -28,6 +28,7 @@ import {
     ElTreeSelect,
     ElUpload
 } from 'element-plus'
+import ArrayContainer from "@/core/components/ArrayContainer.vue"
 import { ComponentName } from '@/types/schema'
 
 export function defaultComps(): Record<ComponentName, Component | string> {
@@ -60,6 +61,7 @@ export function defaultComps(): Record<ComponentName, Component | string> {
         Transfer: ElTransfer,
         TreeSelect: ElTreeSelect,
         Upload: ElUpload,
-        Button: ElButton
+        Button: ElButton,
+        ArrayContainer,
     }
 }
