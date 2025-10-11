@@ -42,21 +42,30 @@ export function collectDefaultValues(children: Array<ComponentConfig | string> =
     return result;
 };
 
-export function normalizeStyle(style: string | Record<string, string> | undefined) {
-    if (!style) return undefined;
 
-    if (typeof style === "string") {
-        // Vue 内部也能解析字符串样式，但我们可以预处理一下防止空格或分号问题
-        return style
+export function normalizeStyle(
+    userStyle: Record<string, string | number> | string | undefined,
+    defaultStyle: Record<string, string | number> = {}
+): Record<string, string | number> {
+    const parseStyleString = (styleStr: string) => {
+        const result: Record<string, string> = {};
+        styleStr
             .split(";")
+            .map((s) => s.trim())
             .filter(Boolean)
-            .reduce((obj, item) => {
-                const [key, value] = item.split(":");
-                if (key && value) obj[key.trim()] = value.trim();
-                return obj;
-            }, {} as Record<string, string>);
+            .forEach((rule) => {
+                const [key, value] = rule.split(":").map((s) => s.trim());
+                if (key && value) result[key] = value.replace(/^["']|["']$/g, ""); // 去掉引号
+            });
+        return result;
+    };
+
+    let userStyleObj: Record<string, string | number> = {};
+    if (typeof userStyle === "string") {
+        userStyleObj = parseStyleString(userStyle);
+    } else if (typeof userStyle === "object" && userStyle !== null) {
+        userStyleObj = { ...userStyle };
     }
 
-    // 对象直接返回
-    return style;
+    return { ...defaultStyle, ...userStyleObj };
 }

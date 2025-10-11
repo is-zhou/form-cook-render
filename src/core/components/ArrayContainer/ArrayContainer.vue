@@ -8,6 +8,9 @@ import {
   replaceIndexInSchema,
 } from "@/utils";
 import FormNodes from "@/renderer/FormNodes.vue";
+import defaultStyle from "./defaultStyle";
+
+type Style = string | Record<string, string | number>;
 
 interface Props {
   arrayKeyPath: string;
@@ -18,18 +21,18 @@ interface Props {
   removeText?: string;
   addText?: string;
   isSetDefaultValue?: boolean;
-  style_container?: string | Record<string, string>;
-  style_item_wrap?: string | Record<string, string>;
-  style_item_content?: string | Record<string, string>;
-  style_btnAdd_container?: string | Record<string, string>;
-  style_btnDel_container?: string | Record<string, string>;
+  style_container?: Style;
+  style_item_wrap?: Style;
+  style_item_content?: Style;
+  style_btnAdd_container?: Style;
+  style_btnDel_container?: Style;
 }
 
 const formData = defineModel<Record<string, unknown>>("formData", {
   required: true,
 });
 
-const {
+let {
   arrayKeyPath,
   children,
   max = 1000,
@@ -46,16 +49,18 @@ const {
 } = defineProps<Props>();
 
 const defaultItem = collectDefaultValues(children);
-
-let initList = get(formData, arrayKeyPath);
-if (!initList) {
+let initList: Array<Record<string, unknown>> = get(
+  formData.value,
+  arrayKeyPath
+) as Array<Record<string, unknown>>;
+if (!initList || !Array.isArray(initList)) {
   initList = [isSetDefaultValue ? cloneDeep(defaultItem) : {}];
 }
 const list = ref(initList);
 // 同步主表单数据
 set(formData.value, arrayKeyPath, list.value);
 
-const arrayContainerChildren = ref([]);
+const arrayContainerChildren = ref<Array<Array<ComponentConfig | string>>>([]);
 
 watch(
   () => list.value,
@@ -66,7 +71,7 @@ watch(
           replaceIndexInSchema(cloneDeep(child), arrayKeyPath, index)
         );
       }
-    );
+    ) as Array<Array<ComponentConfig | string>>;
   },
   { immediate: true, deep: true }
 );
@@ -81,22 +86,43 @@ const removeItem = (index: number) => {
   list.value.splice(index, 1);
   set(formData.value, arrayKeyPath, list.value);
 };
+
+// 合并并转为字符串样式
+const styles = computed(() => ({
+  container: normalizeStyle(style_container, defaultStyle.style_container),
+  itemWrap: normalizeStyle(style_item_wrap, defaultStyle.style_item_wrap),
+  itemContent: normalizeStyle(
+    style_item_content,
+    defaultStyle.style_item_content
+  ),
+  btnAddContainer: normalizeStyle(
+    style_btnAdd_container,
+    defaultStyle.style_btnAdd_container
+  ),
+  btnDelContainer: normalizeStyle(
+    style_btnDel_container,
+    defaultStyle.style_btnDel_container
+  ),
+}));
 </script>
 
 <template>
-  <div class="container" :style="normalizeStyle(style_container)">
+  <div :style="styles.container">
     <template v-for="(list, index) in arrayContainerChildren" :key="index">
-      <div class="item_wrap" :style="normalizeStyle(style_item_wrap)">
-        <div class="item_content" :style="normalizeStyle(style_item_content)">
-          <FormNodes
-            v-model:config-list="arrayContainerChildren[index]"
-            v-model:form-data="formData"
-          ></FormNodes>
-        </div>
+      <div data-style="itemWrap" :style="styles.itemWrap">
         <div
-          class="btnDel_container"
-          :style="normalizeStyle(style_btnDel_container)"
+          data-style="itemContent"
+          :style="styles.itemContent"
+          class="array_container"
         >
+          <slot>
+            <FormNodes
+              v-model:config-list="arrayContainerChildren[index]"
+              v-model:form-data="formData"
+            ></FormNodes>
+          </slot>
+        </div>
+        <div :style="styles.btnDelContainer">
           <span
             @click="removeItem(index)"
             :style="{
@@ -119,10 +145,7 @@ const removeItem = (index: number) => {
         </div>
       </div>
     </template>
-    <div
-      class="btnAdd_container"
-      :style="normalizeStyle(style_btnAdd_container)"
-    >
+    <div :style="styles.btnAddContainer">
       <span
         @click="addItem"
         :style="{
@@ -146,26 +169,4 @@ const removeItem = (index: number) => {
   </div>
 </template>
 
-<style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.item_wrap {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  border: 1px solid var(--el-border-color-light);
-  padding: 12px;
-  border-radius: 6px;
-
-  .item_content {
-    flex: 1;
-  }
-}
-.btnAdd_container {
-  text-align: right;
-}
-</style>
+<style scoped></style>

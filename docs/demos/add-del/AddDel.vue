@@ -2,7 +2,12 @@
 import { ref } from "vue";
 import type { FormSchema } from "form-cook-render";
 
-const formData = ref({});
+const formData = ref({
+  arrayDesc: [
+    { content: "活动是以室外的形式开展的...", num: 10 },
+    { content: "户外拓展游戏...", num: 8 },
+  ],
+});
 const formSchema = ref<FormSchema>({
   formAreaConfig: {
     defaultCreateBtn: "提交",

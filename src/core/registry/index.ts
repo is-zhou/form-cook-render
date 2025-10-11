@@ -1,7 +1,7 @@
 import { defineAsyncComponent, type Component } from 'vue'
 import { isUpperCaseFirst } from '../../utils';
 import { defaultComps } from './defaultComps';
-import ArrayContainer from "../components/ArrayContainer.vue"
+import ArrayContainer from "../components/ArrayContainer/ArrayContainer.vue"
 export * from './builtinFunctions'
 
 type RegistryItem =

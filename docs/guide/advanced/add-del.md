@@ -25,7 +25,6 @@
 | removeText             |         自定义删除按钮文本         |             `string`              |        |
 | addText                |         自定义新增按钮文本         |             `string`              |        |
 | isSetDefaultValue      |       新增时是否初始化默认值       |             `boolean`             |        |
-| limitButtonDisplay     | 达到最大或最小表单数量时不显示按钮 |             `boolean`             |        |
 | style_container        |        自定义最外层容器样式        | `string` `Record<string, string>` |        |
 | style_item_wrap        |          自定义项容器样式          | `string` `Record<string, string>` |        |
 | style_item_content     |        自定义动态项容器样式        | `string` `Record<string, string>` |        |

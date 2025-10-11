@@ -28,7 +28,7 @@ import {
     ElTreeSelect,
     ElUpload
 } from 'element-plus'
-import ArrayContainer from "@/core/components/ArrayContainer.vue"
+import ArrayContainer from "@/core/components/ArrayContainer/ArrayContainer.vue"
 import { ComponentName } from '@/types/schema'
 
 export function defaultComps(): Record<ComponentName, Component | string> {
