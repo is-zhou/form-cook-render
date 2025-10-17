@@ -62,7 +62,7 @@ const renderFormNode = (node: FormCompConfig, formData: Ref<Record<string, unkno
         loadSlots(node, formData).finally(() => loadingSlots.value = false)
     }
 
-    const { options, _options, data, _data, disabled, readonly, ...value } = node.attrs
+    const { options, _options, data, _data, disabled, readonly, size, ...value } = node.attrs
 
     const { events } = node
     let eventProps = {}

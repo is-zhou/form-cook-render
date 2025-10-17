@@ -120,6 +120,10 @@ export default defineComponent({
     <FormNodes
       v-model:config-list="formContentConfigList"
       v-model:form-data="formData"
+      :areaAttrs="{
+        size: formAreaConfig?.attrs.size,
+        disabled: formAreaConfig?.attrs.disabled,
+      }"
     ></FormNodes>
 
     <el-form-item>

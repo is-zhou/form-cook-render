@@ -24,8 +24,14 @@ export function getVisible(config: ComponentConfig, formData: Record<string, unk
     return isVisible;
 }
 
-export function getDisabled(config: FormCompConfig, formData: Record<string, unknown>) {
+export function getDisabled(config: FormCompConfig, formData: Record<string, unknown>, disabled: boolean | undefined) {
+
     let isDisabled = false;
+
+    if (typeof disabled === "boolean") {
+        isDisabled = disabled
+    }
+
     if (typeof config.attrs.disabled === "boolean") {
         isDisabled = config.attrs.disabled;
     }
@@ -36,6 +42,22 @@ export function getDisabled(config: FormCompConfig, formData: Record<string, unk
         });
     }
     return isDisabled;
+}
+
+export function getSize(config: FormCompConfig, size: string | undefined) {
+
+    let _size = "";
+
+    if (typeof size === "string") {
+        _size = size
+    }
+    if (typeof config.formItemAttrs.size === "string") {
+        _size = config.formItemAttrs.size
+    }
+    if (typeof config.attrs.size === "string") {
+        _size = config.attrs.size
+    }
+    return _size;
 }
 
 export function getReadonly(config: FormCompConfig, formData: Record<string, unknown>) {

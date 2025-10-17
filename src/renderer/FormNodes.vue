@@ -3,12 +3,17 @@ import {
   getVisible,
   getDisabled,
   getReadonly,
+  getSize,
 } from "@/core/renderer/conditions";
 
 import { ComponentConfig } from "../types/schema";
 import { createVNodeRenderer } from "@/core/renderer";
 
 type FormData = Record<string, unknown>;
+
+const { areaAttrs } = defineProps<{
+  areaAttrs?: { size: string | undefined; disabled: boolean | undefined };
+}>();
 
 const configList = defineModel<Array<ComponentConfig | string>>("configList", {
   required: true,
@@ -35,8 +40,9 @@ const { renderNode } = createVNodeRenderer(formData);
         <component
           :is="renderNode(config)"
           :key="config.id"
-          :disabled="getDisabled(config, formData)"
+          :disabled="getDisabled(config, formData, areaAttrs?.disabled)"
           :readonly="getReadonly(config, formData)"
+          :size="getSize(config, areaAttrs?.size)"
         />
       </el-form-item>
     </template>
@@ -49,6 +55,7 @@ const { renderNode } = createVNodeRenderer(formData);
           <FormNodes
             v-model:config-list="config.children"
             v-model:form-data="formData"
+            :areaAttrs="areaAttrs"
           ></FormNodes>
         </template>
       </el-form-item>
@@ -65,6 +72,7 @@ const { renderNode } = createVNodeRenderer(formData);
         <FormNodes
           v-model:config-list="config.children"
           v-model:form-data="formData"
+          :areaAttrs="areaAttrs"
         ></FormNodes>
       </component>
       <component v-else-if="config.slots" :is="renderNode(config)"> </component>
