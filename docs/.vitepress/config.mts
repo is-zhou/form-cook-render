@@ -70,6 +70,7 @@ export default defineConfig({
           { text: '滑块', link: '/guide/form/slider' },
           { text: '容器盒子', link: '/guide/layout/div' },
           { text: '分栏', link: '/guide/layout/row' },
+          { text: '动态新增删除', link: '/guide/layout/add-del' },
         ]
       },
     ],

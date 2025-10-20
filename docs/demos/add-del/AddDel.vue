@@ -22,11 +22,11 @@ const formSchema = ref<FormSchema>({
       componentName: "ArrayContainer",
       componentType: "layout",
       attrs: {
+        arrayKeyPath: "arrayDesc",
         addText: "新增活动项",
         removeText: "删除",
         min: 1,
         max: 3,
-        arrayKeyPath: "arrayDesc",
         isSetDefaultValue: false,
         limitButtonDisplay: true,
       },

@@ -9,7 +9,6 @@
   componentType: 'layout',
   attrs: {},
   children: [],
-  style: {},
 }
 ```
 

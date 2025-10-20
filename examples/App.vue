@@ -125,7 +125,9 @@ const formeSchema = ref<FormSchema>({
           defaultValue: 0,
         },
       ],
-      slots: {},
+      slots: {
+        add: "666",
+      },
     },
     {
       id: "",

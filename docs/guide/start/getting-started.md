@@ -17,7 +17,7 @@ $ yarn add form-cook-render
 ```
 
 :::tip
-同时需要`pnpm install element-plus`安装 ElementPlus 框架。
+如果项目中没有安装`element-plus`的话，同时需要运行`pnpm install element-plus`来安装 ElementPlus 框架。
 :::
 
 ## 全局注册
@@ -27,11 +27,15 @@ $ yarn add form-cook-render
 ```ts
 import { createApp } from "vue";
 import App from "./App.vue";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
 import FormCookRender from "form-cook-render";
 
 const app = createApp(App);
 
 app.use(FormCookRender); // 挂载 FormCookRender
+
+app.use(ElementPlus); //挂载ElementPlus
 
 app.mount("#app");
 ```
